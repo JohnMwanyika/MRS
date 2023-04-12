@@ -1,0 +1,27 @@
+{
+  "name": "ecom",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-session-sequelize": "^7.1.5",
+    "cookie-parser": ">=1.4.4",
+    "debug": ">=2.6.9",
+    "express": ">=4.16.1",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.15.0",
+    "http-errors": ">=1.6.3",
+    "morgan": ">=1.9.1",
+    "mysql2": "^3.2.0",
+    "nodemailer": "^6.9.1",
+    "pug": ">=2.0.0",
+    "sequelize": "^6.30.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
