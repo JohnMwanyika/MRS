@@ -10,11 +10,5 @@ router.use('/person', person);
 /* GET home page. */
 router.get('/', home);
 
-// router.get('/', function (req, res, next) {
-//   res.render('home', {
-//     title: 'Express'
-//   });
-// });
-
 
 module.exports = router;

@@ -73,10 +73,11 @@ module.exports = {
                 });
             })
     },
-    getMailByName: async (req, res) => {
+    getMailByName: async (req, res) => { //This checks for existing mails
         const {
             firstName,
-            lastName
+            lastName,
+            departmentId
         } = req.body;
 
         function JoinName(fname, lname) {
@@ -98,10 +99,6 @@ module.exports = {
                     res.render('serp', {
                         status: 'success',
                         data: mail,
-                        // current: fullName
-                        // {
-                        //     firstName:firstName,lastName:lastName
-                        // }
                     });
                     return;
                 }
