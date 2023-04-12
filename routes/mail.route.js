@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { createMail, getMailById, getAllMail, getMailByName, resetPass, requestNewMail } = require('../controllers/mail.controller');
+const {
+    createMail,
+    getMailById,
+    getAllMail,
+    getMailByName,
+    resetPass,
+    requestNewMail
+} = require('../controllers/mail.controller');
 
 router.post('/', createMail);
 router.get('/:id', getMailById);

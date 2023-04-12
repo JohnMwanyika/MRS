@@ -3,7 +3,8 @@ const {
 } = require('../utils/send_mail');
 
 const {
-    Mail
+    Mail,
+    Department
 } = require('../models');
 
 module.exports = {
@@ -86,10 +87,10 @@ module.exports = {
         let fullName = JoinName(firstName, lastName);
 
         const mail = await Mail.findAll({
-            where: {
-                name: fullName,
-            }
-        })
+                where: {
+                    name: fullName,
+                }
+            })
             .then((mail) => {
                 console.log(mail);
                 console.log('this is the current user' + fullName)
@@ -107,7 +108,10 @@ module.exports = {
                 res.render('serp', {
                     status: 'error',
                     data: "There is no email under that name. Please Check your spelling before sending an email creation request.",
-                    current: {firstName,lastName}
+                    current: {
+                        firstName,
+                        lastName
+                    }
                 });
             })
             .catch((err) => {
@@ -131,6 +135,7 @@ module.exports = {
                 text: `Greetings, Sir/Madam! My name is ${fullName} I would like to request a password reset for my email address, ${email}`
             };
 
+
             sendMail(mail.from, mail.to, mail.subject, mail.text)
             res.render('response', {
                 status: 'success',
@@ -147,7 +152,10 @@ module.exports = {
     },
     requestNewMail: (req, res) => {
         try {
-            const { firstName, lastName } = req.body;
+            const {
+                firstName,
+                lastName
+            } = req.body;
             const fullName = `${firstName} ${lastName}`;
             const mailToCreate = `${firstName}.${lastName}@taitataveta.go.ke`
             let mail = {
@@ -158,14 +166,23 @@ module.exports = {
             };
 
             sendMail(mail.from, mail.to, mail.subject, mail.text);
-            res.render('response',{
-                current:{
-                    fullName,mailToCreate
+            res.render('response', {
+                current: {
+                    fullName,
+                    mailToCreate
                 }
             });
 
         } catch (error) {
 
         }
+    },
+    home: async (req, res) => {
+        const departments = await Department.findAll();
+        console.log(departments)
+        res.render('home', {
+            status: 'error',
+            data: departments
+        });
     }
 }

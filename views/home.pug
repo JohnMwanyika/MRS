@@ -21,11 +21,10 @@ html(lang="en")
                             form(action="/mails/user" method="post")
                                 .form-floating.mb-3
                                     select.form-select#floatingSelect(aria-label="Floating label select example")
-                                        option(selected) Open this select menu
-                                        option(value="1") One
-                                        option(value="2") Two
-                                        option(value="3") Three
-                                    label(for="floatingSelect") Department
+                                        //- option(selected) Select Department
+                                        each dep in data
+                                            option(value=`${dep.id}`) #{dep.name}
+                                    label(for="floatingSelect") Select Department
 
                                 .form-floating.mb-3
                                     input(type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name", required)
