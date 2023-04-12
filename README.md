@@ -1,2 +1,2 @@
-# ecommerce
-built with node express for learning sequelize
+# Mail Recovery System
+built with nodejs mysql
