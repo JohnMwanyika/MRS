@@ -4,7 +4,10 @@ const {
 
 const {
     Mail,
-    Department
+    Department,
+    Trial,
+    TrialStatus,
+    TrialTypa
 } = require('../models');
 
 module.exports = {
@@ -77,7 +80,7 @@ module.exports = {
         const {
             firstName,
             lastName,
-            departmentId
+            department, //using it to populate trials and insert it to mails for future identification
         } = req.body;
 
         function JoinName(fname, lname) {
@@ -90,32 +93,77 @@ module.exports = {
         const mail = await Mail.findAll({
                 where: {
                     name: fullName,
-                }
+                },
+                include:Department
             })
-            .then((mail) => {
-                console.log(mail);
-                console.log('this is the current user' + fullName)
+            .then(async (mail) => {
+                console.log(JSON.stringify(mail));
+                console.log('This user exists ' + fullName)
+                console.log('DepartmentId is ' + department)
                 if (mail.length > 0) {
+
+                    // This adds or update the departmentId to the email that has been found 
+                    const [_, updatedMail] = await Mail.update({
+                        departmentId: department
+                    }, {
+                        where: {
+                            id: mail[0].id
+                        },
+                        returning: true
+                    })
+                    console.log("Record Updated is", updatedMail.id)
+                    // This will add a success trial 
+                    let data = {
+                        credentials: fullName,
+                        typeId: 1,
+                        statusId: 2,
+                        departmentId: updatedMail.departmentId,
+                    }
+                    const newTrial = await Trial.create(data)
+                    console.log(newTrial.credentials);
+
                     res.render('serp', {
                         status: 'success',
                         data: mail,
                     });
-                    return;
+
+                } else {
+                    // This will let admin know how many trials users have made
+                    let data = {
+                        credentials: fullName,
+                        typeId: 1,
+                        statusId: 1,
+                        departmentId: department,
+                    }
+                    const newTrial = await Trial.create(data)
+                    console.log(newTrial.credentials);
+
+
+                    res.render('serp', {
+                        status: 'error',
+                        data: "There is no email under that name. Please Check your spelling before sending an email creation request.",
+                        current: {
+                            firstName,
+                            lastName
+                        }
+                    });
                 }
+
+
+            })
+            .catch((err) => {
                 res.render('serp', {
                     status: 'error',
-                    data: "There is no email under that name. Please Check your spelling before sending an email creation request.",
+                    data: err.message,
                     current: {
                         firstName,
                         lastName
                     }
                 });
-            })
-            .catch((err) => {
-                res.json({
-                    status: 'error',
-                    data: err.message
-                });
+                // res.json({
+                //     status: 'error',
+                //     data: err.message
+                // });
             })
     },
     resetPass: (req, res) => {
@@ -176,7 +224,7 @@ module.exports = {
     },
     home: async (req, res) => {
         const departments = await Department.findAll();
-        console.log(departments)
+        // console.log(departments)
         res.render('home', {
             status: 'error',
             data: departments

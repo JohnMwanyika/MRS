@@ -2,15 +2,15 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.addColumn('Trials','typeId',{
-      type:Sequelize.INTEGER,
-      references:{
-        model:'TrialTypes',
-        key:'id'
+  async up(queryInterface, Sequelize) {
+    await queryInterface.addColumn('Trials', 'typeId', {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'TrialTypes',
+        key: 'id'
       },
-     onUpdate:'CASCADE',
-     onDelete:'SET NULL'
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     })
     /**
      * Add altering commands here.
@@ -20,8 +20,8 @@ module.exports = {
      */
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn('Trials','typeId')
+  async down(queryInterface, Sequelize) {
+    await queryInterface.removeColumn('Trials', 'typeId')
     /**
      * Add reverting commands here.
      *

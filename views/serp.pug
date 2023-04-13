@@ -19,14 +19,23 @@ html(lang="en")
                             h2.text-center.Fancy Mail Recovery system
                         .card-body
                             if (status == "success")
-                                .alert.bg-success.text-white Mail found
+                            
+                                .alert.alert-success.alert-dismissible.fade.show(role='alert')
+                                    i.bi.bi-envelope
+                                    | Mail found
+                                    button.btn-close(type='button', data-bs-dismiss='alert', aria-label='Close')
+                                    
+                                //- .alert.bg-success.text-white Mail found
                                 form(action="/mails/reset" method="post")
 
                                     .form-floating.mb-3
-                                        input(type="text" class="form-control" id="lastName" value=`${data[0].name}` name="fullName" placeholder="Last Name", required)
+                                        input(type="text" class="form-control" id="lastName" value=`${data[0].Department.name}` name="fullName" placeholder="Last Name", required, disabled)
+                                        label(for="fullName") Department
+                                    .form-floating.mb-3
+                                        input(type="text" class="form-control" id="lastName" value=`${data[0].name}` name="fullName" placeholder="Last Name", required disabled)
                                         label(for="fullName") Full Name
                                     .form-floating.mb-3
-                                        input(type="email" class="form-control" id="email" value=`${data[0].email}` name="email" placeholder="Email", required)
+                                        input(type="email" class="form-control" id="email" value=`${data[0].email}` name="email" placeholder="Email", required disabled)
                                         label(for="email") Email
                                     button(type="submit" class="btn btn-danger w-100 mt-3")
                                         i.fa.fa-paper-plane.me-2

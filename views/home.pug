@@ -20,7 +20,7 @@ html(lang="en")
                         .card-body
                             form(action="/mails/user" method="post")
                                 .form-floating.mb-3
-                                    select.form-select#floatingSelect(aria-label="Floating label select example")
+                                    select.form-select#floatingSelect(aria-label="Floating label select example", name='department')
                                         //- option(selected) Select Department
                                         each dep in data
                                             option(value=`${dep.id}`) #{dep.name}
