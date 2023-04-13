@@ -16,7 +16,9 @@ html(lang="en")
                 .col-lg-8
                     .card.border-0.shadow-sm.rounded-lg
                         .card-header.bg-white.border-0.pb-0
-                            h2.text-center.Fancy Mail Recovery system
+                            //- h2.text-center.Fancy Mail Recovery system
+                            h2.fw-light.text-center MAIL RECOVERY SYSTEM
+
                         .card-body
                             if (status == "success")
                                 //- alert
@@ -26,15 +28,15 @@ html(lang="en")
                                     button.btn-close(type='button', data-bs-dismiss='alert', aria-label='Close')
                                 //- .alert.bg-success.text-white Mail found
                                 form(action="/mails/reset" method="post")
-
+                                    if (data.Department.name)
+                                        .form-floating.mb-3
+                                            input(type="text" class="form-control" id="lastName" value=`${data.Department.name}` name="fullName" placeholder="Last Name", required, disabled)
+                                            label(for="fullName") Department
                                     .form-floating.mb-3
-                                        input(type="text" class="form-control" id="lastName" value=`${data[0].Department.name}` name="fullName" placeholder="Last Name", required, disabled)
-                                        label(for="fullName") Department
-                                    .form-floating.mb-3
-                                        input(type="text" class="form-control" id="lastName" value=`${data[0].name}` name="fullName" placeholder="Last Name", required disabled)
+                                        input(type="text" class="form-control" id="lastName" value=`${data.name}` name="fullName" placeholder="Last Name", required disabled)
                                         label(for="fullName") Full Name
                                     .form-floating.mb-3
-                                        input(type="email" class="form-control" id="email" value=`${data[0].email}` name="email" placeholder="Email", required disabled)
+                                        input(type="email" class="form-control" id="email" value=`${data.email}` name="email" placeholder="Email", required disabled)
                                         label(for="email") Email
                                     button(type="submit" class="btn btn-danger w-100 mt-3")
                                         i.fa.fa-paper-plane.me-2

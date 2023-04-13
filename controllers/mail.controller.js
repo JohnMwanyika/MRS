@@ -90,54 +90,37 @@ module.exports = {
 
         let fullName = JoinName(firstName, lastName);
 
-        const mail = await Mail.findAll({
+        const mail = await Mail.findOne({
                 where: {
                     name: fullName,
                 },
-                include:Department
+                include: Department
             })
-            .then(async (mail) => {
+            .then((mail) => {
                 console.log(JSON.stringify(mail));
                 console.log('This user exists ' + fullName)
                 console.log('DepartmentId is ' + department)
-                if (mail.length > 0) {
+                if (mail) { // mail has been found
 
-                    // This adds or update the departmentId to the email that has been found 
-                    const [_, updatedMail] = await Mail.update({
+                    // This update the departmentId to the email that has been found 
+                    return Mail.update({
                         departmentId: department
                     }, {
                         where: {
-                            id: mail[0].id
+                            id: mail.id
                         },
-                        returning: true
                     })
-                    console.log("Record Updated is", updatedMail.id)
-                    // This will add a success trial 
-                    let data = {
-                        credentials: fullName,
-                        typeId: 1,
-                        statusId: 2,
-                        departmentId: updatedMail.departmentId,
-                    }
-                    const newTrial = await Trial.create(data)
-                    console.log(newTrial.credentials);
-
-                    res.render('serp', {
-                        status: 'success',
-                        data: mail,
-                    });
-
                 } else {
-                    // This will let admin know how many trials users have made
-                    let data = {
+
+                    // This create a failed check mail attempt
+                    let failedTrial = {
                         credentials: fullName,
                         typeId: 1,
                         statusId: 1,
                         departmentId: department,
                     }
-                    const newTrial = await Trial.create(data)
-                    console.log(newTrial.credentials);
-
+                    const newTrial = Trial.create(failedTrial)
+                    console.log(JSON.stringify(newTrial))
 
                     res.render('serp', {
                         status: 'error',
@@ -147,9 +130,33 @@ module.exports = {
                             lastName
                         }
                     });
+                    return;
                 }
 
+            }).then((updatedMail) => {
+                return Mail.findOne({
+                    include: Department,
+                    where: {
+                        name: fullName
+                    }
+                });
+            }).then((updatedMail) => {
+                // This will add a mail check success attempt
+                let trialData = {
+                    credentials: updatedMail.name,
+                    typeId: 1,
+                    statusId: 2,
+                    departmentId: updatedMail.departmentId,
+                }
+                const newTrial = Trial.create(trialData)
+                return [newTrial, updatedMail]
+            }).then((result) => {
+                console.log(JSON.stringify(result[0]))
 
+                res.render('serp', {
+                    status: 'success',
+                    data: result[1],
+                });
             })
             .catch((err) => {
                 res.render('serp', {
@@ -166,6 +173,75 @@ module.exports = {
                 // });
             })
     },
+    // getMailByName: async (req, res) => {
+    //     const { firstName, lastName, department } = req.body;
+
+    //     function JoinName(fname, lname) {
+    //         let fullName = `${fname} ${lname}`;
+    //         return fullName
+    //     };
+    //     let fullName = JoinName(firstName, lastName);
+
+    //     Mail.findAll({
+    //         where: {
+    //             name: fullName,
+    //         },
+    //         include: Department
+    //     })
+    //     .then(async (mail) => {
+    //         console.log(JSON.stringify(mail));
+    //         console.log('This user exists ' + fullName)
+    //         console.log('DepartmentId is ' + department)
+    //         if (mail.length > 0) {
+    //             const [_, updatedMail] = await Mail.update({
+    //                 departmentId: department
+    //             }, {
+    //                 where: {
+    //                     id: mail[0].id
+    //                 },
+    //                 returning: true
+    //             })
+    //             console.log("Record Updated is", updatedMail.id)
+    //             let data = {
+    //                 credentials: fullName,
+    //                 typeId: 1,
+    //                 statusId: 2,
+    //                 departmentId: updatedMail.departmentId,
+    //             }
+    //             return Trial.create(data)
+    //         } else {
+    //             let data = {
+    //                 credentials: fullName,
+    //                 typeId: 1,
+    //                 statusId: 1,
+    //                 departmentId: department,
+    //             }
+    //             return Trial.create(data)
+    //         }
+    //     })
+    //     .then((newTrial) => {
+    //         console.log(newTrial.credentials);
+
+    //         res.render('serp', {
+    //             status: 'success',
+    //             data: mail.length > 0 ? mail : "There is no email under that name. Please Check your spelling before sending an email creation request.",
+    //             current: {
+    //                 firstName,
+    //                 lastName
+    //             }
+    //         });
+    //     })
+    //     .catch((err) => {
+    //         res.render('serp', {
+    //             status: 'error',
+    //             data: err.message,
+    //             current: {
+    //                 firstName,
+    //                 lastName
+    //             }
+    //         });
+    //     });
+    // },
     resetPass: (req, res) => {
         try {
             const {
@@ -175,7 +251,7 @@ module.exports = {
 
             let mail = {
                 from: 'mwanyikajohn@outlook.com',
-                to: 'gilkichoi@gmail.com',
+                to: '5476benja@gmail.com',
                 subject: 'Email password reset',
                 text: `Greetings, Sir/Madam! My name is ${fullName} I would like to request a password reset for my email address, ${email}`
             };
