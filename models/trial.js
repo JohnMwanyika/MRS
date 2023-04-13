@@ -17,12 +17,18 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'typeId'
       })
 
+      Trial.belongsTo(models.Department,{
+        foreignKey:'departmentId'
+      })
+
       // define association here
     }
   }
   Trial.init({
     credentials: DataTypes.STRING,
-    departmentId: DataTypes.INTEGER
+    typeId: DataTypes.INTEGER,
+    statusId: DataTypes.INTEGER,
+    departmentId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Trial',
