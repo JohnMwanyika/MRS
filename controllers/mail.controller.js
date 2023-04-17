@@ -83,6 +83,14 @@ module.exports = {
             department, //using it to populate trials and insert it to mails for future identification
         } = req.body;
 
+        // find department by name provided by user note it comes as id from the selected department name
+        const dpt = await Department.findOne({
+            where: {
+                id: department
+            }
+        })
+        console.log('This is the department',JSON.stringify(dpt))
+
         function JoinName(fname, lname) {
             let fullName = `${fname} ${lname}`;
             return fullName
@@ -91,10 +99,10 @@ module.exports = {
         let fullName = JoinName(firstName, lastName);
 
         const mail = await Mail.findOne({
+                include: Department,
                 where: {
                     name: fullName,
                 },
-                include: Department
             })
             .then((mail) => {
                 console.log(JSON.stringify(mail));
@@ -122,12 +130,14 @@ module.exports = {
                     const newTrial = Trial.create(failedTrial)
                     console.log(JSON.stringify(newTrial))
 
+                    
                     res.render('serp', {
                         status: 'warning',
                         data: "There is no email under that name. Please Check your spelling before sending an email creation request.",
                         current: {
                             firstName,
-                            lastName
+                            lastName,
+                            dpt
                         }
                     });
                     return;
