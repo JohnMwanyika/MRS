@@ -7,11 +7,11 @@ block content
             | Mail found
             button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
         //- .alert.bg-success.text-white Mail found
-        form(action="/mails/reset" method="post")
+        form(action="/mails/reset" method="post")#myform
             if (data.Department.name)
                 .form-floating.mb-3
                     input(type="text" class="form-control" id="depertment" value=`${data.Department.name}` name="department" placeholder="Last Name", required, disabled)
-                    input(type="text" class="form-control" id="depertment" value=`${data.Department.name}` name="department" placeholder="Last Name", required)
+                    input(type="hidden" class="form-control" id="depertment" value=`${data.Department.name}` name="department" placeholder="Last Name", required)
                     label(for="depertment") Department
             .form-floating.mb-3
                 input(type="text" class="form-control" id="lastName" value=`${data.name}` name="fullName" placeholder="Last Name", required disabled)
@@ -21,16 +21,17 @@ block content
                 input(type="email" class="form-control" id="email" value=`${data.email}` name="email" placeholder="Email", required disabled)
                 input(type="hidden" class="form-control" id="email" value=`${data.email}` name="email" placeholder="Email", required)
                 label(for="email") Email
-            button(type="submit" class="btn btn-danger w-100 mt-3")
+            button(type="submit" class="btn btn-danger w-100 mt-3")#submitbtn
                 i.fa.fa-paper-plane.me-2
-                | Reset Password
+                | Reset Password 
+                span.spinner-border.spinner-border-sm(role="status" aria-hidden="true")#spina
     else
         //- form(action="/mails/request" method="post")
             input(type="text" class="form-control" id="firstName" value=`${current.firstName}` name="firstName" placeholder="First Name", required)
             input(type="text" class="form-control" id="lastName" value=`${current.lastName}` name="lastName" placeholder="Last Name", required)
             .alert.bg-warning #{data} try again <button type='submit' class="btn btn-danger btn-sm" href="/mails/request" role="button">Request</button>
-        form(action="/mails/request" method="post")#myform
-            .alert.alert-dismissible.fade.show(role='alert',class=`alert-${status}`)#msg
+        form(action="/mails/request" method="post")
+            .alert.alert-dismissible.fade.show(role='alert',class=`alert-${status}`)
                 i.bi.bi-envelope
                 | #{data} 
                 button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
@@ -43,70 +44,76 @@ block content
                 label(for="lastName") Last Name
             .row 
                 .col-6
-                    a( class="btn btn-primary w-100 mt-3" href='/')#submitbtn
+                    a( class="btn btn-primary w-100 mt-3" href='/')
                         i.fa.fa-paper-plane.me-2
                         | Try again 
-                        //- span.spinner-border.spinner-border-sm(role="status" aria-hidden="true")#spina
                 .col-6
                     button( class="btn btn-danger w-100 mt-3")
                         i.fa.fa-paper-plane.me-2
                         | Send request
 
     script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js")
-    //- script.
+    script.
         var loading = $('#spina').hide();
         $("#submitbtn").click(function(event){
             event.preventDefault();
             var form = $("#myform");
             var msg = $("#msg");
 
-            function validateForm() {
-                var isValid = true;
-                $('.form-control').each(function() {
-                    if ( $(this).val() === '' )
-                        isValid = false;
-                });
-                return isValid;
+            //- function validateForm() {
+            //-     var isValid = true;
+            //-     $('.form-control').each(function() {
+            //-         if ( $(this).val() === '' )
+            //-             isValid = false;
+            //-     });
+            //-     return isValid;
+            //- }
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
             }
 
-            //- prevent submission of empty fields
-            //- if(!($("#firstName").val() && $("#lasttName").val())){
-            let res = validateForm();
-            if(!res){
-                msg.text('Please fill all fields')
-            }else{
-
-                $.ajax({
-                    url:'/mails/api/user',
-                    type:'post',
-                    data: form.serialize(),
-                    beforeSend: function(){
-                        loading.show(function(){
-                            $("#submitbtn").prop("disabled", true);
-                        });
-                    },
-                    complete: function(){
-                        loading.hide(function(){
-                            $("#submitbtn").removeAttr('disabled');
-                        });
-                        //- listenToCallback();
-                    },
-                    success: function(data){
-                        let rescode = data;
-                        //- alert(rescode)
-                        msg.text(data.data);
-                        msg.prop("alert-success", true);
-                        //- msg.removeAttr('alert-warning',function(){
-                        //-     msg.prop("alert-success", true);
-                        //- })
-                        console.log(data)
-                    },
-                    timeout: 10000,
-                    error: function (request, status, error) {
-                        alert(request,status);
-                        
-                    }
-
-                });
-            }
+            $.ajax({
+                url:'/mails/reset',
+                type:'post',
+                data: form.serialize(),
+                beforeSend: function(){
+                    loading.show(function(){
+                        $("#submitbtn").prop("disabled", true);
+                    });
+                },
+                complete: function(){
+                    loading.hide(function(){
+                        $("#submitbtn").removeAttr('disabled');
+                    });
+                    //- listenToCallback();
+                },
+                timeout: 25000,
+            }).then(function(data){
+                if(data.status == "success"){
+                    console.log('Email Sent')
+                    toastr["success"]("Your password reset request has been sent successfully", "Success")
+                }else{
+                    console.log('Request not completed')
+                    toastr["error"]("An error occured while sending your request try again", "Failed")
+                }
+                console.log(JSON.stringify(data))
+            }).catch(function(error){
+                console.log('Cannot connect to mail')
+                toastr["error"]("Cannot connect to mail", "Failed")
+                console.log(JSON.stringify(request.statusText))
+            })
         });

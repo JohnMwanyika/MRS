@@ -180,7 +180,7 @@ module.exports = {
                 fullName,
                 email
             } = req.body;
-            console.log('This is the email to be rest',req.body);
+            console.log('This is the email to be rest', req.body);
 
 
             let mail = {
@@ -192,11 +192,25 @@ module.exports = {
 
 
             sendMail(mail.to, mail.subject, mail.text)
+                .then((response) => {
+                    console.log(response);
+                    res.json({
+                        status: 'success',
+                        data: response
+                    })
+                })
+                .catch((error) => {
+                    console.log(error);
+                    res.json({
+                        status: 'error',
+                        data: error
+                    })
+                })
             // sendMail(mail)
-            res.render('response', {
-                status: 'success',
-                data: 'success'
-            })
+            // res.render('response', {
+            //     status: 'success',
+            //     data: 'success'
+            // })
 
         } catch (error) {
             res.json({
@@ -221,7 +235,7 @@ module.exports = {
                 text: `Greetings, Sir/Madam! there is a request to create an email for ${firstName} ${lastName}`
             };
 
-            sendMail( mail.to, mail.subject, mail.text);
+            sendMail(mail.to, mail.subject, mail.text);
             res.render('response', {
                 current: {
                     fullName,
