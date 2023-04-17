@@ -234,7 +234,8 @@ module.exports = {
         try {
             const {
                 firstName,
-                lastName
+                lastName,
+                department
             } = req.body;
             const fullName = `${firstName} ${lastName}`;
             const mailToCreate = `${firstName}.${lastName}@taitataveta.go.ke`
@@ -242,7 +243,7 @@ module.exports = {
                 // from: 'mwanyikajohn@outlook.com',
                 to: '5476benja@gmail.com',
                 subject: 'Email creation reset',
-                text: `Greetings, Sir/Madam! there is a request to create an email for ${firstName} ${lastName}`
+                text: `Greetings, Sir/Madam! there is a request to create an email for ${firstName} ${lastName} from ${department}`
             };
 
             // sendMail(mail.to, mail.subject, mail.text);
