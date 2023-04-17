@@ -30,7 +30,7 @@ block content
             input(type="text" class="form-control" id="firstName" value=`${current.firstName}` name="firstName" placeholder="First Name", required)
             input(type="text" class="form-control" id="lastName" value=`${current.lastName}` name="lastName" placeholder="Last Name", required)
             .alert.bg-warning #{data} try again <button type='submit' class="btn btn-danger btn-sm" href="/mails/request" role="button">Request</button>
-        form(action="/mails/request" method="post")
+        form(action="/mails/request" method="post")#myform2
             .alert.alert-dismissible.fade.show(role='alert',class=`alert-${status}`)
                 i.bi.bi-envelope
                 | #{data} 
@@ -48,12 +48,31 @@ block content
                         i.fa.fa-paper-plane.me-2
                         | Try again 
                 .col-6
-                    button( class="btn btn-danger w-100 mt-3")
+                    button( class="btn btn-danger w-100 mt-3")#submitbtn2
                         i.fa.fa-paper-plane.me-2
-                        | Send request
+                        | Send request 
+                        span.spinner-border.spinner-border-sm(role="status" aria-hidden="true")#spina2
+
 
     script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js")
     script.
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
         var loading = $('#spina').hide();
         $("#submitbtn").click(function(event){
             event.preventDefault();
@@ -68,26 +87,9 @@ block content
             //-     });
             //-     return isValid;
             //- }
-            toastr.options = {
-                "closeButton": true,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": true,
-                "positionClass": "toast-top-center",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
 
             $.ajax({
-                url:'/mails/reset',
+                url:'/mails/request',
                 type:'post',
                 data: form.serialize(),
                 beforeSend: function(){
@@ -106,6 +108,45 @@ block content
                 if(data.status == "success"){
                     console.log('Email Sent')
                     toastr["success"]("Your password reset request has been sent successfully", "Success")
+                }else{
+                    console.log('Request not completed')
+                    toastr["error"]("An error occured while sending your request try again", "Failed")
+                }
+                console.log(JSON.stringify(data))
+            }).catch(function(error){
+                console.log('Cannot connect to mail')
+                toastr["error"]("Cannot connect to mail", "Failed")
+                console.log(JSON.stringify(request.statusText))
+            })
+        });
+
+        //- ###############################3  Requesting new email  ###############################
+        var loading2 = $('#spina2').hide();
+        $("#submitbtn2").click(function(event){
+            event.preventDefault();
+            var form2 = $("#myform2");
+            //- var msg = $("#msg");
+
+            $.ajax({
+                url:'/mails/request',
+                type:'post',
+                data: form2.serialize(),
+                beforeSend: function(){
+                    loading2.show(function(){
+                        $("#submitbtn2").prop("disabled", true);
+                    });
+                },
+                complete: function(){
+                    loading2.hide(function(){
+                        $("#submitbtn2").removeAttr('disabled');
+                    });
+                    //- listenToCallback();
+                },
+                timeout: 30000,
+            }).then(function(data){
+                if(data.status == "success"){
+                    console.log('Email Sent')
+                    toastr["success"]("Your email creation request has been sent successfully", "Success")
                 }else{
                     console.log('Request not completed')
                     toastr["error"]("An error occured while sending your request try again", "Failed")

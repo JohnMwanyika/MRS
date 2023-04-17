@@ -235,13 +235,28 @@ module.exports = {
                 text: `Greetings, Sir/Madam! there is a request to create an email for ${firstName} ${lastName}`
             };
 
-            sendMail(mail.to, mail.subject, mail.text);
-            res.render('response', {
-                current: {
-                    fullName,
-                    mailToCreate
-                }
-            });
+            // sendMail(mail.to, mail.subject, mail.text);
+            sendMail(mail.to, mail.subject, mail.text)
+                .then((response) => {
+                    console.log(response);
+                    res.json({
+                        status: 'success',
+                        data: response
+                    })
+                })
+                .catch((error) => {
+                    console.log(error);
+                    res.json({
+                        status: 'error',
+                        data: error
+                    })
+                })
+            // res.render('response', {
+            //     current: {
+            //         fullName,
+            //         mailToCreate
+            //     }
+            // });
 
         } catch (error) {
 
