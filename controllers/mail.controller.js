@@ -123,7 +123,7 @@ module.exports = {
                     console.log(JSON.stringify(newTrial))
 
                     res.render('serp', {
-                        status: 'error',
+                        status: 'warning',
                         data: "There is no email under that name. Please Check your spelling before sending an email creation request.",
                         current: {
                             firstName,
@@ -173,91 +173,26 @@ module.exports = {
                 // });
             })
     },
-    // getMailByName: async (req, res) => {
-    //     const { firstName, lastName, department } = req.body;
-
-    //     function JoinName(fname, lname) {
-    //         let fullName = `${fname} ${lname}`;
-    //         return fullName
-    //     };
-    //     let fullName = JoinName(firstName, lastName);
-
-    //     Mail.findAll({
-    //         where: {
-    //             name: fullName,
-    //         },
-    //         include: Department
-    //     })
-    //     .then(async (mail) => {
-    //         console.log(JSON.stringify(mail));
-    //         console.log('This user exists ' + fullName)
-    //         console.log('DepartmentId is ' + department)
-    //         if (mail.length > 0) {
-    //             const [_, updatedMail] = await Mail.update({
-    //                 departmentId: department
-    //             }, {
-    //                 where: {
-    //                     id: mail[0].id
-    //                 },
-    //                 returning: true
-    //             })
-    //             console.log("Record Updated is", updatedMail.id)
-    //             let data = {
-    //                 credentials: fullName,
-    //                 typeId: 1,
-    //                 statusId: 2,
-    //                 departmentId: updatedMail.departmentId,
-    //             }
-    //             return Trial.create(data)
-    //         } else {
-    //             let data = {
-    //                 credentials: fullName,
-    //                 typeId: 1,
-    //                 statusId: 1,
-    //                 departmentId: department,
-    //             }
-    //             return Trial.create(data)
-    //         }
-    //     })
-    //     .then((newTrial) => {
-    //         console.log(newTrial.credentials);
-
-    //         res.render('serp', {
-    //             status: 'success',
-    //             data: mail.length > 0 ? mail : "There is no email under that name. Please Check your spelling before sending an email creation request.",
-    //             current: {
-    //                 firstName,
-    //                 lastName
-    //             }
-    //         });
-    //     })
-    //     .catch((err) => {
-    //         res.render('serp', {
-    //             status: 'error',
-    //             data: err.message,
-    //             current: {
-    //                 firstName,
-    //                 lastName
-    //             }
-    //         });
-    //     });
-    // },
     resetPass: (req, res) => {
         try {
             const {
+                department,
                 fullName,
                 email
             } = req.body;
+            console.log('This is the email to be rest',req.body);
+
 
             let mail = {
-                from: 'mwanyikajohn@outlook.com',
+                // from: 'mwanyikajohn@outlook.com',
                 to: '5476benja@gmail.com',
                 subject: 'Email password reset',
-                text: `Greetings, Sir/Madam! My name is ${fullName} I would like to request a password reset for my email address, ${email}`
+                text: `Greetings, Sir/Madam! My name is ${fullName} from ${department}, I would like to request a password reset for my email address, ${email}`
             };
 
 
-            sendMail(mail.from, mail.to, mail.subject, mail.text)
+            sendMail(mail.to, mail.subject, mail.text)
+            // sendMail(mail)
             res.render('response', {
                 status: 'success',
                 data: 'success'
@@ -280,13 +215,13 @@ module.exports = {
             const fullName = `${firstName} ${lastName}`;
             const mailToCreate = `${firstName}.${lastName}@taitataveta.go.ke`
             let mail = {
-                from: 'mwanyikajohn@outlook.com',
-                to: 'gilkichoi@gmail.com',
-                subject: 'Email password reset',
+                // from: 'mwanyikajohn@outlook.com',
+                to: '5476benja@gmail.com',
+                subject: 'Email creation reset',
                 text: `Greetings, Sir/Madam! there is a request to create an email for ${firstName} ${lastName}`
             };
 
-            sendMail(mail.from, mail.to, mail.subject, mail.text);
+            sendMail( mail.to, mail.subject, mail.text);
             res.render('response', {
                 current: {
                     fullName,
@@ -305,5 +240,41 @@ module.exports = {
             status: 'error',
             data: departments
         });
+    },
+    retry: async (req, res) => {
+        const {
+            firstName,
+            lastName
+        } = req.body;
+
+        const checkMail = Mail.findOne({
+            where: {
+                name: `${firstName} ${lastName}`
+            }
+        }).then((mail) => {
+            console.log(JSON.stringify(mail));
+            if (!mail) {
+                res.json({
+                    status: 'warning',
+                    data: "There is no email under that name. Please Check your spelling before sending an email creation request."
+                })
+                return;
+            } else {
+                res.json({
+                    status: 'success',
+                    data: "Mail has been found"
+                })
+            }
+
+            // res.render('serp', {
+            //     status: 'success',
+            //     data: mail,
+            // });
+        }).catch((err) => {
+            res.json({
+                error: err.message
+            });
+        });
+
     }
 }

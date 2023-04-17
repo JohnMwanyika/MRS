@@ -6,7 +6,8 @@ const {
     getAllMail,
     getMailByName,
     resetPass,
-    requestNewMail
+    requestNewMail,
+    retry
 } = require('../controllers/mail.controller');
 
 router.post('/', createMail);
@@ -15,5 +16,6 @@ router.get('/', getAllMail);
 router.post('/user', getMailByName);
 router.post('/reset', resetPass);
 router.post('/request', requestNewMail);
+router.post('/api/user', retry);
 
 module.exports = router;
