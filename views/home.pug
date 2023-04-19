@@ -3,7 +3,7 @@ block content
     form(action="/mails/user" method="post")
         .form-floating.mb-3
             select.form-select#floatingSelect(aria-label="Floating label select example" name='department')
-                //- option(selected) Select Department
+                //- option(value='') select department
                 each dep in data
                     option(value=`${dep.id}`) #{dep.name}
             label(for="floatingSelect") Select Department

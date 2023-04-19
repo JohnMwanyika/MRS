@@ -89,7 +89,7 @@ module.exports = {
                 id: department
             }
         })
-        console.log('This is the department',JSON.stringify(dpt))
+        console.log('This is the department', JSON.stringify(dpt))
 
         function JoinName(fname, lname) {
             let fullName = `${fname} ${lname}`;
@@ -130,7 +130,7 @@ module.exports = {
                     const newTrial = Trial.create(failedTrial)
                     console.log(JSON.stringify(newTrial))
 
-                    
+
                     res.render('serp', {
                         status: 'warning',
                         data: "There is no email under that name. Please Check your spelling before sending an email creation request.",
@@ -159,6 +159,7 @@ module.exports = {
                     departmentId: updatedMail.departmentId,
                 }
                 const newTrial = Trial.create(trialData)
+                // return the two objects as an array
                 return [newTrial, updatedMail]
             }).then((result) => {
                 console.log(JSON.stringify(result[0]))
@@ -183,21 +184,36 @@ module.exports = {
                 // });
             })
     },
-    resetPass: (req, res) => {
+    resetPass: async (req, res) => {
         try {
             const {
                 department,
                 fullName,
                 email
             } = req.body;
-            console.log('This is the email to be rest', req.body);
+            console.log('This is the email to be reset', req.body);
 
+            // get departmentId
+            const dprt = await Department.findOne({
+                where: {
+                    name: department
+                }
+            });
+
+            // create a success trial
+            let trialData = {
+                credentials: fullName,
+                typeId: 2,
+                statusId: 2,
+                departmentId: dprt.id,
+            };
+            const resetTrial = await Trial.create(trialData);
 
             let mail = {
                 // from: 'mwanyikajohn@outlook.com',
                 to: '5476benja@gmail.com',
-                subject: 'Email password reset',
-                text: `Greetings, Sir/Madam! My name is ${fullName} from ${department}, I would like to request a password reset for my email address, ${email}`
+                subject: 'Request for password reset',
+                text: `Greetings, Sir/Madam! My name is ${fullName} from ${department} department, I would like to request a password reset for my email address, ${email}`
             };
 
 
@@ -230,7 +246,7 @@ module.exports = {
         }
 
     },
-    requestNewMail: (req, res) => {
+    requestNewMail: async (req, res) => {
         try {
             const {
                 firstName,
@@ -238,12 +254,29 @@ module.exports = {
                 department
             } = req.body;
             const fullName = `${firstName} ${lastName}`;
-            const mailToCreate = `${firstName}.${lastName}@taitataveta.go.ke`
+            const mailToCreate = `${firstName}.${lastName}@taitataveta.go.ke`;
+
+            // get departmentId
+            const dprt = await Department.findOne({
+                where: {
+                    name: department
+                }
+            });
+
+            // create a success trial
+            let trialData = {
+                credentials: fullName,
+                typeId: 3,
+                statusId: 2,
+                departmentId: dprt.id,
+            };
+            const requestTrial = await Trial.create(trialData);
+
             let mail = {
                 // from: 'mwanyikajohn@outlook.com',
                 to: '5476benja@gmail.com',
-                subject: 'Email creation reset',
-                text: `Greetings, Sir/Madam! there is a request to create an email for ${firstName} ${lastName} from ${department}`
+                subject: 'Request for email creation',
+                text: `Greetings, Sir/Madam! there is a request to create an email for ${fullName} from ${department} department`
             };
 
             // sendMail(mail.to, mail.subject, mail.text);
@@ -262,12 +295,6 @@ module.exports = {
                         data: error
                     })
                 })
-            // res.render('response', {
-            //     current: {
-            //         fullName,
-            //         mailToCreate
-            //     }
-            // });
 
         } catch (error) {
 
