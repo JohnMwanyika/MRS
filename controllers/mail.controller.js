@@ -302,10 +302,6 @@ module.exports = {
                     }
                     const newRequest = Request.create(requestData)
 
-                    // res.json({
-                    //     status: 'success',
-                    //     data: response
-                    // })
                     return response;
                 }).then(response => {
                     res.json({
