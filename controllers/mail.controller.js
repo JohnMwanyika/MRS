@@ -6,8 +6,7 @@ const {
     Mail,
     Department,
     Trial,
-    TrialStatus,
-    TrialTypa
+    Request
 } = require('../models');
 
 module.exports = {
@@ -193,10 +192,16 @@ module.exports = {
             } = req.body;
             console.log('This is the email to be reset', req.body);
 
-            // get departmentId
+            // get department details
             const dprt = await Department.findOne({
                 where: {
                     name: department
+                }
+            });
+            // get mail details
+            const mailToReset = await Mail.findOne({
+                where: {
+                    email: email
                 }
             });
 
@@ -210,7 +215,6 @@ module.exports = {
             const resetTrial = await Trial.create(trialData);
 
             let mail = {
-                // from: 'mwanyikajohn@outlook.com',
                 to: '5476benja@gmail.com',
                 subject: 'Request for password reset',
                 text: `Greetings, Sir/Madam! My name is ${fullName} from ${department} department, I would like to request a password reset for my email address, ${email}`
@@ -219,7 +223,20 @@ module.exports = {
 
             sendMail(mail.to, mail.subject, mail.text)
                 .then((response) => {
+                    let requestData = {
+                        mailId: mailToReset.id,
+                        requestType: 1,
+                        requestStatus: 2
+                    }
+                    const newRequest = Request.create(requestData)
+
                     console.log(response);
+                    // res.json({
+                    //     status: 'success',
+                    //     data: response
+                    // })
+                    return response;
+                }).then(response => {
                     res.json({
                         status: 'success',
                         data: response
@@ -232,11 +249,6 @@ module.exports = {
                         data: error
                     })
                 })
-            // sendMail(mail)
-            // res.render('response', {
-            //     status: 'success',
-            //     data: 'success'
-            // })
 
         } catch (error) {
             res.json({
@@ -283,6 +295,19 @@ module.exports = {
             sendMail(mail.to, mail.subject, mail.text)
                 .then((response) => {
                     console.log(response);
+
+                    let requestData = {
+                        requestType: 2,
+                        requestStatus: 2
+                    }
+                    const newRequest = Request.create(requestData)
+
+                    // res.json({
+                    //     status: 'success',
+                    //     data: response
+                    // })
+                    return response;
+                }).then(response => {
                     res.json({
                         status: 'success',
                         data: response
