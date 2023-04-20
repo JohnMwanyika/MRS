@@ -1,0 +1,26 @@
+extends authenticationLayout
+block content 
+    main
+        .container
+            .row.justify-content-center
+                .col-lg-5
+                    .card.shadow-lg.border-0.rounded-lg.mt-5
+                        .card-header
+                            h3.text-center.font-weight-light.my-4 Login
+                        .card-body
+                            form
+                                .form-floating.mb-3
+                                    input.form-control#inputEmail(type="email" placeholder="name@example.com")
+                                    label(for="inputEmail") Email address
+                                .form-floating.mb-3
+                                    input.form-control#inputPassword(type="password" placeholder="Password")
+                                    label(for="inputPassword") Password
+                                .form-check.mb-3
+                                    input.form-check-input#inputRememberPassword(type="checkbox")
+                                    label.form-check-label(for="inputRememberPassword") Remember Password
+                                .d-flex.align-items-center.justify-content-between.mt-4.mb-0
+                                    a.small(href="password.html") Forgot Password?
+                                    a.btn.btn-primary(href="/login") Login
+                        .card-footer.text-center.py-3
+                            .small
+                                a(href="/signup") Need an account? Sign up!

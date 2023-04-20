@@ -38,7 +38,7 @@ module.exports = {
                     status: 'error',
                     data: err.message
                 });
-            })
+            });
     },
     getMailById: async (req, res) => {
         const {

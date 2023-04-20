@@ -1,0 +1,38 @@
+extends authenticationLayout
+block content
+    main
+        .container
+            .row.justify-content-center
+                .col-lg-7
+                    .card.shadow-lg.border-0.rounded-lg.mt-5
+                        .card-header
+                            h3.text-center.font-weight-light.my-4 Create Account
+                        .card-body
+                            form(method="POST",action='/signup')
+                                .row.mb-3
+                                    .col-md-6
+                                        .form-floating.mb-3.mb-md-0
+                                            input.form-control#inputFirstName(type="text" placeholder="Enter your first name" name='firstName')
+                                            label(for="inputFirstName") First name
+                                    .col-md-6
+                                        .form-floating
+                                            input.form-control#inputLastName(type="text" placeholder="Enter your last name" name='lastName')
+                                            label(for="inputLastName") Last name
+                                .form-floating.mb-3
+                                    input.form-control#inputEmail(type="email" placeholder="name@example.com" name='email')
+                                    label(for="inputEmail") Email address
+                                .row.mb-3
+                                    .col-md-6
+                                        .form-floating.mb-3.mb-md-0
+                                            input.form-control#inputPassword(type="password" placeholder="Create a password" name='password')
+                                            label(for="inputPassword") Password
+                                    .col-md-6
+                                        .form-floating.mb-3.mb-md-0
+                                            input.form-control#inputPasswordConfirm(type="password" placeholder="Confirm password")
+                                            label(for="inputPasswordConfirm") Confirm Password
+                                .mt-4.mb-0
+                                    .d-grid
+                                        button.btn.btn-primary.btn-block(type='submit') Create Account
+                        .card-footer.text-center.py-3
+                            .small
+                                a(href="/login") Have an account? Go to login

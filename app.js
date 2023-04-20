@@ -10,6 +10,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const mailRouter = require('./routes/mail.route');
 const dashboardRouter = require('./routes/dashboard.route')
+const authenticationRouter = require('./routes/loginLogout.route');
+const signUpRouter = require('./routes/signUp.route');
 
 // create an express instance
 const app = express();
@@ -25,6 +27,7 @@ const {
 } = require('sequelize');
 const sequelize = new Sequelize(process.env.DATABASE_URL);
 const session = require('express-session');
+
 // require session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -37,18 +40,14 @@ app.use(session({
   saveUninitialized: false
 }))
 
-app.use((req, res, next) => {
-  if (req.session.user) {
-    next();
-  } else {
-    res.redirect('/login');
-  }
-})
+// app.use((req, res, next) => {
+//   if (req.session.user) {
+//     next();
+//   } else {
+//     res.redirect('/login');
+//   }
+// })
 // ##################### End of session management ##########################
-
-// // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -62,6 +61,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/mails', mailRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/login', authenticationRouter);
+app.use('/signup', signUpRouter);
 
 
 // catch 404 and forward to error handler

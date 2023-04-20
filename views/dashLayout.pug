@@ -2,144 +2,101 @@ doctype html
 html(lang="en")
     head
         meta(charset="utf-8")
-        link(rel="icon" type="image/png" href="assets/img/favicon.ico")
-        meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
-        title Mail Recovery System
-        meta(content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name="viewport")
-        meta(name="viewport" content="width=device-width")
-        //  Bootstrap core CSS     
-        link(href="/assets/css/bootstrap.min.css" rel="stylesheet")
-        //  Animation library for notifications   
-        link(href="/assets/css/animate.min.css" rel="stylesheet")
-        //   Light Bootstrap Table core CSS    
-        link(href="/assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet")
-        //   CSS for Demo Purpose, don't include it in your project     
-        link(href="/assets/css/demo.css" rel="stylesheet")
-        //      Fonts and icons     
-        link(href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet")
-        link(href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css")
-        link(href="/assets/css/pe-icon-7-stroke.css" rel="stylesheet")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no")
+        meta(name="description", content)
+        meta(name="author", content)
+        title Dashboard - SB Admin
+        link(href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet")
+        link(href="css/styles.css" rel="stylesheet")
+        script(src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous")
     body
-        .wrapper
-            .sidebar(data-color="purple" data-image="assets/img/sidebar-5.jpg")
-                .sidebar-wrapper
-                    .logo
-                        a.simple-text(href="/").
+        include includes/nav
 
-                            Mail Recovery System
+        #layoutSidenav
+            #layoutSidenav_nav
+                nav.sb-sidenav.accordion.sb-sidenav-dark#sidenavAccordion
+                    .sb-sidenav-menu
+                        .nav
+                            .sb-sidenav-menu-heading Core
+                            a.nav-link(href="index.html")
+                                .sb-nav-link-icon
+                                    i.fas.fa-tachometer-alt
+                                | Dashboard
 
-                    ul.nav
-                        li.active
-                            a(href="/dashboard")
-                                i.pe-7s-graph
-                                p Dashboard
-                        li
-                            a(href="user.html")
-                                i.pe-7s-user
-                                p User Profile
-                        li
-                            a(href="/dashboard/requests")
-                                i.pe-7s-note2
-                                p Table List
-            .main-panel
-                nav.navbar.navbar-default.navbar-fixed
-                    .container-fluid
-                        .navbar-header
-                            button.navbar-toggle(type="button" data-toggle="collapse" data-target="#navigation-example-2")
-                                span.sr-only Toggle navigation
-                                span.icon-bar
-                                span.icon-bar
-                                span.icon-bar
-                            a.navbar-brand(href="#") Dashboard
-                        .collapse.navbar-collapse
-                            ul.nav.navbar-nav.navbar-left
-                                li
-                                    a.dropdown-toggle(href="#" data-toggle="dropdown")
-                                        i.fa.fa-dashboard
-                                        p.hidden-lg.hidden-md Dashboard
-                                li.dropdown
-                                    a.dropdown-toggle(href="#" data-toggle="dropdown")
-                                        i.fa.fa-globe
-                                        b.caret.hidden-lg.hidden-md
-                                        p.hidden-lg.hidden-md
-                                            | 1 Notifications
+                            .sb-sidenav-menu-heading Interface
+                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
+                                .sb-nav-link-icon
+                                    i.fas.fa-columns
+                                | Layouts
 
-                                            b.caret
-                                    ul.dropdown-menu
-                                        li
-                                            a(href="#") Notification 1
-                                li
-                                    a(href)
-                                        i.fa.fa-search
-                                        p.hidden-lg.hidden-md Search
-                            ul.nav.navbar-nav.navbar-right
-                                //- li
-                                //-     a(href)
-                                //-         p Account
-                                li.dropdown
-                                    a.dropdown-toggle(href="#" data-toggle="dropdown")
-                                        p
-                                            | John B Mwanyika
+                                .sb-sidenav-collapse-arrow
+                                    i.fas.fa-angle-down
+                            .collapse#collapseLayouts(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
+                                nav.sb-sidenav-menu-nested.nav
+                                    a.nav-link(href="layout-static.html") Static Navigation
+                                    a.nav-link(href="layout-sidenav-light.html") Light Sidenav
+                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages")
+                                .sb-nav-link-icon
+                                    i.fas.fa-book-open
+                                | Pages
 
-                                            b.caret
-                                    ul.dropdown-menu
-                                        li
-                                            a(href="#") Account
-                                        li
-                                            a(href="#") Another action
-                                        
-                                        li.divider
-                                        li
-                                            a(href="#") Logout
-                                //- li
-                                //-     a(href="#")
-                                //-         p Log out
-                                //- li.separator.hidden-lg
+                                .sb-sidenav-collapse-arrow
+                                    i.fas.fa-angle-down
+                            .collapse#collapsePages(aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion")
+                                nav.sb-sidenav-menu-nested.nav.accordion#sidenavAccordionPages
+                                    a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth")
+                                        | Authentication
+
+                                        .sb-sidenav-collapse-arrow
+                                            i.fas.fa-angle-down
+                                    .collapse#pagesCollapseAuth(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
+                                        nav.sb-sidenav-menu-nested.nav
+                                            a.nav-link(href="/login") Login
+                                            a.nav-link(href="/register") Register
+                                            a.nav-link(href="/reset_pass") Forgot Password
+                                    a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError")
+                                        | Error
+
+                                        .sb-sidenav-collapse-arrow
+                                            i.fas.fa-angle-down
+                                    .collapse#pagesCollapseError(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
+                                        nav.sb-sidenav-menu-nested.nav
+                                            a.nav-link(href="401.html") 401 Page
+                                            a.nav-link(href="404.html") 404 Page
+                                            a.nav-link(href="500.html") 500 Page
+                            .sb-sidenav-menu-heading Addons
+                            a.nav-link(href="charts.html")
+                                .sb-nav-link-icon
+                                    i.fas.fa-chart-area
+                                | Charts
+
+                            a.nav-link(href="tables.html")
+                                .sb-nav-link-icon
+                                    i.fas.fa-table
+                                | Tables
+
+                    .sb-sidenav-footer
+                        .small Logged in as:
+                        | Start Bootstrap
+
+            #layoutSidenav_content
+
                 block content
 
-                footer.footer
-                    .container-fluid
-                        nav.pull-left
-                            ul
-                                li
-                                    a(href="/dashboard").
+                footer.py-4.bg-light.mt-auto
+                    .container-fluid.px-4
+                        .d-flex.align-items-center.justify-content-between.small
+                            .text-muted Copyright © Your Website 2023
+                            div
+                                a(href="#") Privacy Policy
+                                | ·
 
-                                        Home
-
-
-                        p.copyright.pull-right
-                            | © 
-
-                            script document.write(new Date().getFullYear())
-                            a(href="http://www.taitataveta.go.ke") TaitaTaveta
-                            | , Directorate of ict
-
-        //    Core JS Files   
-        script(src="assets/js/jquery.3.2.1.min.js" type="text/javascript")
-        script(src="assets/js/bootstrap.min.js" type="text/javascript")
-        //   Charts Plugin 
-        script(src="assets/js/chartist.min.js")
-        //   Notifications Plugin    
-        script(src="assets/js/bootstrap-notify.js")
-        //   Google Maps Plugin    
-        script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE")
-        //  Light Bootstrap Table Core javascript and methods for Demo purpose 
-        script(src="assets/js/light-bootstrap-dashboard.js?v=1.4.0")
-        //  Light Bootstrap Table DEMO methods, don't include it in your project! 
-        script(src="assets/js/demo.js")
-        script(type="text/javascript").
-
-            $(document).ready(function () {
-
-                demo.initChartist();
-
-                $.notify({
-                    icon: 'pe-7s-gift',
-                    message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
-
-                }, {
-                    type: 'info',
-                    timer: 4000
-                });
-
-                    });
+                                a(href="#") Terms & Conditions
+        script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous")
+        script(src="js/scripts.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous")
+        script(src="assets/demo/chart-area-demo.js")
+        script(src="assets/demo/chart-bar-demo.js")
+        script(src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous")
+        script(src="js/datatables-simple-demo.js")
