@@ -1,13 +1,22 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req,res)=>{
-    res.render('dashboard',{
-        title:'Welcome to MRS Dashboard'
+// middleware to protect authenticated routes
+router.use((req,res,next)=>{
+    if(!req.session.user){
+        return res.redirect('/login')
+    }
+    next();
+})
+
+router.get('/', (req, res) => {
+    res.render('dashboard', {
+        title: 'Welcome to MRS Dashboard',
+        user: req.session.user
     })
 })
 
-router.get('/requests',(req,res)=>{
+router.get('/requests', (req, res) => {
     res.render('requests')
 })
 

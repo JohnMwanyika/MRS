@@ -6,13 +6,6 @@ const {
     logout
 } = require('../controllers/loginLogout.controller')
 
-// router.use((req, res, next) => {
-//     if (req.session.user) {
-//         next();
-//     } else {
-//         res.redirect('/login');
-//     }
-// })
 
 router.get('/signup', (req, res) => {
     res.render('signup');
@@ -22,6 +15,6 @@ router.get('/', (req, res) => {
     res.render('login');
 });
 router.post('/', login);
-router.get('/logout', logout);
+// router.get('/logout', logout);
 
 module.exports = router;

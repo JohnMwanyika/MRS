@@ -63,6 +63,10 @@ app.use('/mails', mailRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/login', authenticationRouter);
 app.use('/signup', signUpRouter);
+app.get('/logout',(req,res)=>{
+  req.session.destroy();
+  res.redirect('/login');
+})
 
 
 // catch 404 and forward to error handler

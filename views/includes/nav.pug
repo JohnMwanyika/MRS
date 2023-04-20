@@ -17,10 +17,10 @@ nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
                 i.fas.fa-user.fa-fw
             ul.dropdown-menu.dropdown-menu-end(aria-labelledby="navbarDropdown")
                 li
-                    a.dropdown-item(href="#!") Settings
+                    a.dropdown-item(href="#!") User : #{user.firstName} #{user.lastName}
                 li
                     a.dropdown-item(href="#!") Activity Log
                 li
                     hr.dropdown-divider
                 li
-                    a.dropdown-item(href="#!") Logout
+                    a.dropdown-item(href="/logout") Logout
