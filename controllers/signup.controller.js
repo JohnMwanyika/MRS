@@ -1,6 +1,7 @@
 const {
     User
 } = require('../models');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     signUp: async (req, res) => {
@@ -10,14 +11,22 @@ module.exports = {
             email,
             password
         } = req.body;
+
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        console.log('this is the hashed password',hashedPassword);
+
+        console.log(req.body);
         // check if user exists in the database with similar creadentials
-        return existingUser = await User.findOne({
+        return await User.findOne({
             where: {
                 email: email,
             }
         }).then((existingUser) => {
-            const saltRounds = 10;
-            const hashedPassword = bcrypt.hash(password, saltRounds);
+            console.log('Existing user is',existingUser);
+            // const saltRounds = 10;
+            // const hashedPassword = await bcrypt.hash(password, saltRounds);
+            // console.log('this is the hashed password',hashedPassword);
 
             if (!existingUser) {
                 return createdUser = User.create({
@@ -30,13 +39,14 @@ module.exports = {
             } else {
                 res.json({
                     message: {
-                        status: 'error',
+                        status: 'warning',
                         info: 'User already exists'
                     }
                 })
             }
         }).then((createdUser) => {
-            res.render('/login');
+            console.log(createdUser)
+            res.render('login');
         }).catch((error) => {
             res.json({
                 message: {

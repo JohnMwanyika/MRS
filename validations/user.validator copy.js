@@ -3,21 +3,20 @@ const { body, param } = require('express-validator');
 
 module.exports = {
     create: () => [
-        body('firstName')
+        body('name')
             .notEmpty()
             .isString()
             .isLength({ max: 128 }),
 
-        body('lastName')
+        body('age')
             .notEmpty()
-            .isString(),
+            .isInt(),
 
-        body('email')
+        body('gender')
             .notEmpty()
-            // .isIn(['female', 'male']),
-            .isString(),
+            .isIn(['female', 'male']),
 
-        body('password')
+        body('address')
             .notEmpty()
             .isString()
             .isLength({ max: 255 })
