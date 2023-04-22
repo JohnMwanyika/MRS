@@ -54,74 +54,47 @@ block content
             .card.mb-4
                 .card-header
                     i.fas.fa-table.me-1
-                    | DataTable Example
+                    | Recent Requests
 
                 .card-body
                     table#datatablesSimple
                         thead
                             tr
+                                th Email
                                 th Name
-                                th Position
-                                th Office
-                                th Age
-                                th Start date
-                                th Salary
+                                th Type
+                                th Status
+                                th Date
+                                th Action
                         tfoot
                             tr
+                                th Email
                                 th Name
-                                th Position
-                                th Office
-                                th Age
-                                th Start date
-                                th Salary
+                                th Type
+                                th Status
+                                th Date
+                                th Action
                         tbody
-                            tr
-                                td Tiger Nixon
-                                td System Architect
-                                td Edinburgh
-                                td 61
-                                td 2011/04/25
-                                td $320,800
-                            tr
-                                td Garrett Winters
-                                td Accountant
-                                td Tokyo
-                                td 63
-                                td 2011/07/25
-                                td $170,750
-                            tr
-                                td Ashton Cox
-                                td Junior Technical Author
-                                td San Francisco
-                                td 66
-                                td 2009/01/12
-                                td $86,000
+                            each req in requests
+                                tr
+                                    td=req.Mail.email
+                                    td=req.Mail.name
+                                    td=req.RequestType.name
+                                    if (req.RequestStatus.name == 'Pending')
+                                        td
+                                            span.badge.text-bg-warning=req.RequestStatus.name
+                                    else
+                                        td
+                                            span.badge.text-bg-success=req.RequestStatus.name
+                                    td=moment(req.createdAt).format('MMMM Do YYYY, h:mm:ss a')
 
-                            tr
-                                td Colleen Hurst
-                                td Javascript Developer
-                                td San Francisco
-                                td 39
-                                td 2009/09/15
-                                td $205,500
-                            tr
-                                td Sonya Frost
-                                td Software Engineer
-                                td Edinburgh
-                                td 23
-                                td 2008/12/13
-                                td $103,600                                  
-                            tr
-                                td Michael Bruce
-                                td Javascript Developer
-                                td Singapore
-                                td 29
-                                td 2011/06/27
-                                td $183,000
-                            tr
-                                td Donna Snider
-                                td Customer Support
-                                td New York
-                                td 27
-                                td 2011/01/25
-                                td $112,000
+                                    if (req.RequestType.name == 'Reset password')
+                                        td
+                                            button.btn.btn-info.btn-sm(type="button").
+                                                Reset
+                                    else
+                                        td
+                                            button.btn.btn-info.btn-sm(type="button").
+                                                Create
+
+                                    
