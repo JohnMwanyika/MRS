@@ -98,13 +98,14 @@ block content
                                     else
                                         td
                                             //- button.btn.btn-info.btn-sm(type="button" onclick="postUserRecord(#{req.fullName},#{req.email},#{req.department})")#createBtn.
-                                            button.btn.btn-info.btn-sm(type="button" onclick=`postUserRecord('${req.fullName}', '${req.email}', '${req.department}')`)#createBtn
-                                               | Create
-                                            #spinner-container
+                                            button.btn.btn-info.btn-sm(type="button" onclick=`postUserRecord('${req.fullName}', '${req.email}', '${req.department}',this)`)#createBtn
+                                                span.spinner-border.spinner-border-sm.mr-2.d-none(aria-hidden="true")
+                                                | Create 
+                                            //- #spinner-container
 
     script.
         // Create a spinner object
-        var spinner = new Spinner().spin();
+        //- var spinner = new Spinner().spin();
         toastr.options = {
             "closeButton": true,
             "debug": false,
@@ -122,11 +123,14 @@ block content
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
-        function postUserRecord(fullName, email,department) {
+        function postUserRecord(fullName, email,department,button) {
             //- const userRecord = users.find(user => user.id === id);
-            var target = document.getElementById("spinner-container");
-            target.appendChild(spinner.el);
-
+            //- var target = document.getElementById("spinner-container");
+            //- target.appendChild(spinner.el);
+            //- loading.show();
+              // Disable the button and show the spinner animation
+            button.disabled = true;
+            button.querySelector('.spinner-border').classList.remove('d-none');
             const userRecord = {
                 fullName,
                 email,
@@ -137,13 +141,19 @@ block content
                 console.log(response)
                 toastr[response.data.status](response.data.data, response.data.status)
                 // Hide the spinner
-                spinner.stop();
+                //- spinner.stop();
+                // Enable the button and hide the spinner animation
+                button.disabled = false;
+                button.querySelector('.spinner-border').classList.add('d-none');
             })
             .catch(error => {
                 console.log(response)
                 alert(error)
                 // Hide the spinner
-                spinner.stop();
+                //- spinner.stop();
+                // Enable the button and hide the spinner animation
+                button.disabled = false;
+                button.querySelector('.spinner-border').classList.add('d-none');
             });
         }
         //- // Show the spinner when the user clicks the submit button
