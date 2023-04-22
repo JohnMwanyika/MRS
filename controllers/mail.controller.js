@@ -370,39 +370,39 @@ module.exports = {
             data: departments
         });
     },
-    retry: async (req, res) => {
+    completeReset: async (req, res) => {
         const {
-            firstName,
-            lastName
+            fullName,
+            email,
+            department
         } = req.body;
 
-        const checkMail = Mail.findOne({
+        const dprt = await Department.findOne({
             where: {
-                name: `${firstName} ${lastName}`
+                name: department
             }
-        }).then((mail) => {
-            console.log(JSON.stringify(mail));
-            if (!mail) {
-                res.json({
-                    status: 'warning',
-                    data: "There is no email under that name. Please Check your spelling before sending an email creation request."
-                })
-                return;
-            } else {
-                res.json({
-                    status: 'success',
-                    data: "Mail has been found"
-                })
+        });
+
+        const updatedRequest = await Request.update({
+                requestStatus: 1,
+            }, {
+                where: {
+                    requestType: 1,
+                    fullName: fullName,
+                }
             }
 
-            // res.render('serp', {
-            //     status: 'success',
-            //     data: mail,
-            // });
-        }).catch((err) => {
+        ).then((response) => {
+            console.log(response);
             res.json({
-                error: err.message
-            });
+                status: 'success',
+                data: 'Password reset completed successfully'
+            })
+        }).catch((error) => {
+            res.json({
+                status: 'error',
+                data: error.message
+            })
         });
 
     }
