@@ -94,7 +94,64 @@ block content
                                                 Reset
                                     else
                                         td
-                                            button.btn.btn-info.btn-sm(type="button").
-                                                Create
+                                            //- button.btn.btn-info.btn-sm(type="button" onclick="postUserRecord(#{req.fullName},#{req.email},#{req.department})")#createBtn.
+                                            button.btn.btn-info.btn-sm(type="button" onclick=`postUserRecord('${req.fullName}', '${req.email}', '${req.department}')`)#createBtn
+                                               | Create
+                                            #spinner-container
 
-                                    
+    script.
+        // Create a spinner object
+        var spinner = new Spinner().spin();
+
+        function postUserRecord(fullName, email,department) {
+            //- const userRecord = users.find(user => user.id === id);
+            var target = document.getElementById("spinner-container");
+            target.appendChild(spinner.el);
+
+            const userRecord = {
+                fullName,
+                email,
+                department
+            }
+            axios.post('/mails/api/new', userRecord)
+            .then(response => {
+                alert(response)
+                // Hide the spinner
+                spinner.stop();
+            })
+            .catch(error => {
+                alert(error)
+                // Hide the spinner
+                spinner.stop();
+            });
+        }
+        //- // Show the spinner when the user clicks the submit button
+        //- document.getElementById("createBtn").addEventListener("click", function() {
+        //-     var target = document.getElementById("spinner-container");
+        //-     target.appendChild(spinner.el);
+
+        //-     var mailData = {
+        //-         name:req.fullName,
+        //-         email:req.email,
+        //-         department:req.department
+        //-     }
+        //-     // Make the HTTP request to the server
+        //-     axios.post("/mails/api/new", {
+        //-         mailData
+        //-     })
+        //-     .then(function(response) {
+        //-         // Handle the response from the server
+        //-         console.log(response.data);
+
+        //-         // Hide the spinner
+        //-         spinner.stop();
+        //-     })
+        //-     .catch(function(error) {
+        //-         // Handle any errors that occurred during the request
+        //-         console.log(error);
+
+
+        //-     });
+
+        //- });
+

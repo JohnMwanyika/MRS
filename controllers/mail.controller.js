@@ -15,30 +15,34 @@ module.exports = {
         const {
             name,
             email,
-            password
+            password,
+            departmentId
         } = req.body;
 
-        const data = {
+        const mailData = {
             name,
             email,
-            password
+            password,
+            departmentId
         };
 
-        const NewMail = await Mail.create(data)
+        console.log('Received request');
+        console.log(req.body);
+        // const NewMail = await Mail.create(mailData)
 
-            .then((newMail) => {
-                console.log(`${newMail} created`);
-                res.json({
-                    status: 'success',
-                    data: newMail
-                })
-            })
-            .catch((err) => {
-                res.json({
-                    status: 'error',
-                    data: err.message
-                });
-            });
+        //     .then((newMail) => {
+        //         console.log(`${newMail} created`);
+        //         res.json({
+        //             status: 'success',
+        //             data: newMail
+        //         })
+        //     })
+        //     .catch((err) => {
+        //         res.json({
+        //             status: 'error',
+        //             data: err.message
+        //         });
+        //     });
     },
     getMailById: async (req, res) => {
         const {

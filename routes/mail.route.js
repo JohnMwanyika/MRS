@@ -11,7 +11,7 @@ const {
     retry
 } = require('../controllers/mail.controller');
 
-router.post('/', createMail);
+router.post('/api/new', createMail);
 router.get('/:id', getMailById);
 router.get('/', getAllMail);
 router.post('/user', getMailByName);

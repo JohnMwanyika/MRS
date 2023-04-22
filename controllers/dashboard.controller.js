@@ -41,6 +41,7 @@ module.exports = {
                     user: req.session.user,
                     requests: requests,
                     moment: require('moment'),
+                    axios: require('axios'),
                 });
             })
             .catch((error) => {
