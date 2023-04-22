@@ -105,7 +105,23 @@ block content
     script.
         // Create a spinner object
         var spinner = new Spinner().spin();
-
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
         function postUserRecord(fullName, email,department) {
             //- const userRecord = users.find(user => user.id === id);
             var target = document.getElementById("spinner-container");
@@ -119,7 +135,7 @@ block content
             axios.post('/mails/api/new', userRecord)
             .then(response => {
                 console.log(response)
-                alert(response)
+                toastr[response.data.status](response.data.data, response.data.status)
                 // Hide the spinner
                 spinner.stop();
             })

@@ -19,6 +19,18 @@ module.exports = {
             department
         } = req.body;
 
+        // check existing
+        const mail = await Mail.findOne({
+            where: {
+                email: email
+            }
+        })
+        if (mail) {
+            return res.json({
+                status: 'error',
+                data: 'Mail already exists'
+            });
+        }
         // get the department id from the creation request from admin
         const dprt = await Department.findOne({
             where:{
