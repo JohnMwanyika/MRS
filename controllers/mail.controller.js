@@ -226,7 +226,9 @@ module.exports = {
                     let requestData = {
                         mailId: mailToReset.id,
                         requestType: 1,
-                        requestStatus: 2
+                        requestStatus: 2,
+                        email: email,
+                        fullName: fullName,
                     }
                     const newRequest = Request.create(requestData)
 
@@ -297,8 +299,11 @@ module.exports = {
                     console.log(response);
 
                     let requestData = {
+                        mailId: null,
                         requestType: 2,
-                        requestStatus: 2
+                        requestStatus: 2,
+                        email: mailToCreate,
+                        fullName: fullName,
                     }
                     const newRequest = Request.create(requestData)
 

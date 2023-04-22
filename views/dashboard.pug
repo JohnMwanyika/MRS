@@ -77,8 +77,8 @@ block content
                         tbody
                             each req in requests
                                 tr
-                                    td=req.Mail.email
-                                    td=req.Mail.name
+                                    td=req.email
+                                    td=req.fullName
                                     td=req.RequestType.name
                                     if (req.RequestStatus.name == 'Pending')
                                         td

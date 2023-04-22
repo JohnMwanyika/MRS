@@ -11,21 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Request.belongsTo(models.Mail,{
-        foreignKey:'mailId'
-      }),
-      Request.belongsTo(models.RequestType,{
-        foreignKey:'requestType'
-      }),
-      Request.belongsTo(models.RequestStatus,{
-        foreignKey:'requestStatus'
-      })
+      Request.belongsTo(models.Mail, {
+          foreignKey: 'mailId'
+        }),
+        Request.belongsTo(models.RequestType, {
+          foreignKey: 'requestType'
+        }),
+        Request.belongsTo(models.RequestStatus, {
+          foreignKey: 'requestStatus'
+        })
     }
   }
   Request.init({
     mailId: DataTypes.INTEGER,
-    requestType:DataTypes.INTEGER,
-    requestStatus:DataTypes.INTEGER
+    requestType: DataTypes.INTEGER,
+    requestStatus: DataTypes.INTEGER,
+    email: DataTypes.STRING,
+    fullName: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Request',

@@ -12,7 +12,7 @@ module.exports = {
         return await Request.findAll({
                 include: [{
                         model: Mail,
-                        required: true
+                        required: false
                     },
                     {
                         model: RequestType,
@@ -30,7 +30,7 @@ module.exports = {
             })
             .then((requests) => {
                 console.log('####################################################');
-                console.log(JSON.stringify(requests[0].Mail.name));
+                // console.log(JSON.stringify(requests[0].Mail));
                 console.log('####################################################');
 
                 // res.json({
