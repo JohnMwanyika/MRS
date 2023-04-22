@@ -13,36 +13,44 @@ module.exports = {
     createMail: async (req, res) => {
 
         const {
-            name,
+            fullName,
             email,
             password,
-            departmentId
+            department
         } = req.body;
 
+        // get the department id from the creation request from admin
+        const dprt = await Department.findOne({
+            where:{
+                name:department
+            }
+        })
+
         const mailData = {
-            name,
+            name:fullName,
             email,
-            password,
-            departmentId
+            password:'Welcome2020',
+            departmentId:dprt.id,
         };
 
         console.log('Received request');
         console.log(req.body);
-        // const NewMail = await Mail.create(mailData)
+        const NewMail = await Mail.create(mailData)
 
-        //     .then((newMail) => {
-        //         console.log(`${newMail} created`);
-        //         res.json({
-        //             status: 'success',
-        //             data: newMail
-        //         })
-        //     })
-        //     .catch((err) => {
-        //         res.json({
-        //             status: 'error',
-        //             data: err.message
-        //         });
-        //     });
+            .then((newMail) => {
+                console.log(`${newMail} created`);
+                res.json({
+                    status: 'success',
+                    data: newMail
+                })
+            })
+            .catch((err) => {
+                console.log('Mail creation failed'+err.message)
+                res.json({
+                    status: 'error',
+                    data: err.message
+                });
+            });
     },
     getMailById: async (req, res) => {
         const {
@@ -233,6 +241,7 @@ module.exports = {
                         requestStatus: 2,
                         email: email,
                         fullName: fullName,
+                        department:dprt.name
                     }
                     const newRequest = Request.create(requestData)
 
@@ -308,6 +317,7 @@ module.exports = {
                         requestStatus: 2,
                         email: mailToCreate,
                         fullName: fullName,
+                        department:dprt.name
                     }
                     const newRequest = Request.create(requestData)
 

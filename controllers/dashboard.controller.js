@@ -2,7 +2,8 @@ const {
     Request,
     Mail,
     RequestType,
-    RequestStatus
+    RequestStatus,
+    Department
 } = require('../models');
 
 module.exports = {

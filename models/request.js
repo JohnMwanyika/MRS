@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     requestStatus: DataTypes.INTEGER,
     email: DataTypes.STRING,
     fullName: DataTypes.STRING,
+    department: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Request',
