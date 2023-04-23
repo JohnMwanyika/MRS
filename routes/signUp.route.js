@@ -10,7 +10,8 @@ const {
 const validation = require('../validations/user.validator');
 
 router.get('/', (req, res) => {
-    res.render('signup');
+    const errorMessage = req.query.error === 'user_exists' ? 'User with similar email already exist' : '';
+    res.render('signup',{errorMessage});
 });
 
 router.post('/', validation.create(), validate, signUp);

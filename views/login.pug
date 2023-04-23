@@ -8,6 +8,10 @@ block content
                         .card-header
                             h3.text-center.font-weight-light.my-4 Login
                         .card-body
+                            if (errorMessage)
+                                .alert.alert-danger(role="alert").
+                                    #{errorMessage}
+  
                             form(method='post' action='/login')
                                 .form-floating.mb-3
                                     input.form-control#inputEmail(type="email" placeholder="name@example.com" name='email')

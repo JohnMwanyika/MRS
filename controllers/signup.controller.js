@@ -37,12 +37,13 @@ module.exports = {
                 })
 
             } else {
-                res.json({
-                    message: {
-                        status: 'warning',
-                        info: 'User already exists'
-                    }
-                })
+                // res.json({
+                //     message: {
+                //         status: 'warning',
+                //         info: 'User already exists'
+                //     }
+                // })
+                return res.redirect('/signup?error=user_exists');
             }
         }).then((createdUser) => {
             console.log(createdUser)

@@ -8,6 +8,9 @@ block content
                         .card-header
                             h3.text-center.font-weight-light.my-4 Create Account
                         .card-body
+                            if (errorMessage)
+                                .alert.alert-danger(role="alert").
+                                    #{errorMessage}
                             form(method="POST",action='/signup')
                                 .row.mb-3
                                     .col-md-6

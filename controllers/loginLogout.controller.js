@@ -15,23 +15,25 @@ module.exports = {
             }
         });
         if (!user) {
-            return res.json({
-                message: {
-                    status: 'error',
-                    info: 'No user under that email check spelling and try again'
-                }
-            });
+            // return res.json({
+            //     message: {
+            //         status: 'error',
+            //         info: 'No user under that email check spelling and try again'
+            //     }
+            // });
+            return res.redirect('/login?error=no_user');
 
         }
         // Compare password with hashed password in the database
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.json({
-                message: {
-                    status: 'error',
-                    info: 'Invalid username or password try again',
-                }
-            });
+            // return res.json({
+            //     message: {
+            //         status: 'error',
+            //         info: 'Invalid username or password try again',
+            //     }
+            // });
+            return res.redirect('/login?error=invalid_credentials');
         }
         console.log('Setting user session')
         req.session.user = user;
