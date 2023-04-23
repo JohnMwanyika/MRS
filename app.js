@@ -37,16 +37,19 @@ app.use(session({
     db: sequelize
   }),
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 30 * 60 * 1000, //clears session data after 30 min of inactivity
+    httpOnly: true,
+  }
 }))
 
-// app.use((req, res, next) => {
-//   if (req.session.user) {
-//     next();
-//   } else {
-//     res.redirect('/login');
-//   }
-// })
+function checkSession(req, res, next) {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  next();
+}
 // ##################### End of session management ##########################
 
 app.use(logger('dev'));
@@ -60,10 +63,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/mails', mailRouter);
-app.use('/dashboard', dashboardRouter);
+app.use('/dashboard', checkSession, dashboardRouter);
 app.use('/login', authenticationRouter);
 app.use('/signup', signUpRouter);
-app.get('/logout',(req,res)=>{
+
+app.get('/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/login');
 })

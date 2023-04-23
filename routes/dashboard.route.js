@@ -5,12 +5,12 @@ const {
     getDashboard
 } = require('../controllers/dashboard.controller');
 // middleware to protect authenticated routes
-router.use((req, res, next) => {
-    if (!req.session.user) {
-        return res.redirect('/login')
-    }
-    next();
-})
+// router.use((req, res, next) => {
+//     if (!req.session.user) {
+//         return res.redirect('/login')
+//     }
+//     next();
+// })
 
 router.get('/', getDashboard);
 
