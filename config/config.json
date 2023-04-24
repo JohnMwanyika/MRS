@@ -10,7 +10,7 @@
     "username": "taitatveta23_mrs",
     "password": "Ttcg@006.",
     "database": "taitatveta23_mrs",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
