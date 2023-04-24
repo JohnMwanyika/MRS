@@ -1,2 +1,2 @@
 # Mail Recovery System
-built with nodejs mysql
+built with nodejs mysql Sequelize
