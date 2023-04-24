@@ -7,17 +7,17 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "taitatveta23_mrs",
+    "username": "taitatavetaco_mrs",
     "password": "Ttcg@006.",
-    "database": "taitatveta23_mrs",
-    "host": "taitataveta.go.ke",
+    "database": "taitatavetaco_mrs",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
-    "username": "taitatveta23_mrs",
+    "username": "taitatavetaco_mrs",
     "password": "Ttcg@006.",
-    "database": "taitatveta23_mrs",
-    "host": "taitataveta.go.ke",
+    "database": "taitatavetaco_mrs",
+    "host": "localhost",
     "dialect": "mysql"
   }
 }
