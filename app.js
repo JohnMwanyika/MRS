@@ -25,7 +25,11 @@ app.set('view engine', 'pug');
 const {
   Sequelize
 } = require('sequelize');
-const sequelize = new Sequelize(process.env.DATABASE_URL,{
+const sequelize = new Sequelize({
+  database: process.env.DB_NAME,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  host: 'localhost',
   dialect: 'mysql'
 });
 const session = require('express-session');
