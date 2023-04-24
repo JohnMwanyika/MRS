@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "root",
-    "password": "",
-    "database": "ecom",
+    "username": "taitatavetaco_mrs",
+    "password": "Ttcg@006.",
+    "database": "taitatavetaco_mrs",
     "host": "localhost",
     "dialect": "mysql"
   },
