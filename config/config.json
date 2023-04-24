@@ -10,14 +10,14 @@
     "username": "taitatveta23_mrs",
     "password": "Ttcg@006.",
     "database": "taitatveta23_mrs",
-    "host": "localhost",
+    "host": "taitataveta.go.ke",
     "dialect": "mysql"
   },
   "production": {
     "username": "taitatveta23_mrs",
     "password": "Ttcg@006.",
     "database": "taitatveta23_mrs",
-    "host": "localhost",
+    "host": "taitataveta.go.ke",
     "dialect": "mysql"
   }
 }
