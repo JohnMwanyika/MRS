@@ -1,6 +1,9 @@
 const {
     sendMail
 } = require('../utils/send_mail');
+const {
+    whatsappText
+} = require('../utils/whatsapp');
 
 const {
     Mail,
@@ -254,8 +257,8 @@ module.exports = {
                 text: `Greetings, Sir/Madam! My name is ${fullName} from ${department} department, I would like to request a password reset for my email address, ${email}`
             };
 
-
-            sendMail(mail.to, mail.subject, mail.text)
+            // send whatsApp Message
+            whatsappText(process.env.ADMIN, mail.text)
                 .then((response) => {
                     let requestData = {
                         mailId: mailToReset.id,
@@ -280,12 +283,46 @@ module.exports = {
                     })
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.log(error.message);
                     res.json({
                         status: 'error',
                         data: error
                     })
                 })
+
+
+            // Send Email
+            // sendMail(mail.to, mail.subject, mail.text)
+            //     .then((response) => {
+            //         let requestData = {
+            //             mailId: mailToReset.id,
+            //             requestType: 1,
+            //             requestStatus: 2,
+            //             email: email,
+            //             fullName: fullName,
+            //             department: dprt.name
+            //         }
+            //         const newRequest = Request.create(requestData)
+
+            //         console.log(response);
+            //         // res.json({
+            //         //     status: 'success',
+            //         //     data: response
+            //         // })
+            //         return response;
+            //     }).then(response => {
+            //         res.json({
+            //             status: 'success',
+            //             data: response
+            //         })
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //         res.json({
+            //             status: 'error',
+            //             data: error
+            //         })
+            //     })
 
         } catch (error) {
             res.json({
