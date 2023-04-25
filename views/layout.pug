@@ -8,10 +8,16 @@ html(lang="en")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-NVctBQYgM0i0jL6MvkHCFjK2FKtXsZVEJNAnHbDZMGSEaTtavCfN/39TtWbkEPPj40tk9Xj+aRrtZmSdbZB/g==" crossorigin="anonymous" referrerpolicy="no-referrer" )
     //- jquery
     script(src="/javascripts/jquery.min.js")
+    //- Popper.js 
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js")
+    //- Bootstrap JS 
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js")
     //- Toaster
     script(src="/toaster/toastr.js")
-    link(rel="stylesheet", href="/toaster/toastr.css")
-    
+    link(rel="stylesheet" href="/toaster/toastr.css")
+    //- Bootstrap Icons
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css")
+
     style.
       body {
         background-color: #f8f9fa;
@@ -20,11 +26,31 @@ html(lang="en")
     //- <script src="https://raw.githubusercontent.com/rosshatokay/toasterjs/main/src/toaster.js"></script>
     //- <link rel="stylesheet" href="https://raw.githubusercontent.com/rosshatokay/toasterjs/main/src/toaster.css" />
   body
+    nav.navbar.navbar-expand-lg.bg-body-tertiary.border-bottom.shadow-sm.bg-white
+      .container-fluid
+        img(src="/images/Coat_of_Arms_of_Taita_Taveta_County.png",width='43px' alt="Logo", srcset="")
+        a.navbar-brand(href="#")
+          h4 Taita Taveta
+        button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation")
+          span.navbar-toggler-icon
+        .collapse.navbar-collapse#navbarNavAltMarkup
+          .navbar-nav
+            a.nav-link.active(aria-current="page" href="/") Home
+            a.nav-link(href="/about") About
+
+
     .container.my-5
       .row.justify-content-center
         .col-lg-8
           .card.border-0.shadow-sm.rounded-lg
             .card-header.bg-white.border-0.pb-0
-              h2.text-center.Fancy Mail Recovery system
+              h2.text-center.Fancy Mail Recovery System
             .card-body
               block content
+
+    footer.footer.bg-light.fixed-bottom.bg-white
+      .container
+        hr
+        .row
+          .col-md-12.text-center
+            p © 2023 Directorate of ICT.

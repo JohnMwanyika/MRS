@@ -10,13 +10,6 @@ module.exports = {
     whatsappText: async (phone, message) => {
 
         return await restAPI.message.sendMessage(`254${phone}@c.us`, null, message)
-            // .then((data) => {
-            //     console.log('Whatsapp message sent');
-            //     // console.log(data);
-            // }).catch((error) => {
-            //     console.log('Failed to send whatsapp message');
-            //     console.log(error.message);
-            // });
 
     }
 }
