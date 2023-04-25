@@ -1,21 +1,22 @@
 const whatsAppClient = require('@green-api/whatsapp-api-client');
 require('dotenv').config();
 
+const restAPI = whatsAppClient.restAPI(({
+    idInstance: process.env.ID_INSTANCE,
+    apiTokenInstance: process.env.API_TOKEN_INSTANCE
+}))
 
 module.exports = {
     whatsappText: async (phone, message) => {
-        const restAPI = whatsAppClient.restAPI(({
-            idInstance: process.env.ID_INSTANCE,
-            apiTokenInstance: process.env.API_TOKEN_INSTANCE
-        }))
-        await restAPI.message.sendMessage(`254${phone}@c.us`, null, message)
-            .then((data) => {
-                console.log('Whatsapp message sent');
-                console.log(data);
-            }).catch((error) => {
-                console.log('Failed to send whatsapp message');
-                console.log(error.message);
-            });
+
+        return await restAPI.message.sendMessage(`254${phone}@c.us`, null, message)
+            // .then((data) => {
+            //     console.log('Whatsapp message sent');
+            //     // console.log(data);
+            // }).catch((error) => {
+            //     console.log('Failed to send whatsapp message');
+            //     console.log(error.message);
+            // });
 
     }
 }

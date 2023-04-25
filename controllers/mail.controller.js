@@ -258,8 +258,9 @@ module.exports = {
             };
 
             // send whatsApp Message
-            whatsappText(process.env.ADMIN, mail.text)
+            whatsappText(process.env.ADMIN1, mail.text)
                 .then((response) => {
+                    console.log('This is the response', response);
                     let requestData = {
                         mailId: mailToReset.id,
                         requestType: 1,
@@ -365,8 +366,8 @@ module.exports = {
                 text: `Greetings, Sir/Madam! there is a request to create an email for ${fullName} from ${department} department`
             };
 
-            // sendMail(mail.to, mail.subject, mail.text);
-            sendMail(mail.to, mail.subject, mail.text)
+            // Send WhatsApp Message
+            whatsappText(process.env.ADMIN1, mail.text)
                 .then((response) => {
                     console.log(response);
 
@@ -388,12 +389,43 @@ module.exports = {
                     })
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.log(error.message);
                     res.json({
                         status: 'error',
                         data: error
                     })
                 })
+
+
+            // sendMail(mail.to, mail.subject, mail.text);
+            // sendMail(mail.to, mail.subject, mail.text)
+            //     .then((response) => {
+            //         console.log(response);
+
+            //         let requestData = {
+            //             mailId: null,
+            //             requestType: 2,
+            //             requestStatus: 2,
+            //             email: mailToCreate,
+            //             fullName: fullName,
+            //             department: dprt.name
+            //         }
+            //         const newRequest = Request.create(requestData)
+
+            //         return response;
+            //     }).then(response => {
+            //         res.json({
+            //             status: 'success',
+            //             data: response
+            //         })
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //         res.json({
+            //             status: 'error',
+            //             data: error
+            //         })
+            //     })
 
         } catch (error) {
 
