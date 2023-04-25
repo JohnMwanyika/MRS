@@ -6,7 +6,7 @@ html(lang="en")
         meta(name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no")
         meta(name="description", content)
         meta(name="author", content)
-        title Dashboard - SB Admin
+        title Mail Recovery Admin
         link(href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet")
         link(href="css/styles.css" rel="stylesheet")
         script(src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous")
@@ -35,62 +35,62 @@ html(lang="en")
                                 .sb-nav-link-icon
                                     i.fas.fa-tachometer-alt
                                 | Dashboard
+                            //- For Future Updates
+                                .sb-sidenav-menu-heading Interface
+                                a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
+                                    .sb-nav-link-icon
+                                        i.fas.fa-columns
+                                    | Layouts
 
-                            .sb-sidenav-menu-heading Interface
-                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
-                                .sb-nav-link-icon
-                                    i.fas.fa-columns
-                                | Layouts
+                                    .sb-sidenav-collapse-arrow
+                                        i.fas.fa-angle-down
+                                .collapse#collapseLayouts(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
+                                    nav.sb-sidenav-menu-nested.nav
+                                        a.nav-link(href="layout-static.html") Static Navigation
+                                        a.nav-link(href="layout-sidenav-light.html") Light Sidenav
+                                a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages")
+                                    .sb-nav-link-icon
+                                        i.fas.fa-book-open
+                                    | Pages
 
-                                .sb-sidenav-collapse-arrow
-                                    i.fas.fa-angle-down
-                            .collapse#collapseLayouts(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
-                                nav.sb-sidenav-menu-nested.nav
-                                    a.nav-link(href="layout-static.html") Static Navigation
-                                    a.nav-link(href="layout-sidenav-light.html") Light Sidenav
-                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages")
-                                .sb-nav-link-icon
-                                    i.fas.fa-book-open
-                                | Pages
+                                    .sb-sidenav-collapse-arrow
+                                        i.fas.fa-angle-down
+                                .collapse#collapsePages(aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion")
+                                    nav.sb-sidenav-menu-nested.nav.accordion#sidenavAccordionPages
+                                        a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth")
+                                            | Authentication
 
-                                .sb-sidenav-collapse-arrow
-                                    i.fas.fa-angle-down
-                            .collapse#collapsePages(aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion")
-                                nav.sb-sidenav-menu-nested.nav.accordion#sidenavAccordionPages
-                                    a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth")
-                                        | Authentication
+                                            .sb-sidenav-collapse-arrow
+                                                i.fas.fa-angle-down
+                                        .collapse#pagesCollapseAuth(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
+                                            nav.sb-sidenav-menu-nested.nav
+                                                a.nav-link(href="/login") Login
+                                                a.nav-link(href="/register") Register
+                                                a.nav-link(href="/reset_pass") Forgot Password
+                                        a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError")
+                                            | Error
 
-                                        .sb-sidenav-collapse-arrow
-                                            i.fas.fa-angle-down
-                                    .collapse#pagesCollapseAuth(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
-                                        nav.sb-sidenav-menu-nested.nav
-                                            a.nav-link(href="/login") Login
-                                            a.nav-link(href="/register") Register
-                                            a.nav-link(href="/reset_pass") Forgot Password
-                                    a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError")
-                                        | Error
+                                            .sb-sidenav-collapse-arrow
+                                                i.fas.fa-angle-down
+                                        .collapse#pagesCollapseError(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
+                                            nav.sb-sidenav-menu-nested.nav
+                                                a.nav-link(href="401.html") 401 Page
+                                                a.nav-link(href="404.html") 404 Page
+                                                a.nav-link(href="500.html") 500 Page
+                                .sb-sidenav-menu-heading Addons
+                                a.nav-link(href="charts.html")
+                                    .sb-nav-link-icon
+                                        i.fas.fa-chart-area
+                                    | Charts
 
-                                        .sb-sidenav-collapse-arrow
-                                            i.fas.fa-angle-down
-                                    .collapse#pagesCollapseError(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
-                                        nav.sb-sidenav-menu-nested.nav
-                                            a.nav-link(href="401.html") 401 Page
-                                            a.nav-link(href="404.html") 404 Page
-                                            a.nav-link(href="500.html") 500 Page
-                            .sb-sidenav-menu-heading Addons
-                            a.nav-link(href="charts.html")
-                                .sb-nav-link-icon
-                                    i.fas.fa-chart-area
-                                | Charts
-
-                            a.nav-link(href="tables.html")
-                                .sb-nav-link-icon
-                                    i.fas.fa-table
-                                | Tables
+                                a.nav-link(href="tables.html")
+                                    .sb-nav-link-icon
+                                        i.fas.fa-table
+                                    | Tables
 
                     .sb-sidenav-footer
                         .small Logged in as:
-                        | Start Bootstrap
+                        | #{user.firstName} #{user.lastName}
 
             #layoutSidenav_content
 
@@ -99,7 +99,12 @@ html(lang="en")
                 footer.py-4.bg-light.mt-auto
                     .container-fluid.px-4
                         .d-flex.align-items-center.justify-content-between.small
-                            .text-muted Copyright © Your Website 2023
+                            .text-muted
+                                #time
+                                    script.
+                                        let time = new Date().getFullYear();
+                                        $('#time').text('Copyright © TaitaTaveta Directorate of ICT ' + time.toString());
+
                             div
                                 a(href="#") Privacy Policy
                                 | ·

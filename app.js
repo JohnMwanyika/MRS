@@ -52,7 +52,7 @@ app.use(session({
 
 function checkSession(req, res, next) {
   if (!req.session.user) {
-    return res.redirect('/login');
+    return res.redirect('/login?error=no_session');
   }
   next();
 }
