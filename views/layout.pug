@@ -44,7 +44,11 @@ html(lang="en")
         .col-lg-8
           .card.border-0.shadow-sm.rounded-lg
             .card-header.bg-white.border-0.pb-0
-              h2.text-center.Fancy Mail Recovery System
+              if (title)
+                h2.text-center.Fancy #{title}
+                hr
+              else
+                h2.text-center.Fancy Mail Recovery System
             .card-body
               block content
 
