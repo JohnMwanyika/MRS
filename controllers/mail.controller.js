@@ -142,8 +142,27 @@ module.exports = {
             })
             .then((mail) => {
                 console.log(JSON.stringify(mail));
-                console.log('This user exists ' + fullName)
+                console.log('This user is ' + fullName)
                 console.log('DepartmentId is ' + department)
+
+                if (!mail) {
+                    let failedTrial = {
+                        credentials: fullName,
+                        typeId: 1,
+                        statusId: 1,
+                        departmentId: department,
+                    }
+                    const newTrial = Trial.create(failedTrial)
+                    return res.render('serp', {
+                        status: 'warning',
+                        data: "There is no email under that name. Please Check your spelling before sending an email creation request.",
+                        current: {
+                            firstName,
+                            lastName,
+                            dpt
+                        }
+                    });
+                }
                 if (mail) { // mail has been found
 
                     // This update the departmentId to the email that has been found 
@@ -154,56 +173,46 @@ module.exports = {
                             id: mail.id
                         },
                     })
-                } else {
-
-                    // This create a failed check mail attempt
-                    let failedTrial = {
-                        credentials: fullName,
-                        typeId: 1,
-                        statusId: 1,
-                        departmentId: department,
-                    }
-                    const newTrial = Trial.create(failedTrial)
-                    console.log(JSON.stringify(newTrial))
-
-
-                    res.render('serp', {
-                        status: 'warning',
-                        data: "There is no email under that name. Please Check your spelling before sending an email creation request.",
-                        current: {
-                            firstName,
-                            lastName,
-                            dpt
+                }
+            })
+            .then((updatedMail) => {
+                if (updatedMail) {
+                    console.log(JSON.stringify(updatedMail));
+                    return Mail.findOne({
+                        include: Department,
+                        where: {
+                            name: fullName
                         }
                     });
-                    return;
                 }
 
-            }).then((updatedMail) => {
-                return Mail.findOne({
-                    include: Department,
-                    where: {
-                        name: fullName
+            })
+            .then((updatedMail) => {
+                if (updatedMail) {
+                    // This will add a mail check success attempt
+                    console.log(JSON.stringify(updatedMail));
+                    let trialData = {
+                        credentials: updatedMail.name,
+                        typeId: 1,
+                        statusId: 2,
+                        departmentId: updatedMail.departmentId,
                     }
-                });
-            }).then((updatedMail) => {
-                // This will add a mail check success attempt
-                let trialData = {
-                    credentials: updatedMail.name,
-                    typeId: 1,
-                    statusId: 2,
-                    departmentId: updatedMail.departmentId,
+                    const newTrial = Trial.create(trialData)
+                    // return the two objects as an array
+                    return [newTrial, updatedMail]
                 }
-                const newTrial = Trial.create(trialData)
-                // return the two objects as an array
-                return [newTrial, updatedMail]
-            }).then((result) => {
-                console.log(JSON.stringify(result[0]))
 
-                res.render('serp', {
-                    status: 'success',
-                    data: result[1],
-                });
+            })
+            .then((result) => {
+                if (result) {
+                    console.log(JSON.stringify(result[0]))
+
+                    res.render('serp', {
+                        status: 'success',
+                        data: result[1],
+                    });
+                }
+
             })
             .catch((err) => {
                 res.render('serp', {
@@ -214,10 +223,6 @@ module.exports = {
                         lastName
                     }
                 });
-                // res.json({
-                //     status: 'error',
-                //     data: err.message
-                // });
             })
     },
     resetPass: async (req, res) => {
@@ -444,7 +449,7 @@ module.exports = {
                 res.render('error', {
                     status: 'error',
                     error: err,
-                    message:err.message
+                    message: err.message
                 });
             })
 
