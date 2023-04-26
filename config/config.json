@@ -17,7 +17,7 @@
     "username": "taitatavetaco_mrs",
     "password": "Ttcg@006.",
     "database": "taitatavetaco_mrs",
-    "host": "localhost",
+    "host": "taitataveta.co.ke",
     "dialect": "mysql"
   }
 }
