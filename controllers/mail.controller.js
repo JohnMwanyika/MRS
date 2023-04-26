@@ -432,12 +432,22 @@ module.exports = {
         }
     },
     home: async (req, res) => {
-        const departments = await Department.findAll();
-        // console.log(departments)
-        res.render('home', {
-            status: 'error',
-            data: departments
-        });
+        const departments = await Department.findAll()
+            .then((allDepartments) => {
+                res.render('home', {
+                    status: 'error',
+                    data: allDepartments
+                });
+            })
+            .catch((err) => {
+                console.log(err)
+                res.render('error', {
+                    status: 'error',
+                    error: err,
+                    message:err.message
+                });
+            })
+
     },
     completeReset: async (req, res) => {
         const {
