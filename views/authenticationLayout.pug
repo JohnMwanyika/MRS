@@ -6,9 +6,11 @@ html(lang="en")
         meta(name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no")
         meta(name="description", content)
         meta(name="author", content)
-        title Login - SB Admin
+        title Signin | MRS
         link(href="css/styles.css" rel="stylesheet")
         script(src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous")
+        //- jquery
+        script(src="/javascripts/jquery.min.js")
     body.bg-primary
         #layoutAuthentication
             #layoutAuthentication_content
@@ -16,10 +18,14 @@ html(lang="en")
                 block content
                 
             #layoutAuthentication_footer
-                footer.py-4.bg-light.mt-auto
+                footer.py-4.bg-light.mt-auto.fixed-bottom
                     .container-fluid.px-4
                         .d-flex.align-items-center.justify-content-between.small
-                            .text-muted Copyright © taitataveta.go.ke 2023
+                            .text-muted
+                                #time 
+                                    script.
+                                        let time = new Date().getFullYear();
+                                        $('#time').text('Copyright © TaitaTaveta Directorate of ICT ' + time.toString());
                             div
                                 a(href="#") Privacy Policy
                                 | ·
