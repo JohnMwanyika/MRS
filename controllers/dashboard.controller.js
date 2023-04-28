@@ -32,9 +32,9 @@ module.exports = {
                 order: [
                     ['createdAt', 'DESC']
                 ],
-                // where: {
-                //     requestStatus: 2
-                // }
+                where: {
+                    requestStatus: 2
+                }
 
             })
             .then((requests) => {
