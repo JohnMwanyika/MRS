@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "",
-    "database": "ecom",
-    "host": "localhost",
+    "username": "mcrhorke_mrs",
+    "password": "Ttcg@006.",
+    "database": "mcrhorke_mrs",
+    "host": "mcrhorke.or.ke",
     "dialect": "mysql"
   },
   "test": {
