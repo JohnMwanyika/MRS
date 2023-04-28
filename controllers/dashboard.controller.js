@@ -3,6 +3,7 @@ const {
     Mail,
     RequestType,
     RequestStatus,
+    User,
     Department
 } = require('../models');
 
@@ -22,6 +23,10 @@ module.exports = {
                     {
                         model: RequestStatus,
                         required: true
+                    },
+                    {
+                        model: User,
+                        required: false
                     }
                 ],
                 order: [
@@ -66,6 +71,10 @@ module.exports = {
                     {
                         model: RequestStatus,
                         required: true
+                    },
+                    {
+                        model: User,
+                        required: false
                     }
                 ],
                 order: [
@@ -77,8 +86,10 @@ module.exports = {
                 }
             })
             .then((newMails) => {
+                console.log(JSON.stringify(newMails))
+                // res.json({newMails})
                 res.render('newMails', {
-                    title:'New mails',
+                    title: 'New mails',
                     status: 'success',
                     user: req.session.user,
                     data: newMails,

@@ -17,17 +17,17 @@ block content
                                 th Email
                                 th Name
                                 th Department
-                                //- th Type
                                 th Status
                                 th Date
+                                th Created by
                         tfoot
                             tr
                                 th Email
                                 th Name
                                 th Department
-                                //- th Type
                                 th Status
                                 th Date
+                                th Created by
                         tbody
                             each req in data
                                 tr
@@ -42,3 +42,4 @@ block content
                                         td
                                             span.badge.text-bg-success=req.RequestStatus.name
                                     td=moment(req.createdAt).format('MMMM Do YYYY, h:mm:ss a')
+                                    td=req.userId

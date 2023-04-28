@@ -11,6 +11,9 @@ const {
     Trial,
     Request
 } = require('../models');
+const {
+    check
+} = require('express-validator');
 
 module.exports = {
     createMail: async (req, res) => {
@@ -375,6 +378,18 @@ module.exports = {
             whatsappText(process.env.ADMIN1, mail.text)
                 .then((response) => {
                     console.log(response);
+                    // check if exists
+                    return Request.findOne({
+                        where: {
+                            email: mailToCreate
+                        }
+                    })
+                })
+                .then((isExisting) => {
+                    console.log('**********************************88');
+                    console.log('is Existing', isExisting);
+                    console.log('**********************************88');
+
 
                     let requestData = {
                         mailId: null,
@@ -384,13 +399,30 @@ module.exports = {
                         fullName: fullName,
                         department: dprt.name
                     }
-                    const newRequest = Request.create(requestData)
 
-                    return response;
-                }).then(response => {
+                    if (!isExisting) {
+                        const newRequest = Request.create(requestData);
+                        return newRequest;
+
+                    } else {
+                        let data = {
+                            requestStatus: 2,
+                        }
+                        const updatedRequest = Request.update(data, {
+                            where: {
+                                email: mailToCreate,
+                                requestType: 2,
+                            }
+                        })
+
+                        return updatedRequest;
+                    }
+                })
+                .then(response => {
+
                     res.json({
                         status: 'success',
-                        data: response
+                        data: response,
                     })
                 })
                 .catch((error) => {
@@ -469,6 +501,7 @@ module.exports = {
 
         const updatedRequest = await Request.update({
                 requestStatus: 1,
+                userId: req.session.user.id
             }, {
                 where: {
                     requestType: 1,
