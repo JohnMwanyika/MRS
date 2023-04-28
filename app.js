@@ -95,7 +95,11 @@ app.get('/about', (req, res) => {
     title: 'Team'
   });
 });
-
+app.get('/gallery', (req, res)=>{
+  res.render('gallery', {
+    title: 'Gallery'
+  });
+})
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

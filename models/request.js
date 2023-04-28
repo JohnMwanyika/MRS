@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         }),
         Request.belongsTo(models.RequestStatus, {
           foreignKey: 'requestStatus'
+        }),
+        Request.belongsTo(models.User, {
+          foreignKey: 'userId'
         })
     }
   }
@@ -28,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     requestStatus: DataTypes.INTEGER,
     email: DataTypes.STRING,
     fullName: DataTypes.STRING,
-    department: DataTypes.STRING
+    department: DataTypes.STRING,
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Request',
