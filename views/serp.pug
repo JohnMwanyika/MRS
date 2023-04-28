@@ -34,8 +34,8 @@ block content
                 button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
             //- try again <button type='submit' class="btn btn-danger btn-sm" role="button">Request</button>
             .form-floating.mb-3
-                    input(type="text" class="form-control" id="depertment" value=`${current.dpt.name}` name="department" placeholder="Last Name", required)
-                    label(for="depertment") Department
+                input(type="text" class="form-control" id="depertment" value=`${current.dpt.name}` name="department" placeholder="Last Name", required)
+                label(for="depertment") Department
             .form-floating.mb-3.mt-3
                 input(type="text" class="form-control" id="firstName" value=`${current.firstName}` name="firstName" placeholder="First Name", )
                 label(for="firstName") First Name
@@ -144,10 +144,13 @@ block content
                 },
                 timeout: 30000,
             }).then(function(data){
-                if(data.status == "success"){
+                if(data.status == "success" && !Array.isArray(data.data)){
                     console.log('Email Sent')
                     toastr["success"]("Your email creation request has been sent successfully", "Success")
-                }else{
+                }else if(data.status == "success" && Array.isArray(data.data)){
+                    toastr["warning"]("Your email creation request has been updated successfully", "Success")
+                }
+                else{
                     console.log('Request not completed')
                     toastr["error"]("An error occured while sending your request try again", "Failed")
                 }
