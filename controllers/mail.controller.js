@@ -387,7 +387,7 @@ module.exports = {
                 })
                 .then((isExisting) => {
                     console.log('**********************************88');
-                    console.log('is Existing', isExisting);
+                    // console.log('is Existing', isExisting);
                     console.log('**********************************88');
 
 
@@ -419,7 +419,7 @@ module.exports = {
                     }
                 })
                 .then(response => {
-
+                    console.log(JSON.stringify(response));
                     res.json({
                         status: 'success',
                         data: response,
