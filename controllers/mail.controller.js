@@ -57,7 +57,8 @@ module.exports = {
         return await Mail.create(mailData)
             .then((newMail) => {
                 const updatedStatus = Request.update({
-                    requestStatus: 1
+                    requestStatus: 1,
+                    userId: req.session.user.id
                 }, {
                     where: {
                         fullName: fullName,

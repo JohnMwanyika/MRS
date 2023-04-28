@@ -42,4 +42,4 @@ block content
                                         td
                                             span.badge.text-bg-success=req.RequestStatus.name
                                     td=moment(req.createdAt).format('MMMM Do YYYY, h:mm:ss a')
-                                    td=req.userId
+                                    td #{req.User.firstName} #{req.User.lastName}
