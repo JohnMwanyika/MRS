@@ -8,7 +8,7 @@ html(lang="en")
         meta(name="author", content)
         title Mail Recovery Admin
         link(href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet")
-        link(href="css/styles.css" rel="stylesheet")
+        link(href="/css/styles.css" rel="stylesheet")
         script(src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous")
         //- <!-- Axios library -->
         script(src="https://unpkg.com/axios/dist/axios.min.js")
@@ -35,6 +35,10 @@ html(lang="en")
                                 .sb-nav-link-icon
                                     i.fas.fa-tachometer-alt
                                 | Dashboard
+                            a.nav-link(href="/dashboard/new_mails")
+                                .sb-nav-link-icon
+                                    i.fas.fa-tachometer-alt
+                                | New Mails
                             //- For Future Updates
                                 .sb-sidenav-menu-heading Interface
                                 a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
@@ -111,10 +115,10 @@ html(lang="en")
 
                                 a(href="#") Terms & Conditions
         script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous")
-        script(src="js/scripts.js")
+        script(src="/js/scripts.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous")
-        script(src="assets/demo/chart-area-demo.js")
-        script(src="assets/demo/chart-bar-demo.js")
-        script(src="assets/demo/chart-pie-demo.js")
+        script(src="/assets/demo/chart-area-demo.js")
+        script(src="/assets/demo/chart-bar-demo.js")
+        script(src="/assets/demo/chart-pie-demo.js")
         script(src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous")
-        script(src="js/datatables-simple-demo.js")
+        script(src="/js/datatables-simple-demo.js")

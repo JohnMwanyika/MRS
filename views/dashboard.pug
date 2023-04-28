@@ -2,9 +2,9 @@ extends dashLayout
 block content 
     main
         .container-fluid.px-4
-            h1.mt-4 Dashboard
+            h1.mt-4 #{title}
             ol.breadcrumb.mb-4
-                li.breadcrumb-item.active Dashboard
+                li.breadcrumb-item.active #{title}
             .row
                 .col-xl-3.col-md-6
                     .card.bg-primary.text-white.mb-4
@@ -103,6 +103,7 @@ block content
                                                 | Create 
 
     script.
+        var axios = `${axios}`;
         // Create a spinner object
         //- var spinner = new Spinner().spin();
         toastr.options = {

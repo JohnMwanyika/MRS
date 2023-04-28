@@ -489,5 +489,25 @@ module.exports = {
             })
         });
 
-    }
+    },
+    // newlyCreatedMails: async (req, res) => {
+    //     return await Request.findAll({
+    //             where: {
+    //                 requestStatus: 1, //completed
+    //                 requestType: 2 //create New Mail
+    //             }
+    //         })
+    //         .then((newMails) => {
+    //             res.render('newMails', {
+    //                 status: 'success',
+    //                 data: newMails
+    //             })
+    //         })
+    //         .catch((error) => {
+    //             res.render('error', {
+    //                 error: error
+    //             })
+    //         });
+
+    // }
 }

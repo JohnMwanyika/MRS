@@ -38,7 +38,7 @@ module.exports = {
                 //     requests
                 // })
                 res.render('dashboard', {
-                    title: 'Welcome to MRS Dashboard',
+                    title: 'Dashboard',
                     user: req.session.user,
                     requests: requests,
                     moment: require('moment'),
@@ -51,6 +51,46 @@ module.exports = {
                     message: error.message
                 })
             })
+
+    },
+    newlyCreatedMails: async (req, res) => {
+        return await Request.findAll({
+                include: [{
+                        model: Mail,
+                        required: false
+                    },
+                    {
+                        model: RequestType,
+                        required: true
+                    },
+                    {
+                        model: RequestStatus,
+                        required: true
+                    }
+                ],
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                where: {
+                    requestStatus: 1, //completed
+                    requestType: 2 //create New Mail
+                }
+            })
+            .then((newMails) => {
+                res.render('newMails', {
+                    title:'New mails',
+                    status: 'success',
+                    user: req.session.user,
+                    data: newMails,
+                    moment: require('moment'),
+                    axios: require('axios'),
+                })
+            })
+            .catch((error) => {
+                res.render('error', {
+                    error: error,
+                })
+            });
 
     }
 }
