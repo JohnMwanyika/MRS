@@ -3,7 +3,7 @@
     "username": "mcrhorke_mrs",
     "password": "Ttcg@006.",
     "database": "mcrhorke_mrs",
-    "host": "mcrhorke.or.ke",
+    "host": "mcrh.or.ke",
     "dialect": "mysql"
   },
   "test": {
