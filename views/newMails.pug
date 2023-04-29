@@ -11,7 +11,8 @@ block content
                     |  New
 
                 .card-body
-                    table#datatablesSimple
+                    table#newMails
+                        //- table#datatablesSimple
                         thead
                             tr
                                 th Email
@@ -43,3 +44,25 @@ block content
                                             span.badge.text-bg-success=req.RequestStatus.name
                                     td=moment(req.createdAt).format('MMMM Do YYYY, h:mm:ss a')
                                     td #{req.User.firstName} #{req.User.lastName}
+
+    //- script.
+    //-     $(document).ready(function() {
+    //-         // Initialize DataTable
+    //-         var newMails = $('#newMails').DataTable();
+
+    //-         // Add DataTables Buttons plugin options
+    //-         var buttons = [
+    //-             'copy',
+    //-             'excelHtml5',
+    //-             'pdfHtml5',
+    //-             'print'
+    //-         ];
+
+    //-         // Add DataTables Buttons plugin to DataTable
+    //-         new $.fn.dataTable.Buttons(newMails, {
+    //-             buttons: buttons
+    //-         });
+
+    //-         // Display DataTables Buttons plugin
+    //-         newMails.buttons().container().appendTo($('#example_wrapper .col-md-6:eq(0)'));
+    //-     });

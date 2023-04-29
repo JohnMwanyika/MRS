@@ -9,8 +9,7 @@ const {
 
 module.exports = {
     getDashboard: async (req, res) => {
-
-        // get all requests
+        // get all requests where status is pending
         return await Request.findAll({
                 include: [{
                         model: Mail,
@@ -37,20 +36,29 @@ module.exports = {
                 }
 
             })
-            .then((requests) => {
-                console.log('####################################################');
-                // console.log(JSON.stringify(requests[0].Mail));
-                console.log('####################################################');
-
-                // res.json({
-                //     requests
-                // })
+            .then(async (pendingRequests) => {
+                const allRequests = await Request.count();
+                const completedRequests = await Request.count({
+                    where: {
+                        requestStatus: 1
+                    }
+                });
+                const declinedRequests = await Request.count({
+                    where: {
+                        requestStatus: 3
+                    }
+                });
+                return [pendingRequests, allRequests, completedRequests, declinedRequests];
+            }).then((data) => {
+                console.log(data)
                 res.render('dashboard', {
                     title: 'Dashboard',
                     user: req.session.user,
-                    requests: requests,
+                    requests: data[0],
                     moment: require('moment'),
-                    axios: require('axios'),
+                    allRequests: data[1],
+                    completedRequests: data[2],
+                    declinedRequests: data[3]
                 });
             })
             .catch((error) => {
