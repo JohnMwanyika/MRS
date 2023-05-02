@@ -7,29 +7,37 @@ block content
                 li.breadcrumb-item.active #{title}
             .row
                 .col-xl-3.col-md-6
-                    .card.bg-primary.text-white.mb-4
-                        .card-body Total Requests #{allRequests}
+                    .card.bg-primary.bg-gradient.text-white.mb-4
+                        .card-body 
+                            h1.display-6 Total 
+                                strong #{allRequests}
                         .card-footer.d-flex.align-items-center.justify-content-between
                             a.small.text-white.stretched-link(href="#") View Details
                             .small.text-white
                                 i.fas.fa-angle-right
                 .col-xl-3.col-md-6
-                    .card.bg-warning.text-white.mb-4
-                        .card-body Pending Requests #{requests.length}
+                    .card.bg-warning.bg-gradient.text-white.mb-4
+                        .card-body 
+                            h1.display-6.text-dark Pending 
+                                strong #{requests.length}
                         .card-footer.d-flex.align-items-center.justify-content-between
                             a.small.text-white.stretched-link(href="#") View Details
                             .small.text-white
                                 i.fas.fa-angle-right
                 .col-xl-3.col-md-6
-                    .card.bg-success.text-white.mb-4
-                        .card-body Resolved Requests #{completedRequests}
+                    .card.bg-success.bg-gradient.text-white.mb-4
+                        .card-body
+                            h1.display-6 Resolved 
+                                strong #{completedRequests}
                         .card-footer.d-flex.align-items-center.justify-content-between
                             a.small.text-white.stretched-link(href="#") View Details
                             .small.text-white
                                 i.fas.fa-angle-right
                 .col-xl-3.col-md-6
-                    .card.bg-danger.text-white.mb-4
-                        .card-body Declined Requests #{declinedRequests}
+                    .card.bg-danger.bg-gradient.text-white.mb-4
+                        .card-body
+                            h1.display-6 Declined 
+                                strong #{declinedRequests}
                         .card-footer.d-flex.align-items-center.justify-content-between
                             a.small.text-white.stretched-link(href="#") View Details
                             .small.text-white

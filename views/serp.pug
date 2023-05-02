@@ -3,9 +3,9 @@ block content
     if (status == "success")
         //- alert
         .alert.alert-success.alert-dismissible.fade.show(role='alert')
-            i.bi.bi-envelope
-            | An email has been found under that name as follows
-            button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
+            i.bi.bi-check-circle-fill 
+            |  An email has been found under that name as follows
+            button.btn-close(type='button' data-dismiss='alert' aria-label='Close')
         //- .alert.bg-success.text-white Mail found
         form(action="/mails/reset" method="post")#myform
             if (data.Department.name)
@@ -29,9 +29,9 @@ block content
 
         form(action="/mails/request" method="post")#myform2
             .alert.alert-dismissible.fade.show(role='alert',class=`alert-${status}`)
-                i.bi.bi-envelope
+                i.bi.bi-exclamation-triangle-fill 
                 | #{data} 
-                button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
+                button.btn-close(type='button' data-dismiss='alert' aria-label='Close')
             //- try again <button type='submit' class="btn btn-danger btn-sm" role="button">Request</button>
             .form-floating.mb-3
                 input(type="text" class="form-control" id="depertment" value=`${current.dpt.name}` name="department" placeholder="Last Name", required)
