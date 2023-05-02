@@ -1,5 +1,6 @@
 const {
-    User
+    User,
+    Role
 } = require('../models');
 
 const bcrypt = require('bcrypt');
@@ -10,6 +11,10 @@ module.exports = {
             password
         } = req.body;
         const user = await User.findOne({
+            include: [{
+                model: Role,
+                required: true
+            }],
             where: {
                 email: email,
             }
