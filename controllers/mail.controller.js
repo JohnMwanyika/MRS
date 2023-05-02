@@ -466,7 +466,11 @@ module.exports = {
             //     })
 
         } catch (error) {
-
+            console.log(error.message);
+            res.json({
+                status: 'error',
+                data: error
+            })
         }
     },
     home: async (req, res) => {

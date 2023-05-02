@@ -70,49 +70,97 @@ module.exports = {
 
     },
     newlyCreatedMails: async (req, res) => {
-        return await Request.findAll({
-                include: [{
-                        model: Mail,
-                        required: false
-                    },
-                    {
-                        model: RequestType,
-                        required: true
-                    },
-                    {
-                        model: RequestStatus,
-                        required: true
-                    },
-                    {
-                        model: User,
-                        required: true
+        if (req.session.user.Role.name == 'Super Admin') {
+            return await Request.findAll({
+                    include: [{
+                            model: Mail,
+                            required: false
+                        },
+                        {
+                            model: RequestType,
+                            required: true
+                        },
+                        {
+                            model: RequestStatus,
+                            required: true
+                        },
+                        {
+                            model: User,
+                            required: true
+                        }
+                    ],
+                    order: [
+                        ['createdAt', 'DESC']
+                    ],
+                    where: {
+                        requestStatus: 1, //completed
+                        requestType: 2, //create New Mail
+                        // userId:req.session.user.id //get all mails that a specific admin has attended to
                     }
-                ],
-                order: [
-                    ['createdAt', 'DESC']
-                ],
-                where: {
-                    requestStatus: 1, //completed
-                    requestType: 2 //create New Mail
-                }
-            })
-            .then((newMails) => {
-                console.log(JSON.stringify(newMails))
-                // res.json({newMails})
-                res.render('newMails', {
-                    title: 'New mails',
-                    status: 'success',
-                    user: req.session.user,
-                    data: newMails,
-                    moment: require('moment'),
-                    axios: require('axios'),
+                }).then((newMails) => {
+                    console.log(JSON.stringify(newMails))
+                    // res.json({newMails})
+                    res.render('newMails', {
+                        title: 'New mails',
+                        status: 'success',
+                        user: req.session.user,
+                        data: newMails,
+                        moment: require('moment'),
+                        axios: require('axios'),
+                    })
                 })
-            })
-            .catch((error) => {
-                res.render('error', {
-                    error: error,
+                .catch((error) => {
+                    res.render('error', {
+                        error: error,
+                    })
+                });
+        } else {
+            return await Request.findAll({
+                    include: [{
+                            model: Mail,
+                            required: false
+                        },
+                        {
+                            model: RequestType,
+                            required: true
+                        },
+                        {
+                            model: RequestStatus,
+                            required: true
+                        },
+                        {
+                            model: User,
+                            required: true
+                        }
+                    ],
+                    order: [
+                        ['createdAt', 'DESC']
+                    ],
+                    where: {
+                        requestStatus: 1, //completed
+                        requestType: 2, //create New Mail
+                        userId: req.session.user.id //get all mails that a specific admin has attended to
+                    }
                 })
-            });
+                .then((newMails) => {
+                    console.log(JSON.stringify(newMails))
+                    // res.json({newMails})
+                    res.render('newMails', {
+                        title: 'New mails',
+                        status: 'success',
+                        user: req.session.user,
+                        data: newMails,
+                        moment: require('moment'),
+                        axios: require('axios'),
+                    })
+                })
+                .catch((error) => {
+                    res.render('error', {
+                        error: error,
+                    })
+                });
+        }
+
 
     }
 }
