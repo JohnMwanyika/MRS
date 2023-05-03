@@ -38,9 +38,13 @@ block content
                                     tr
                                         td=user.firstName
                                         td=user.lastName
-                                        td=user.email
+                                        td 
+                                            i.fa-solid.fa-paper-plane.text-muted 
+                                            |  #{user.email}
                                         if (user.phone)
-                                            td=user.phone
+                                            td 
+                                                i.fa-solid.fa-phone.text-muted 
+                                                |  #{user.phone}
                                         else 
                                             td.text-center ---
                                         if (user.UserStatus.name == 'Active')
@@ -54,8 +58,14 @@ block content
                                                     i.fa-solid.fa-circle-xmark 
                                                     |  #{user.UserStatus.name}
                                             //- i.fas.fa-circle-exclamation.text-muted
-                                                
-                                        td=user.Role.name
+                                        if (user.Role.name == "Super Admin")        
+                                            td 
+                                                i.fa-solid.fa-user-tie.text-muted  
+                                                |  #{user.Role.name}
+                                        else
+                                            td 
+                                                i.fa-solid.fa-user.text-muted 
+                                                |  #{user.Role.name}
                                         td
                                             .btn-group
                                                 button.btn.btn-light.btn-sm.dropdown-toggle(type="button" data-bs-toggle="dropdown" aria-expanded="false").
