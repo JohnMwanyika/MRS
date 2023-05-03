@@ -47,17 +47,38 @@ block content
                                             i.fas.fa-circle-exclamation.text-muted 
                                                 span=user.status
                                         td=user.Role.name
-                                        td Dropdown
-                                        
-                                        //- if (req.RequestStatus.name == 'Pending')
-                                        //-     td
-                                        //-         span.badge.text-bg-warning=req.RequestStatus.name
-                                        //- else
-                                        //-     td
-                                        //-         span.badge.text-bg-success=req.RequestStatus.name
-                                        //- td=moment(req.createdAt).format('MMMM Do YYYY, h:mm:ss a')
+                                        td
+                                            .btn-group
+                                                button.btn.btn-light.btn-sm.dropdown-toggle(type="button" data-bs-toggle="dropdown" aria-expanded="false").
+
+                                                    Actions |
+
+                                                ul.dropdown-menu
+                                                    li
+                                                        a.dropdown-item(href="#").text-muted.text-center.border-bottom
+                                                            | Actions
+                                                    li
+                                                        a.dropdown-item.btn(href="#" data-bs-toggle="modal" data-bs-target=`#staticBackdrop${user.id}`).border-bottom
+                                                            <i class="fa-solid fa-user-pen text-muted"></i> 
+                                                            | Edit
+
+                                                    li
+                                                        a.dropdown-item(href="#").border-bottom
+                                                            <i class="fa-solid fa-user-check text-muted"></i> 
+                                                            | Activate
+                                                    li
+                                                        a.dropdown-item(href="#").text-danger
+                                                            <i class="fa-solid fa-user-large-slash"></i> 
+                                                            | Deactivate
+                                        //- user model                   
+                                        include includes/userModal.pug
+
             else 
                 .card.mb-4
                     .card-header
                         i.fas.fa-table.me-1
                         |  Busted!! Only Super Admins can access User Management
+
+//- //- Button trigger modal 
+//- button.btn.btn-primary(type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop").
+//-     Launch static backdrop modal

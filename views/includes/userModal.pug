@@ -1,0 +1,47 @@
+.modal.fade(data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id=`staticBackdrop${user.id}`)
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h1.modal-title.fs-5#staticBackdropLabel #{user.firstName} #{user.lastName}
+                button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+            .modal-body
+
+                form(method="POST" action='/dashboard/users')
+                    .row.mb-3
+                        .col-md-6
+                            .form-floating.mb-3.mb-md-0
+                                input.form-control#inputFirstName(type="text" placeholder="Enter your first name" value=`${user.firstName}` name='firstName')
+                                label(for="inputFirstName") First name
+                        .col-md-6
+                            .form-floating
+                                input.form-control#inputLastName(type="text" placeholder="Enter your last name" value=`${user.lastName}` name='lastName')
+                                label(for="inputLastName") Last name
+                    .row 
+                        .col-md-6
+                            .form-floating.mb-3
+                                input.form-control#inputEmail(type="email" placeholder="name@example.com" value=`${user.email}` name='email')
+                                label(for="inputEmail") Email address
+                        .col-md-6
+                            .form-floating.mb-3.mb-md-0
+                                input.form-control#inputPhone(type="tel" placeholder="name@example.com" value=`${user.phone}` name='email')
+                                label(for="inputPhone") Phone
+                    .row.mb-3
+                        .col-md-6
+                            .form-floating.mb-3.mb-md-0
+                                select.form-select(aria-label="Default select example")
+                                    //- option(selected) Role
+                                    option(value="1") One
+                                    option(value="2") Two
+                                    option(value="3") Three
+                                label(for="selectRole") User role
+                        .col-md-6
+                            .form-floating.mb-3.mb-md-0
+                                input.form-control#inputStatus(type="text" placeholder="User Status")
+                                label(for="inputStatus") Status
+                    .mt-4.mb-0
+                        .d-grid
+                            button.btn.btn-primary.btn-block(type='submit') Save
+
+            //- .modal-footer
+                button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Close
+                button.btn.btn-primary(type="button") Understood
