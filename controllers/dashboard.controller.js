@@ -189,4 +189,7 @@ module.exports = {
                 console.log(err.message)
             });
     },
+    updateUser: async (req, res) => {
+        const {} = req.body
+    }
 }

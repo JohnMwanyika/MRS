@@ -23,13 +23,13 @@
                                 label(for="inputEmail") Email address
                         .col-md-6
                             .form-floating.mb-3.mb-md-0
-                                input.form-control#inputPhone(type="tel" placeholder="name@example.com" value=`${user.phone}` name='email')
+                                input.form-control#inputPhone(type="tel" placeholder="name@example.com" value=`${user.phone}` name='phone')
                                 label(for="inputPhone") Phone
                     .row.mb-3
                         .col-md-6
                             .form-floating.mb-3.mb-md-0
-                                select.form-select(aria-label="Default select example")
-                                    //- option(selected) Role
+                                select.form-select(aria-label="Default select example" name='roleId')
+                                    option(selected) #{user.Role.name}
                                     each role in roles
                                         option(value=`${role.id}`) #{role.name}
                                 label(for="selectRole") User role
