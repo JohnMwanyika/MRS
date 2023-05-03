@@ -34,7 +34,8 @@ module.exports = {
                     lastName,
                     email,
                     password: hashedPassword,
-                    roleId: 2
+                    roleId: 2,
+                    statusId: 1
                 })
 
             } else {

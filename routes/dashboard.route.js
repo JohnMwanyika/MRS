@@ -4,7 +4,8 @@ const router = express.Router();
 const {
     getDashboard,
     newlyCreatedMails,
-    getUsers
+    getUsers,
+    updateUser
 } = require('../controllers/dashboard.controller');
 // middleware to protect authenticated routes
 // router.use((req, res, next) => {
@@ -23,5 +24,7 @@ router.get('/requests', (req, res) => {
 router.get('/new_mails', newlyCreatedMails);
 
 router.get('/users', getUsers);
+
+router.post('/users/:userId', updateUser)
 
 module.exports = router

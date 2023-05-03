@@ -6,7 +6,7 @@
                 button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
             .modal-body
 
-                form(method="POST" action='/dashboard/users')
+                form(method="post" action=`/dashboard/users/${user.id}`)
                     .row.mb-3
                         .col-md-6
                             .form-floating.mb-3.mb-md-0
@@ -29,7 +29,7 @@
                         .col-md-6
                             .form-floating.mb-3.mb-md-0
                                 select.form-select(aria-label="Default select example" name='roleId')
-                                    option(selected) #{user.Role.name}
+                                    //- option(selected) #{user.Role.name}
                                     each role in roles
                                         option(value=`${role.id}`) #{role.name}
                                 label(for="selectRole") User role

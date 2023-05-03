@@ -190,6 +190,36 @@ module.exports = {
             });
     },
     updateUser: async (req, res) => {
-        const {} = req.body
+        const {
+            userId
+        } = req.params
+        console.log(userId)
+        const {
+            firstName,
+            lastName,
+            email,
+            phone,
+            roleId,
+        } = req.body
+        console.log(req.body)
+
+        const updatedUser = await User.update({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            roleId: roleId
+        }, {
+            where: {
+                id: parseInt(userId)
+            }
+        }).then((results) => {
+            res.redirect('/dashboard/users')
+        })
+        // .catch((error) => {
+        //     res.render('error', {
+        //         error: error
+        //     })
+        // });
     }
 }
