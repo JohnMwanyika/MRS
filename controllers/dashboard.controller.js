@@ -4,6 +4,7 @@ const {
     RequestType,
     RequestStatus,
     User,
+    Role,
     Department
 } = require('../models');
 
@@ -162,5 +163,24 @@ module.exports = {
         }
 
 
+    },
+    getUsers: async (req, res) => {
+        return await User.findAll({
+                include: [{
+                    model: Role,
+                    required: true
+                }]
+            })
+            .then((result) => {
+                res.render('users', {
+                    title: 'User management',
+                    user: req.session.user,
+                    status: 'success',
+                    data: result
+                })
+            })
+            .catch((err) => {
+                console.log(err.message)
+            });
     }
 }

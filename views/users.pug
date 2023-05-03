@@ -1,0 +1,63 @@
+extends dashLayout 
+block content
+    main
+        .container-fluid.px-4
+            h1.mt-4 #{title}
+            ol.breadcrumb.mb-4
+                li.breadcrumb-item.active #{title}
+            if (user.Role.name == 'Super Admin')
+                .card.mb-4
+                    .card-header
+                        i.fas.fa-table.me-1
+                        |  All users
+
+                    .card-body
+                        table#newMails
+                            thead
+                                tr
+                                    th First Name
+                                    th Last Name
+                                    th Email
+                                    th Phone
+                                    th Status
+                                    th Role
+                                    th Action
+                            tfoot
+                                tr
+                                    th First Name
+                                    th Last Name
+                                    th Email
+                                    th 
+                                        i.fas.fa-phone.text-muted 
+                                            span Phone
+                                    th Status
+                                    th Role
+                                    th Action
+                            tbody
+                                each user in data
+                                    tr
+                                        td=user.firstName
+                                        td=user.lastName
+                                        td=user.email
+                                        if (user.phone)
+                                            td=user.phone
+                                        else 
+                                            td.text-center ---
+                                        td  
+                                            i.fas.fa-circle-exclamation.text-muted 
+                                                span=user.status
+                                        td=user.Role.name
+                                        td Dropdown
+                                        
+                                        //- if (req.RequestStatus.name == 'Pending')
+                                        //-     td
+                                        //-         span.badge.text-bg-warning=req.RequestStatus.name
+                                        //- else
+                                        //-     td
+                                        //-         span.badge.text-bg-success=req.RequestStatus.name
+                                        //- td=moment(req.createdAt).format('MMMM Do YYYY, h:mm:ss a')
+            else 
+                .card.mb-4
+                    .card-header
+                        i.fas.fa-table.me-1
+                        |  Busted!! Only Super Admins can access User Management

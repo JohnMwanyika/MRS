@@ -14,7 +14,7 @@ module.exports = {
 
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
-        console.log('this is the hashed password',hashedPassword);
+        console.log('this is the hashed password', hashedPassword);
 
         console.log(req.body);
         // check if user exists in the database with similar creadentials
@@ -23,7 +23,7 @@ module.exports = {
                 email: email,
             }
         }).then((existingUser) => {
-            console.log('Existing user is',existingUser);
+            console.log('Existing user is', existingUser);
             // const saltRounds = 10;
             // const hashedPassword = await bcrypt.hash(password, saltRounds);
             // console.log('this is the hashed password',hashedPassword);
@@ -34,6 +34,7 @@ module.exports = {
                     lastName,
                     email,
                     password: hashedPassword,
+                    roleId: 2
                 })
 
             } else {

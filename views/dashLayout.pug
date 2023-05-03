@@ -42,6 +42,11 @@ html(lang="en")
                                 .sb-nav-link-icon
                                     i.fas.fa-file-circle-plus
                                 | New Mails
+                            if (user.Role.name == "Super Admin")
+                                a.nav-link(href="/dashboard/users")
+                                    .sb-nav-link-icon
+                                        i.fas.fa-user-group
+                                    | Users
                             //- For Future Updates
                                 .sb-sidenav-menu-heading Interface
                                 a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
