@@ -5,6 +5,7 @@ const {
     RequestStatus,
     User,
     Role,
+    UserStatus,
     Department
 } = require('../models');
 
@@ -165,9 +166,13 @@ module.exports = {
 
     },
     getUsers: async (req, res) => {
+        const roles = await Role.findAll()
         return await User.findAll({
                 include: [{
                     model: Role,
+                    required: true
+                }, {
+                    model: UserStatus,
                     required: true
                 }]
             })
@@ -176,7 +181,8 @@ module.exports = {
                     title: 'User management',
                     user: req.session.user,
                     status: 'success',
-                    data: result
+                    data: result,
+                    roles
                 })
             })
             .catch((err) => {

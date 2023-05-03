@@ -30,13 +30,12 @@
                             .form-floating.mb-3.mb-md-0
                                 select.form-select(aria-label="Default select example")
                                     //- option(selected) Role
-                                    option(value="1") One
-                                    option(value="2") Two
-                                    option(value="3") Three
+                                    each role in roles
+                                        option(value=`${role.id}`) #{role.name}
                                 label(for="selectRole") User role
                         .col-md-6
                             .form-floating.mb-3.mb-md-0
-                                input.form-control#inputStatus(type="text" placeholder="User Status")
+                                input.form-control#inputStatus(type="text" placeholder="User Status" value=`${user.UserStatus.name}`)
                                 label(for="inputStatus") Status
                     .mt-4.mb-0
                         .d-grid

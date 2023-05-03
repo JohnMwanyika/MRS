@@ -43,9 +43,18 @@ block content
                                             td=user.phone
                                         else 
                                             td.text-center ---
-                                        td  
-                                            i.fas.fa-circle-exclamation.text-muted 
-                                                span=user.status
+                                        if (user.UserStatus.name == 'Active')
+                                            td.text-center
+                                                span.badge.text-bg-success
+                                                    i.fa-solid.fa-circle-check 
+                                                    |  #{user.UserStatus.name}
+                                        else if (user.UserStatus.name == 'Inactive')
+                                            td.text-center
+                                                span.badge.text-bg-danger
+                                                    i.fa-solid.fa-circle-xmark 
+                                                    |  #{user.UserStatus.name}
+                                            //- i.fas.fa-circle-exclamation.text-muted
+                                                
                                         td=user.Role.name
                                         td
                                             .btn-group

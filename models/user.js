@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         }),
         User.belongsTo(models.Role, {
           foreignKey: 'roleId'
+        }),
+        User.belongsTo(models.UserStatus, {
+          foreignKey: 'statusId'
         })
     }
   }
@@ -24,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    roleId: DataTypes.INTEGER
+    roleId: DataTypes.INTEGER,
+    statusId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',
