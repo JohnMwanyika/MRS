@@ -19,8 +19,7 @@ block content
                                     th Last Name
                                     th Email
                                     th Phone
-                                    th Status 
-                                        span.spinner-border.spinner-border-sm.mr-2.d-none(aria-hidden="true")#spinner
+                                    th Status
                                     th Role
                                     th Action
                             tfoot
@@ -50,25 +49,15 @@ block content
                                             td.text-center ---
                                         if (user.UserStatus.name == 'Active')
                                             td.text-center
-                                                .form-check.form-switch
-                                                    input.form-check-input#switch(type="checkbox" role="switch" onchange=`handleCheckboxChange(this,${user.id})` checked)
-                                                    label.form-check-label(for="switch" id=`switch-state${user.id}`) Active 
-                                        else 
+                                                span.badge.text-bg-success
+                                                    i.fa-solid.fa-circle-check 
+                                                    |  #{user.UserStatus.name}
+                                        else if (user.UserStatus.name == 'Inactive')
                                             td.text-center
-                                                .form-check.form-switch
-                                                    input.form-check-input#switch(type="checkbox" role="switch" onchange=`handleCheckboxChange(this,${user.id})`)
-                                                    label.form-check-label(for="switch" id=`switch-state${user.id}`) Inactive
-                                        //- if (user.UserStatus.name == 'Active')  
-                                        //-     td.text-center
-                                        //-         span.badge.text-bg-success
-                                        //-             i.fa-solid.fa-circle-check 
-                                        //-             |  #{user.UserStatus.name}
-                                        //- else if (user.UserStatus.name == 'Inactive')
-                                        //-     td.text-center
-                                        //-         span.badge.text-bg-danger
-                                        //-             i.fa-solid.fa-circle-xmark 
-                                        //-             |  #{user.UserStatus.name}
-                                        //- i.fas.fa-circle-exclamation.text-muted
+                                                span.badge.text-bg-danger
+                                                    i.fa-solid.fa-circle-xmark 
+                                                    |  #{user.UserStatus.name}
+                                            //- i.fas.fa-circle-exclamation.text-muted
                                         if (user.Role.name == "Super Admin")        
                                             td 
                                                 i.fa-solid.fa-user-tie.text-muted  
@@ -100,27 +89,8 @@ block content
                                                         a.dropdown-item(href="#").text-danger
                                                             <i class="fa-solid fa-user-large-slash"></i> 
                                                             | Deactivate
-                                        //- Edit user modal                   
+                                        //- user model                   
                                         include includes/userModal.pug
-                                script.
-
-                                    function handleCheckboxChange(checkbox,userId) {
-                                        if (checkbox.checked) {
-                                            axios.post(`/dashboard/users/update_status/${userId}`,{statusId:1})
-                                            .then((response)=>{
-                                                alert(response.data)
-                                                console.log(response);
-                                            })
-
-                                        } else {
-                                            axios.post(`/dashboard/users/update_status/${userId}`,{statusId:2})
-                                            .then((response)=>{
-                                                alert(response.data)
-                                                console.log(response);
-                                            })
-                                        }
-                                    }
-
 
             else 
                 .card.mb-4

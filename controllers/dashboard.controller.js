@@ -204,22 +204,53 @@ module.exports = {
         console.log(req.body)
 
         const updatedUser = await User.update({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phone: phone,
-            roleId: roleId
-        }, {
-            where: {
-                id: parseInt(userId)
-            }
-        }).then((results) => {
-            res.redirect('/dashboard/users')
-        })
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone,
+                roleId: roleId
+            }, {
+                where: {
+                    id: parseInt(userId)
+                }
+            }).then((results) => {
+                res.redirect('/dashboard/users')
+            })
+            .catch((error) => {
+                res.render('error', {
+                    error: error
+                })
+            });
+    },
+    toggleStatus: async (req, res) => {
+        const {
+            userId
+        } = req.params;
+
+        const {
+            statusId
+        } = req.body;
+        console.log(req.body);
+        console.log('user is',userId)
+        return await User.update({
+                statusId: statusId
+            }, {
+                where: {
+                    id: userId
+                }
+            })
+            .then((result) => {
+                res.json({
+                    status: 'success',
+                    data: 'user status updated successfully'
+                })
+            })
         // .catch((error) => {
-        //     res.render('error', {
-        //         error: error
+        //     res.json({
+        //         status: 'error',
+        //         data: 'error updating user status'
         //     })
-        // });
+        // })
     }
+
 }
