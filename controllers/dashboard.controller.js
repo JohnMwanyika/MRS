@@ -231,7 +231,7 @@ module.exports = {
             statusId
         } = req.body;
         console.log(req.body);
-        console.log('user is',userId)
+        console.log('user is', userId)
         return await User.update({
                 statusId: statusId
             }, {
@@ -245,12 +245,12 @@ module.exports = {
                     data: 'user status updated successfully'
                 })
             })
-        // .catch((error) => {
-        //     res.json({
-        //         status: 'error',
-        //         data: 'error updating user status'
-        //     })
-        // })
+            .catch((error) => {
+                res.json({
+                    status: 'error',
+                    data: 'error updating user status'
+                })
+            })
     }
 
 }
