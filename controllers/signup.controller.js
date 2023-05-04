@@ -35,7 +35,7 @@ module.exports = {
                     email,
                     password: hashedPassword,
                     roleId: 2,
-                    statusId: 1
+                    statusId: 2
                 })
 
             } else {
