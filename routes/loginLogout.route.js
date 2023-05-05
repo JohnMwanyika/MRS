@@ -17,15 +17,17 @@ router.get('/', (req, res) => {
     // }else{
     //     return ''
     // }
+    const successMessage = req.query.success === 'user_created' ? 'User created successfully login to your account' : ''
     const errorMessage =
         req.query.error === 'invalid_credentials' ? 'Invalid username or password' :
         req.query.error === 'no_user' ? 'No user found under that username' :
         req.query.error === 'no_session' ? 'System has been idle for more than 30 minutes you need to log in to create your session' :
-        req.query.error === 'inactive' ? 'Your account is inactive contact Administrator for assistance' :
+        req.query.error === 'inactive' ? 'Your account is inactive contact Administrator for activation' :
         "";
     console.log(errorMessage);
     res.render('login', {
-        errorMessage
+        errorMessage,
+        successMessage
     });
 });
 router.post('/', login);

@@ -232,6 +232,12 @@ module.exports = {
         } = req.body;
         console.log(req.body);
         console.log('user is', userId)
+        if (userId == req.session.user.id) {
+            return res.json({
+                status: 'error',
+                data: 'You cannot change your own status'
+            })
+        }
         return await User.update({
                 statusId: statusId
             }, {

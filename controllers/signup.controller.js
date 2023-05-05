@@ -49,7 +49,7 @@ module.exports = {
             }
         }).then((createdUser) => {
             console.log(createdUser)
-            res.render('login');
+            res.redirect('/login?success=user_created');
         }).catch((error) => {
             res.json({
                 message: {

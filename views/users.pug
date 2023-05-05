@@ -30,18 +30,20 @@ block content
                                     th Email
                                     th 
                                         i.fas.fa-phone.text-muted 
-                                            span Phone
+                                        | Phone
                                     th Status
                                     th Role
-                                    th Action
+                                    //- th Action
                             tbody
                                 each user in data
                                     tr
                                         td=user.firstName
                                         td=user.lastName
                                         td 
-                                            i.fa-solid.fa-paper-plane.text-muted 
-                                            |  #{user.email}
+                                            b
+                                                a.link-underline-light(href="#" data-bs-toggle="modal" data-bs-target=`#staticBackdrop${user.id}` style="text-decoration:false;")
+                                                    i.fa-solid.fa-paper-plane 
+                                                    |  #{user.email}
                                         if (user.phone)
                                             td 
                                                 i.fa-solid.fa-phone.text-muted 
@@ -69,7 +71,7 @@ block content
                                                 |  #{user.Role.name}
                                         td
                                             .btn-group
-                                                button.btn.btn-light.btn-sm.dropdown-toggle(type="button" data-bs-toggle="dropdown" aria-expanded="false").
+                                                button.btn.btn-light.btn-sm.dropdown-toggle.border(type="button" data-bs-toggle="dropdown" aria-expanded="false").
 
                                                     Actions |
 
@@ -81,59 +83,60 @@ block content
                                                         a.dropdown-item.btn(href="#" data-bs-toggle="modal" data-bs-target=`#staticBackdrop${user.id}`).border-bottom
                                                             <i class="fa-solid fa-user-pen text-muted"></i> 
                                                             | Edit
-
-                                                    li
-                                                        a.dropdown-item(href="#").border-bottom
-                                                            <i class="fa-solid fa-user-check text-muted"></i> 
-                                                            | Activate
-                                                    li
-                                                        a.dropdown-item(href="#").text-danger
-                                                            <i class="fa-solid fa-user-large-slash"></i> 
-                                                            | Deactivate
+                                                    if (user.UserStatus.name == "Inactive")
+                                                        li
+                                                            a.dropdown-item(href="#").border-bottom
+                                                                <i class="fa-solid fa-user-check text-muted"></i> 
+                                                                | Activate
+                                                    else
+                                                        li
+                                                            a.dropdown-item(href="#").text-danger
+                                                                <i class="fa-solid fa-user-large-slash"></i> 
+                                                                | Deactivate
                                         //- Edit user modal                   
                                         include includes/userModal.pug
-                                script.
-                                    toastr.options = {
-                                        "closeButton": true,
-                                        "debug": false,
-                                        "newestOnTop": false,
-                                        "progressBar": true,
-                                        "positionClass": "toast-top-center",
-                                        "preventDuplicates": false,
-                                        "onclick": null,
-                                        "showDuration": "300",
-                                        "hideDuration": "1000",
-                                        "timeOut": "5000",
-                                        "extendedTimeOut": "1000",
-                                        "showEasing": "swing",
-                                        "hideEasing": "linear",
-                                        "showMethod": "fadeIn",
-                                        "hideMethod": "fadeOut"
-                                    };
+                                //- script.
+                                //-     toastr.options = {
+                                //-         "closeButton": true,
+                                //-         "debug": false,
+                                //-         "newestOnTop": false,
+                                //-         "progressBar": true,
+                                //-         "positionClass": "toast-top-center",
+                                //-         "preventDuplicates": false,
+                                //-         "onclick": null,
+                                //-         "showDuration": "300",
+                                //-         "hideDuration": "1000",
+                                //-         "timeOut": "5000",
+                                //-         "extendedTimeOut": "1000",
+                                //-         "showEasing": "swing",
+                                //-         "hideEasing": "linear",
+                                //-         "showMethod": "fadeIn",
+                                //-         "hideMethod": "fadeOut"
+                                //-     };
 
 
-                                    function handleCheckboxChange(checkbox,userId) {
-                                        if (checkbox.checked) {
-                                            axios.post(`/dashboard/users/update_status/${userId}`,{statusId:1})
-                                            .then((response)=>{
-                                                toastr[response.data.status](response.data.data, response.data.status);
-                                                setTimeout(() => {
-                                                    location.reload();
-                                                }, 2000);
-                                                console.log(response);
-                                            })
+                                //-     function handleCheckboxChange(checkbox,userId) {
+                                //-         if (checkbox.checked) {
+                                //-             axios.post(`/dashboard/users/update_status/${userId}`,{statusId:1})
+                                //-             .then((response)=>{
+                                //-                 toastr[response.data.status](response.data.data, response.data.status);
+                                //-                 setTimeout(() => {
+                                //-                     location.reload();
+                                //-                 }, 2000);
+                                //-                 console.log(response);
+                                //-             })
 
-                                        } else {
-                                            axios.post(`/dashboard/users/update_status/${userId}`,{statusId:2})
-                                            .then((response)=>{
-                                                toastr[response.data.status](response.data.data, response.data.status);
-                                                setTimeout(() => {
-                                                    location.reload();
-                                                }, 2000);
-                                                console.log(response);
-                                            })
-                                        }
-                                    }
+                                //-         } else {
+                                //-             axios.post(`/dashboard/users/update_status/${userId}`,{statusId:2})
+                                //-             .then((response)=>{
+                                //-                 toastr[response.data.status](response.data.data, response.data.status);
+                                //-                 setTimeout(() => {
+                                //-                     location.reload();
+                                //-                 }, 2000);
+                                //-                 console.log(response);
+                                //-             })
+                                //-         }
+                                //-     }
 
 
             else 

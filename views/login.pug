@@ -11,6 +11,9 @@ block content
                             if (errorMessage)
                                 .alert.alert-danger(role="alert").
                                     #{errorMessage}
+                            if (successMessage)
+                                .alert.alert-success(role="alert").
+                                    #{successMessage}
   
                             form(method='post' action='/login')
                                 .form-floating.mb-3
