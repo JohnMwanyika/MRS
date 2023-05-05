@@ -10,7 +10,10 @@ block content
                     .card-header
                         i.fas.fa-table.me-1
                         |  All users
-
+                        button.btn.btn-outline-primary.float-end(type="button" data-bs-toggle="modal" data-bs-target=`#staticBackdrop`)
+                            i.fas.fa-user-plus.me-1
+                        | New
+                        include includes/newUserModal
                     .card-body
                         table#newMails
                             thead
