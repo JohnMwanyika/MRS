@@ -1,6 +1,14 @@
 extends dashLayout 
 block content
     main
+        if (errorMessage)
+            .alert.alert-danger(role="alert")
+                <i class="fa-solid fa-circle-xmark"></i> 
+                |  #{errorMessage}
+        if (successMessage)
+            .alert.alert-success(role="alert")
+                <i class="fa-solid fa-circle-check"></i> 
+                |  #{successMessage}
         .container-fluid.px-4
             h1.mt-4 #{title}
             ol.breadcrumb.mb-4

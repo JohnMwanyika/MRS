@@ -166,6 +166,10 @@ module.exports = {
 
     },
     getUsers: async (req, res) => {
+        // defining request queries
+        const errorMessage = req.query.error === 'user_exists' ? 'This user already exists in the database' : "";
+        const successMessage = req.query.success === 'user_created' ? 'User has been created successfully' : "";
+
         const roles = await Role.findAll()
         return await User.findAll({
                 include: [{
@@ -178,16 +182,21 @@ module.exports = {
             })
             .then((result) => {
                 // res.set('Content-Security-Policy', "script-src 'unsafe-inline' 'unsafe-eval' *");
-                res.render('users', {
+                return res.render('users', {
                     title: 'User management',
                     user: req.session.user,
                     status: 'success',
                     data: result,
-                    roles
+                    roles,
+                    errorMessage,
+                    successMessage
                 })
             })
             .catch((err) => {
                 console.log(err.message)
+                res.render('error', {
+                    error: error
+                })
             });
     },
     updateUser: async (req, res) => {

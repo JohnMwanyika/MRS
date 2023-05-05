@@ -6,7 +6,7 @@
                 button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
             .modal-body
 
-                form(method="post" action=`/dashboard/users/`)
+                form(method="post" action=`/signup`)
                     .row.mb-3
                         .col-md-6
                             .form-floating.mb-3.mb-md-0
@@ -23,8 +23,10 @@
                                 label(for="inputEmail") Email address
                         .col-md-6
                             .form-floating.mb-3.mb-md-0
-                                input.form-control#inputPhone(type="tel" placeholder="name@example.com" name='phone' required)
+                                input.form-control#inputPhone(type="tel" placeholder="name@example.com" name='phone')
                                 label(for="inputPhone") Phone
+                                input.form-control#inputPhone(type="hidden" placeholder="password" value='Welcome2023' name='password')
+
                     .row.mb-3
                         .col-md-6
                             .form-floating.mb-3.mb-md-0
@@ -35,7 +37,7 @@
                                 label(for="selectRole") User role
                         .col-md-6
                             .form-floating.mb-3.mb-md-0
-                                input.form-control#inputStatus(type="text" placeholder="User Status" value=`${user.UserStatus.name}`)
+                                input.disabled.form-control#inputStatus(type="text" placeholder="User Status" value=`${user.UserStatus.name}`)
                                 label(for="inputStatus") Status
                     .mt-4.mb-0
                         .d-grid
