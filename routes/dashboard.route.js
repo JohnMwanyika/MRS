@@ -6,7 +6,8 @@ const {
     newlyCreatedMails,
     getUsers,
     updateUser,
-    toggleStatus
+    toggleStatus,
+    getAllResetRequests
 } = require('../controllers/dashboard.controller');
 // middleware to protect authenticated routes
 // router.use((req, res, next) => {
@@ -35,5 +36,7 @@ router.get('/switch-state', (req, res) => {
 });
 
 router.post('/users/update_status/:userId', toggleStatus);
+
+router.get('/reset_mails', getAllResetRequests);
 
 module.exports = router

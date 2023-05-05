@@ -79,11 +79,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+// app.use('/mails', mailRouter);
+// app.use('/dashboard', checkSession, dashboardRouter);
+app.use('/login', authenticationRouter);
+app.use('/dashboard', checkSession, dashboardRouter);
+app.use('/signup', signUpRouter);
 app.use('/users', usersRouter);
 app.use('/mails', mailRouter);
-app.use('/dashboard', checkSession, dashboardRouter);
-app.use('/login', authenticationRouter);
-app.use('/signup', signUpRouter);
+
 
 app.get('/logout', (req, res) => {
   req.session.destroy();

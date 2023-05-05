@@ -37,6 +37,10 @@ html(lang="en")
                                 .sb-nav-link-icon
                                     i.fas.fa-file-circle-plus
                                 | New Mails
+                            a.nav-link(href="/dashboard/reset_mails")
+                                .sb-nav-link-icon
+                                    i.fas.fa-file-circle-plus
+                                | Reset Mails
                             if (user.Role.name == "Super Admin")
                                 a.nav-link(href="/dashboard/users")
                                     .sb-nav-link-icon

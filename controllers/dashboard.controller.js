@@ -258,6 +258,98 @@ module.exports = {
                     data: 'error updating user status'
                 })
             })
+    },
+    getAllResetRequests: async (req, res) => {
+        console.log('gGetting all reset requests')
+        if (req.session.user.Role.name == 'Super Admin') {
+            return await Request.findAll({
+                    include: [{
+                            model: Mail,
+                            required: false
+                        },
+                        {
+                            model: RequestType,
+                            required: true
+                        },
+                        {
+                            model: RequestStatus,
+                            required: true
+                        },
+                        {
+                            model: User,
+                            required: true
+                        }
+                    ],
+                    order: [
+                        ['createdAt', 'DESC']
+                    ],
+                    where: {
+                        requestStatus: 1, //completed
+                        requestType: 1, //Reset Password
+                    }
+                }).then((results) => {
+                    console.log(JSON.stringify(results))
+                    // res.json({newMails})
+                    res.render('resetMails', {
+                        title: 'Reset requests',
+                        status: 'success',
+                        user: req.session.user,
+                        data: results,
+                        moment: require('moment'),
+                        axios: require('axios'),
+                    })
+                })
+                .catch((error) => {
+                    res.render('error', {
+                        error: error,
+                    })
+                });
+        } else {
+            return await Request.findAll({
+                    include: [{
+                            model: Mail,
+                            required: false
+                        },
+                        {
+                            model: RequestType,
+                            required: true
+                        },
+                        {
+                            model: RequestStatus,
+                            required: true
+                        },
+                        {
+                            model: User,
+                            required: true
+                        }
+                    ],
+                    order: [
+                        ['createdAt', 'DESC']
+                    ],
+                    where: {
+                        requestStatus: 1, //completed
+                        requestType: 1, //Reset Password
+                        userId: req.session.user.id //get only the mails reset by the logged in user
+                    }
+                })
+                .then((results) => {
+                    console.log(JSON.stringify(results))
+                    // res.json({newMails})
+                    res.render('resetMails', {
+                        title: 'Reset requests',
+                        status: 'success',
+                        user: req.session.user,
+                        data: results,
+                        moment: require('moment'),
+                        axios: require('axios'),
+                    })
+                })
+                .catch((error) => {
+                    res.render('error', {
+                        error: error,
+                    })
+                });
+        }
     }
 
 }

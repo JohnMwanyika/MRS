@@ -1,0 +1,60 @@
+extends dashLayout 
+block content
+    main
+        .container-fluid.px-4
+            h1.mt-4 #{title}
+            ol.breadcrumb.mb-4
+                li.breadcrumb-item.active #{title}
+            .card.mb-4
+                .card-header
+                    i.fas.fa-table.me-1
+                    |  Reset
+
+                .card-body
+                    table#newMails
+                        thead
+                            tr
+                                th Email
+                                th Name
+                                th Department
+                                th Status
+                                th Date
+                                th Reset by
+                        tfoot
+                            tr
+                                th Email
+                                th Name
+                                th Department
+                                th Status
+                                th Date
+                                th Reset by
+                        if (user.Role.name == 'Super Admin')
+                            tbody
+                                each req in data
+                                    tr
+                                        td=req.email
+                                        td=req.fullName
+                                        td=req.department
+                                        if (req.RequestStatus.name == 'Pending')
+                                            td
+                                                span.badge.text-bg-warning=req.RequestStatus.name
+                                        else
+                                            td
+                                                span.badge.text-bg-success=req.RequestStatus.name
+                                        td=moment(req.createdAt).format('MMMM Do YYYY, h:mm:ss a')
+                                        td #{req.User.firstName} #{req.User.lastName}
+                        else if (user.Role.name == 'Admin')
+                            tbody
+                                each req in data
+                                    tr
+                                        td=req.email
+                                        td=req.fullName
+                                        td=req.department
+                                        if (req.RequestStatus.name == 'Pending')
+                                            td
+                                                span.badge.text-bg-warning=req.RequestStatus.name
+                                        else
+                                            td
+                                                span.badge.text-bg-success=req.RequestStatus.name
+                                        td=moment(req.createdAt).format('MMMM Do YYYY, h:mm:ss a')
+                                        td #{req.User.firstName} #{req.User.lastName}
