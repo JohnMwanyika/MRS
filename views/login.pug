@@ -10,9 +10,11 @@ block content
                         .card-body
                             if (errorMessage)
                                 .alert.alert-danger(role="alert").
+                                    <i class="fa-solid fa-circle-xmark"></i> 
                                     #{errorMessage}
                             if (successMessage)
                                 .alert.alert-success(role="alert").
+                                    <i class="fa-solid fa-circle-check"></i> 
                                     #{successMessage}
   
                             form(method='post' action='/login')

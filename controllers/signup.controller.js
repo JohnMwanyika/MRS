@@ -1,5 +1,6 @@
 const {
-    User
+    User,
+    Mail
 } = require('../models');
 const bcrypt = require('bcrypt');
 
@@ -17,6 +18,15 @@ module.exports = {
         console.log('this is the hashed password', hashedPassword);
 
         console.log(req.body);
+        // check if user is a registered county staff with an email address
+        // const countyStaff = await Mail.findOne({
+        //     where:{
+        //         email:email
+        //     }
+        // })
+        // if (!countyStaff){
+        //     return res.redirect('/signup?error=not_member');
+        // }
         // check if user exists in the database with similar creadentials
         return await User.findOne({
             where: {
@@ -39,12 +49,6 @@ module.exports = {
                 })
 
             } else {
-                // res.json({
-                //     message: {
-                //         status: 'warning',
-                //         info: 'User already exists'
-                //     }
-                // })
                 return res.redirect('/signup?error=user_exists');
             }
         }).then((createdUser) => {
