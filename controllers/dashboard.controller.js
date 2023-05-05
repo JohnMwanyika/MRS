@@ -177,6 +177,7 @@ module.exports = {
                 }]
             })
             .then((result) => {
+                // res.set('Content-Security-Policy', "script-src 'unsafe-inline' 'unsafe-eval' *");
                 res.render('users', {
                     title: 'User management',
                     user: req.session.user,

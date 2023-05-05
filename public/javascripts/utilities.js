@@ -17,11 +17,11 @@ toastr.options = {
 };
 
 // this function toggles between activating and deactivating a user on flipping the switch
-function handleCheckboxChange(checkbox, userId) {
+function handleCheckboxChange(userId,checkbox) {
     if (checkbox.checked) {
         axios.post(`/dashboard/users/update_status/${userId}`, {
                 statusId: 1
-            })
+            },)
             .then((response) => {
                 toastr[response.data.status](response.data.data, response.data.status);
                 setTimeout(() => {

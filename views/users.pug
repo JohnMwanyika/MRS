@@ -53,12 +53,12 @@ block content
                                         if (user.UserStatus.name == 'Active')
                                             td.text-center
                                                 .form-check.form-switch
-                                                    input.form-check-input#switch(type="checkbox" role="switch" onchange=`handleCheckboxChange(this,${user.id})` checked)
+                                                    input.form-check-input#switch(type="checkbox" role="switch" onchange=`handleCheckboxChange(${user.id},this)` checked)
                                                     label.form-check-label(for="switch" id=`switch-state${user.id}`) Active 
                                         else 
                                             td.text-center
                                                 .form-check.form-switch
-                                                    input.form-check-input#switch(type="checkbox" role="switch" onchange=`handleCheckboxChange(this,${user.id})`)
+                                                    input.form-check-input#switch(type="checkbox" role="switch" onchange=`handleCheckboxChange(${user.id},this)`)
                                                     label.form-check-label(for="switch" id=`switch-state${user.id}`) Inactive
 
                                         if (user.Role.name == "Super Admin")        
