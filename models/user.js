@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     roleId: DataTypes.INTEGER,
     statusId: DataTypes.INTEGER,
     phone: DataTypes.INTEGER,
+    passReset: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'User',

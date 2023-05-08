@@ -47,7 +47,8 @@ function handleCheckboxChange(userId, checkbox) {
 function resetUserPassword(userId) {
 
     axios.post(`/dashboard/users/reset_password/${userId}`, {
-            userId: userId
+            userId: userId,
+            passReset: 1
         })
         .then((response) => {
             console.log(response);
@@ -56,5 +57,34 @@ function resetUserPassword(userId) {
         .catch((error) => {
             console.log(error);
             toastr[error.data.status](error.data.data, error.data.status)
+        });
+};
+
+// Wait for 3 seconds and then launch the modal
+// setTimeout(function () {
+//     document.getElementById('launchModal').click();
+// }, 3000);
+
+function resetOwnPassword(userId) {
+    // get password from the user
+    const pass = document.getElementById('confirm').value;
+
+    axios.post(`/dashboard/reset_password/${userId}`, {
+            password: pass,
+            passReset: 0
+        })
+        .then((response) => {
+            console.log(response);
+            toastr[response.data.status](response.data.data, response.data.status);
+            setTimeout(() => {
+                window.location.href = '/logout'
+            }, 3000);
+        })
+        .catch((error) => {
+            console.log(error);
+            toastr[error.data.status](error.data.data, error.data.status)
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
         });
 };

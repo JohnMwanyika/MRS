@@ -8,7 +8,8 @@ const {
     updateUser,
     toggleStatus,
     getAllResetRequests,
-    passwordReset
+    passwordReset,
+    ownPasswordReset
 } = require('../controllers/dashboard.controller');
 // middleware to protect authenticated routes
 // router.use((req, res, next) => {
@@ -42,5 +43,7 @@ router.post('/users/update_status/:userId', toggleStatus);
 router.get('/reset_mails', getAllResetRequests);
 // route for Super Admin to reset user password
 router.post('/users/reset_password/:userId', passwordReset);
+// route for changing the currently logged in user
+router.post('/reset_password/:userId',ownPasswordReset);
 
 module.exports = router;

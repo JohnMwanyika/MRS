@@ -364,30 +364,72 @@ module.exports = {
             userId
         } = req.params;
 
+        const {
+            passReset
+        } = req.body;
+
         console.log('User id is as follows', userId)
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash('Welcome2023', saltRounds);
         console.log('this is the hashed password', hashedPassword);
 
         const user = await User.update({
-                password: hashedPassword
+                password: hashedPassword,
+                passReset
             }, {
                 where: {
                     id: userId
                 }
             }).then((result) => {
-                console.log('Response is ',result)
+                console.log('Response is ', result)
                 // res.redirect('/dashboard/users?success=pass_changed')
                 res.json({
                     status: 'success',
-                    data:'Password reset successfull'
+                    data: 'Password reset successfull'
                 });
             })
             .catch((err) => {
                 // res.redirect('/dashboard/users?error=pass_unchanged')
                 res.json({
                     status: 'error',
-                    data:'Oops an error has occured while reseting password try again'
+                    data: 'Oops an error has occured while reseting password try again'
+                });
+            })
+    },
+    ownPasswordReset: async (req, res) => {
+        const {
+            userId
+        } = req.params;
+        const {
+            password,
+            passReset
+        } = req.body;
+
+        console.log('User id is as follows', userId)
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        console.log('this is the hashed password', hashedPassword);
+
+        const user = await User.update({
+                password: hashedPassword,
+                passReset
+            }, {
+                where: {
+                    id: userId
+                }
+            }).then((result) => {
+                console.log('Response is ', result)
+                // res.redirect('/dashboard?success=pass_changed')
+                res.json({
+                    status: 'success',
+                    data: 'Password reset successfull'
+                });
+            })
+            .catch((err) => {
+                // res.redirect('/dashboard?error=pass_unchanged')
+                res.json({
+                    status: 'error',
+                    data: 'Oops an error has occured while reseting password try again'
                 });
             })
     }

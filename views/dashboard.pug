@@ -65,6 +65,13 @@ block content
                     | Recent Requests
 
                 .card-body
+                    if (user.passReset === 1)
+                        script.
+                            setTimeout(function () {
+                                document.getElementById('launchModal').click();
+                            }, 3000);
+                    include includes/changePassword
+
                     table#datatablesSimple
                         thead
                             tr
