@@ -94,6 +94,11 @@ block content
                                                         a.dropdown-item.btn(href="#" data-bs-toggle="modal" data-bs-target=`#staticBackdrop${user.id}`).border-bottom
                                                             <i class="fa-solid fa-user-pen text-muted"></i> 
                                                             | Edit
+                                                    li
+                                                        button.btn(onclick=`resetUserPassword(${userId})`).border-bottom
+                                                            <i class="fa-solid fa-arrow-rotate-left text-muted"></i> 
+                                                            | Reset Password
+
                                                     if (user.UserStatus.name == "Inactive")
                                                         li
                                                             a.dropdown-item(href="#").border-bottom
@@ -107,6 +112,36 @@ block content
                                         //- Edit user modal                   
                                         include includes/userModal.pug
                                 //- script.
+                                //-     toastr.options = {
+                                //-         "closeButton": true,
+                                //-         "debug": false,
+                                //-         "newestOnTop": false,
+                                //-         "progressBar": true,
+                                //-         "positionClass": "toast-top-center",
+                                //-         "preventDuplicates": false,
+                                //-         "onclick": null,
+                                //-         "showDuration": "300",
+                                //-         "hideDuration": "1000",
+                                //-         "timeOut": "5000",
+                                //-         "extendedTimeOut": "1000",
+                                //-         "showEasing": "swing",
+                                //-         "hideEasing": "linear",
+                                //-         "showMethod": "fadeIn",
+                                //-         "hideMethod": "fadeOut"
+                                //-     };
+
+                                //-     function resetUserPassword(userId){
+
+                                //-         axios.post('/dashboard/users/reset_password',{userId:userId});
+                                //-         .then((response)=>{
+                                //-             console.log(response);
+                                //-             toastr[response.data.status](response.data.data, response.data.status);
+                                //-         })
+                                //-         .catch((error)=>{
+                                //-             console.log(response);
+                                //-             toastr[response.data.status](response.data.data, response.data.status);
+                                //-         });
+                                //-     };
                                 //-     toastr.options = {
                                 //-         "closeButton": true,
                                 //-         "debug": false,

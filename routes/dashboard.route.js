@@ -7,7 +7,8 @@ const {
     getUsers,
     updateUser,
     toggleStatus,
-    getAllResetRequests
+    getAllResetRequests,
+    passwordReset
 } = require('../controllers/dashboard.controller');
 // middleware to protect authenticated routes
 // router.use((req, res, next) => {
@@ -35,8 +36,11 @@ router.get('/switch-state', (req, res) => {
     })
 });
 
+// this will toggle between Actvation and deactivation of user account
 router.post('/users/update_status/:userId', toggleStatus);
-
+// this lists all reset requests
 router.get('/reset_mails', getAllResetRequests);
+// route for Super Admin to reset user password
+router.post('/dashboard/users/reset_password', passwordReset);
 
-module.exports = router
+module.exports = router;
