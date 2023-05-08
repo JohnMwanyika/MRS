@@ -46,7 +46,7 @@ function handleCheckboxChange(userId, checkbox) {
 
 function resetUserPassword(userId) {
 
-    axios.post('/dashboard/users/reset_password', {
+    axios.post(`/dashboard/users/reset_password/${userId}`, {
             userId: userId
         })
         .then((response) => {
@@ -55,6 +55,6 @@ function resetUserPassword(userId) {
         })
         .catch((error) => {
             console.log(error);
-            // toastr[error.data.status](error.data.data, error.data.status)
+            toastr[error.data.status](error.data.data, error.data.status)
         });
 };

@@ -268,7 +268,7 @@ module.exports = {
             })
     },
     getAllResetRequests: async (req, res) => {
-        console.log('gGetting all reset requests')
+        console.log('Getting all reset requests')
         if (req.session.user.Role.name == 'Super Admin') {
             return await Request.findAll({
                     include: [{
@@ -362,8 +362,9 @@ module.exports = {
     passwordReset: async (req, res) => {
         const {
             userId
-        } = req.body;
-        console.log('User id is as follows',req.body)
+        } = req.params;
+
+        console.log('User id is as follows', userId)
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash('Welcome2023', saltRounds);
         console.log('this is the hashed password', hashedPassword);

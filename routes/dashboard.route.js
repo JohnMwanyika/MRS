@@ -41,6 +41,6 @@ router.post('/users/update_status/:userId', toggleStatus);
 // this lists all reset requests
 router.get('/reset_mails', getAllResetRequests);
 // route for Super Admin to reset user password
-router.post('/dashboard/users/reset_password', passwordReset);
+router.post('/users/reset_password/:userId', passwordReset);
 
 module.exports = router;
