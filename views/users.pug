@@ -13,7 +13,7 @@ block content
             h1.mt-4 #{title}
             ol.breadcrumb.mb-4
                 li.breadcrumb-item.active #{title}
-            if (user.Role.name == 'Super Admin')
+            if (user.roleId == 1)
                 .card.mb-4
                     .card-header
                         i.fas.fa-table.me-1
@@ -186,10 +186,18 @@ block content
 
 
             else 
-                .card.mb-4
-                    .card-header
-                        i.fas.fa-table.me-1
-                        |  Busted!! Only Super Admins can access User Management
+                .alert.alert-warning.d-flex.align-items-center(role="alert")
+                    svg.bi.flex-shrink-0.me-2(role="img" aria-label="Warning:")
+                        use(href="#exclamation-triangle-fill")
+                    div.
+
+                        Sorry!! You are not authorized to access this page
+
+
+            //- .card.mb-4
+                .card-header
+                    i.fas.fa-circle-xmark.me-1
+                    |  Busted!! Only Super Admins can access User Management
 
 //- //- Button trigger modal 
 //- button.btn.btn-primary(type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop").

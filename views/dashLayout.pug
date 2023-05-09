@@ -41,7 +41,7 @@ html(lang="en")
                                 .sb-nav-link-icon
                                     i.fas.fa-file-circle-plus
                                 | Reset Mails
-                            if (user.Role.name == "Super Admin")
+                            if (user.roleId == 1)
                                 a.nav-link(href="/dashboard/users")
                                     .sb-nav-link-icon
                                         i.fas.fa-user-group

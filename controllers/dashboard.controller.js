@@ -223,6 +223,19 @@ module.exports = {
                     id: parseInt(userId)
                 }
             }).then((results) => {
+                const currentUser = User.findOne({
+                    where: {
+                        id: userId
+                    }
+                })
+                console.log(currentUser)
+                if (req.session.user.id === currentUser.id) {
+                    req.session.user.roleId = roleId;
+                }
+                console.log('##########################');
+                console.log(req.session.user);
+                console.log('##########################');
+            }).then((results) => {
                 res.redirect('/dashboard/users')
             })
             .catch((error) => {
@@ -419,6 +432,7 @@ module.exports = {
                 }
             }).then((result) => {
                 console.log('Response is ', result)
+                req.session.user.password = hashedPassword;
                 // res.redirect('/dashboard?success=pass_changed')
                 res.json({
                     status: 'success',

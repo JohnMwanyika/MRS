@@ -19,10 +19,10 @@ block content
   
                             form(method='post' action='/login')
                                 .form-floating.mb-3
-                                    input.form-control#inputEmail(type="email" placeholder="name@example.com" name='email')
+                                    input.form-control#inputEmail(type="email" placeholder="name@example.com" name='email' required)
                                     label(for="inputEmail") Email address
                                 .form-floating.mb-3
-                                    input.form-control#inputPassword(type="password" placeholder="Password" name='password')
+                                    input.form-control#inputPassword(type="password" placeholder="Password" name='password' required)
                                     label(for="inputPassword") Password
                                 .form-check.mb-3
                                     input.form-check-input#inputRememberPassword(type="checkbox")

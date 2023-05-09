@@ -49,15 +49,18 @@ const session = require('express-session');
 // require session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
+
 app.use(session({
   secret: 'This@is@my@secret@code@that@is!hard@code@thatis',
   store: new SequelizeStore({
-    db: sequelize
+    db: sequelize,
+    checkExpirationInterval: 30 * 60 * 1000, // check every 30 minutes
+    expiration: 3 * 60 * 60 * 1000, // expire sessions after 1 hour
   }),
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 30 * 60 * 1000, //clears session data after 30 min of inactivity
+    maxAge: 3 * 60 * 60 * 1000, //session data expires after 3 hrs
     httpOnly: true,
   }
 }))
@@ -99,7 +102,7 @@ app.get('/about', (req, res) => {
     title: 'Team'
   });
 });
-app.get('/gallery', (req, res)=>{
+app.get('/gallery', (req, res) => {
   res.render('gallery', {
     title: 'Gallery'
   });
