@@ -1,9 +1,12 @@
 const {
     sendMail
 } = require('../utils/send_mail');
+
 const {
     whatsappText
 } = require('../utils/whatsapp');
+
+const sendSms = require('../utils/sendSms');
 
 const {
     Mail,
@@ -252,6 +255,15 @@ module.exports = {
                 }
             });
 
+            // Add phone to user
+            const userPhoneUpdated = Mail.update({
+                phone
+            }, {
+                where: {
+                    email: email
+                },
+            })
+
             // create a success trial
             let trialData = {
                 credentials: fullName,
@@ -266,6 +278,9 @@ module.exports = {
                 subject: 'Request for password reset',
                 text: `Greetings, Sir/Madam! My name is ${fullName} from ${department} department, I would like to request a password reset for my email address, ${email}`
             };
+            const recipient = parseInt(phone);
+            // send an sms to user
+            sendSms(recipient,`Dear ${fullName}, we have received your request and we'll inform you when your email has been reset`)
 
             // send whatsApp Message
             whatsappText(process.env.ADMIN1, mail.text)

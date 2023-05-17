@@ -23,7 +23,10 @@ block content
                 input(type="hidden" class="form-control" id="email" value=`${data.email}` name="email" placeholder="Email", required)
                 label(for="email") Email
             .form-floating.mb-3
-                input(type="tel" class="form-control" id="phone" name="phone" placeholder="Phone", required)
+                if (data.phone != null)
+                    input(type="tel" class="form-control" id="phone" name="phone" value=`0${data.phone}` placeholder="Phone", required)
+                else
+                    input(type="tel" class="form-control" id="phone" name="phone" placeholder="Phone", required)
                 //- input(type="hidden" class="form-control" id="phone" value=`${data.phone}` name="phone" placeholder="Phone", required)
                 label(for="phone") Phone
                 p.text-muted Enter your phone number for feedback purposes.(optional)
@@ -49,7 +52,7 @@ block content
                 input(type="text" class="form-control" id="lastName" value=`${current.lastName}` name="lastName" placeholder="Last Name", required)
                 label(for="lastName") Last Name
             .form-floating.mb-3
-                input(type="text" class="form-control" id="phone" value=`${current.lastName}` name="phone" placeholder="Phone", )
+                input(type="text" class="form-control" id="phone" name="phone" placeholder="Phone", )
                 label(for="lastName") Phone
                 p.text-muted Enter your phone number for feedback purposes.(optional)
             .row 
