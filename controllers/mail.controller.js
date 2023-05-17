@@ -234,7 +234,8 @@ module.exports = {
             const {
                 department,
                 fullName,
-                email
+                email,
+                phone
             } = req.body;
             console.log('This is the email to be reset', req.body);
 

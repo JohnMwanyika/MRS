@@ -13,6 +13,7 @@ block content
                     input(type="text" class="form-control" id="depertment" value=`${data.Department.name}` name="department" placeholder="Last Name", required, disabled)
                     input(type="hidden" class="form-control" id="depertment" value=`${data.Department.name}` name="department" placeholder="Last Name", required)
                     label(for="depertment") Department
+            //- The hidden inputs are the ones that are being posted since the disabled field cannot be posted
             .form-floating.mb-3
                 input(type="text" class="form-control" id="lastName" value=`${data.name}` name="fullName" placeholder="Last Name", required disabled)
                 input(type="hidden" class="form-control" id="lastName" value=`${data.name}` name="fullName" placeholder="Last Name", required)
@@ -21,6 +22,11 @@ block content
                 input(type="email" class="form-control" id="email" value=`${data.email}` name="email" placeholder="Email", required disabled)
                 input(type="hidden" class="form-control" id="email" value=`${data.email}` name="email" placeholder="Email", required)
                 label(for="email") Email
+            .form-floating.mb-3
+                input(type="tel" class="form-control" id="phone" name="phone" placeholder="Phone", required)
+                //- input(type="hidden" class="form-control" id="phone" value=`${data.phone}` name="phone" placeholder="Phone", required)
+                label(for="phone") Phone
+                p.text-muted Enter your phone number for feedback purposes.(optional)
             button(type="submit" class="btn btn-danger w-100 mt-3")#submitbtn
                 i.fa.fa-paper-plane.me-2
                 | Reset Password 
@@ -37,11 +43,15 @@ block content
                 input(type="text" class="form-control" id="depertment" value=`${current.dpt.name}` name="department" placeholder="Last Name", required)
                 label(for="depertment") Department
             .form-floating.mb-3.mt-3
-                input(type="text" class="form-control" id="firstName" value=`${current.firstName}` name="firstName" placeholder="First Name", )
+                input(type="text" class="form-control" id="firstName" value=`${current.firstName}` name="firstName" placeholder="First Name", required)
                 label(for="firstName") First Name
             .form-floating.mb-3
-                input(type="text" class="form-control" id="lastName" value=`${current.lastName}` name="lastName" placeholder="Last Name", )
+                input(type="text" class="form-control" id="lastName" value=`${current.lastName}` name="lastName" placeholder="Last Name", required)
                 label(for="lastName") Last Name
+            .form-floating.mb-3
+                input(type="text" class="form-control" id="phone" value=`${current.lastName}` name="phone" placeholder="Phone", )
+                label(for="lastName") Phone
+                p.text-muted Enter your phone number for feedback purposes.(optional)
             .row 
                 .col-6
                     a( class="btn btn-primary w-100 mt-3" href='/')
@@ -78,15 +88,6 @@ block content
             event.preventDefault();
             var form = $("#myform");
             var msg = $("#msg");
-
-            //- function validateForm() {
-            //-     var isValid = true;
-            //-     $('.form-control').each(function() {
-            //-         if ( $(this).val() === '' )
-            //-             isValid = false;
-            //-     });
-            //-     return isValid;
-            //- }
 
             $.ajax({
                 url:'/mails/reset',
