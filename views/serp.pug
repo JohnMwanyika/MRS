@@ -27,6 +27,11 @@ block content
                     input(type="tel" class="form-control" id="phone" name="phone" value=`0${data.phone}` placeholder="Phone", required)
                 else
                     input(type="tel" class="form-control" id="phone" name="phone" placeholder="Phone", required)
+                    script.
+                        window.addEventListener('DOMContentLoaded', (event) => {
+                            const inputElement = document.getElementById('phone');
+                            inputElement.focus();
+                        });
                 //- input(type="hidden" class="form-control" id="phone" value=`${data.phone}` name="phone" placeholder="Phone", required)
                 label(for="phone") Phone
                 p.text-muted Enter your phone number for feedback purposes.(optional)
