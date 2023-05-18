@@ -442,17 +442,25 @@ module.exports = {
                         }
                     })
                 })
-                .then((isExisting) => {
+                .then(async (isExisting) => {
                     console.log('**********************************88');
                     // console.log('is Existing', isExisting);
                     console.log('**********************************88');
 
                     // check if email exists in Mails
-                    const existingMail = Mail.findOne({
+                    const existingMail = await Mail.findOne({
                         where: {
-                            email: email
+                            email: mailToCreate
                         }
                     })
+                    if (existingMail) {
+                        // return existingMail
+                        return res.json({
+                            status: 'info',
+                            data: "We kindly inform you that the email you have provided has already been registered by the administrator. Please consider using a different email address or contacting the administrator for further assistance."
+                        });
+
+                    }
 
                     let requestData = {
                         mailId: null,
@@ -464,12 +472,21 @@ module.exports = {
                     }
 
                     if (!isExisting) {
-                        if (existingMail) {
-                            return existingMail
-                        } else {
-                            const newRequest = Request.create(requestData);
-                            return newRequest;
-                        }
+                        // if (existingMail) {
+                        //     // return existingMail
+                        //     return res.json({
+                        //         status: 'warning',
+                        //         data: "An email has been found under that name."
+                        //     });
+
+                        // } else {
+                        const newRequest = Request.create(requestData);
+                        // return newRequest;
+                        return res.json({
+                            status: 'success',
+                            data: "We are pleased to inform you that your email creation request has been sent successfully. The admins will review it promptly. Thank you for your submission."
+                        });
+                        // }
 
                     } else {
                         let data = {
@@ -482,16 +499,20 @@ module.exports = {
                             }
                         })
 
-                        return updatedRequest;
+                        // return updatedRequest;
+                        return res.json({
+                            status: 'warning',
+                            data: "We would like to inform you that a similar request has been identified, and the administrators have been promptly notified regarding this matter. Thank you for bringing it to our attention."
+                        });
                     }
                 })
-                .then(response => {
-                    console.log(JSON.stringify(response));
-                    res.json({
-                        status: 'success',
-                        data: response,
-                    })
-                })
+                // .then(response => {
+                //     console.log(JSON.stringify(response));
+                //     res.json({
+                //         status: 'success',
+                //         data: response,
+                //     })
+                // })
                 .catch((error) => {
                     console.log(error.message);
                     res.json({
