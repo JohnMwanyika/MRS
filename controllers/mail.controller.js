@@ -17,6 +17,7 @@ const {
 const {
     check
 } = require('express-validator');
+const e = require('express');
 
 module.exports = {
     createMail: async (req, res) => {
@@ -291,30 +292,62 @@ module.exports = {
 
             // send whatsApp Message
             whatsappText(process.env.ADMIN1, mail.text)
-                .then((response) => {
-                    console.log('This is the response', response);
-                    let requestData = {
-                        mailId: mailToReset.id,
-                        requestType: 1,
-                        requestStatus: 2,
-                        email: email,
-                        fullName: fullName,
-                        department: dprt.name
-                    }
-                    const newRequest = Request.create(requestData)
-
-                    console.log(response);
-                    // res.json({
-                    //     status: 'success',
-                    //     data: response
-                    // })
-                    return response;
-                }).then(response => {
-                    res.json({
-                        status: 'success',
-                        data: response
+                .then(async (response) => {
+                    // check if request exists
+                    const existingReq = await Request.findOne({
+                        where: {
+                            requestType: 1,
+                            email: email,
+                            requestStatus: 2
+                        }
                     })
+                    // console.log('This is the existing Request***', existingReq)
+                    return existingReq
                 })
+                .then((results) => {
+                    // console.log("*******", results)
+                    if (!results) {
+                        let requestData = {
+                            mailId: mailToReset.id,
+                            requestType: 1,
+                            requestStatus: 2,
+                            email: email,
+                            fullName: fullName,
+                            department: dprt.name
+                        }
+                        const newRequest = Request.create(requestData)
+
+                        return res.json({
+                            status: 'success',
+                            data: "Your request has been submitted successfully"
+                        })
+                        // return newRequest
+                    } else {
+                        console.log("************The request already exist ********")
+                        let data = {
+                            requestStatus: 2,
+                        };
+                        // update the request if it exists
+                        const updatedRequest = Request.update(data, {
+                            where: {
+                                email: email,
+                                requestType: 1,
+                                requestStatus: 2
+                            }
+                        })
+                        return res.json({
+                            status: 'warning',
+                            data: "You submitted your request earlier, the admins have been reminded"
+                        })
+                        // return updatedRequest
+                    }
+                })
+                // .then(response => {
+                //     res.json({
+                //         status: 'success',
+                //         data: response
+                //     })
+                // })
                 .catch((error) => {
                     console.log(error.message);
                     res.json({
@@ -402,7 +435,7 @@ module.exports = {
             whatsappText(process.env.ADMIN1, mail.text)
                 .then((response) => {
                     console.log(response);
-                    // check if exists
+                    // check if request exists
                     return Request.findOne({
                         where: {
                             email: mailToCreate
@@ -414,6 +447,12 @@ module.exports = {
                     // console.log('is Existing', isExisting);
                     console.log('**********************************88');
 
+                    // check if email exists in Mails
+                    const existingMail = Mail.findOne({
+                        where: {
+                            email: email
+                        }
+                    })
 
                     let requestData = {
                         mailId: null,
@@ -425,8 +464,12 @@ module.exports = {
                     }
 
                     if (!isExisting) {
-                        const newRequest = Request.create(requestData);
-                        return newRequest;
+                        if (existingMail) {
+                            return existingMail
+                        } else {
+                            const newRequest = Request.create(requestData);
+                            return newRequest;
+                        }
 
                     } else {
                         let data = {

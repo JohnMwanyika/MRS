@@ -34,7 +34,7 @@ block content
                         });
                 //- input(type="hidden" class="form-control" id="phone" value=`${data.phone}` name="phone" placeholder="Phone", required)
                 label(for="phone") Phone
-                p.text-muted Enter your phone number for feedback purposes.(optional)
+                p.text-muted Please consider entering your phone number for optional feedback purposes.
             button(type="submit" class="btn btn-danger w-100 mt-3")#submitbtn
                 i.fa.fa-paper-plane.me-2
                 | Reset Password 
@@ -59,7 +59,12 @@ block content
             .form-floating.mb-3
                 input(type="text" class="form-control" id="phone" name="phone" placeholder="Phone", )
                 label(for="lastName") Phone
-                p.text-muted Enter your phone number for feedback purposes.(optional)
+                p.text-muted Please consider entering your phone number for optional feedback purposes.
+                script.
+                    window.addEventListener('DOMContentLoaded', (event) => {
+                        const inputElement = document.getElementById('phone');
+                        inputElement.focus();
+                    });
             .row 
                 .col-6
                     a( class="btn btn-primary w-100 mt-3" href='/')
@@ -119,7 +124,7 @@ block content
                     toastr["success"]("Your password reset request has been sent successfully", "Success")
                 }else{
                     console.log('Request not completed')
-                    toastr["error"]("An error occured while sending your request try again", "Failed")
+                    toastr[data.status](data.data, data.status)
                 }
                 console.log(JSON.stringify(data))
             }).catch(function(error){
