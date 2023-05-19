@@ -9,7 +9,7 @@ block content
                 li.breadcrumb-item.active Tables
             .card.mb-4
                 .card-body
-                    form.d-flex.align-items-center.justify-content-center(action="/import-mails", method="POST", enctype="multipart/form-data")
+                    form.d-flex.align-items-center.justify-content-center(action="/dashboard/import-mails", method="POST", enctype="multipart/form-data")
                         .form-group
                             label(for="file") Choose CSV File 
                             input.form-control-file#file(type="file", name="file", accept=".csv", required)

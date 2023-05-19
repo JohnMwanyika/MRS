@@ -453,10 +453,11 @@ module.exports = {
         try {
             const mails = [];
 
-            fs.createReadStream(req, file, path)
+            fs.createReadStream(req.file.path)
                 .pipe(csv())
                 .on('data', (row) => {
                     mails.push(row);
+                    console.log("*******MAils*****", mails)
                 })
                 .on('end', async () => {
                     // insert the mails to the database
@@ -468,7 +469,7 @@ module.exports = {
                     });
                 })
         } catch (error) {
-            console.log('Error importing user', error);
+            console.log('Error importing mails', error);
             res.status(500).json({
                 status: 'error',
                 data: 'Failed to import mails',
