@@ -51,7 +51,7 @@ module.exports = {
         const mailData = {
             name: fullName,
             email,
-            password: 'Welcome2020',
+            password: 'Welcome2020!',
             departmentId: dprt.id,
         };
 
@@ -70,7 +70,19 @@ module.exports = {
                     }
                 })
             })
-            .then((newMail) => {
+            .then(async (newMail) => {
+                // get the phone of the user
+                const mailUser = await Mail.findOne({
+                    where: {
+                        email: email
+                    }
+                })
+                // Send feedback to the Mail user
+                const recipient = parseInt(mailUser.phone);
+                // seperate first and last name from full name
+                const [firstName, lastName] = fullName.split(' ');
+                // send an sms to user
+                sendSms(recipient, `Dear ${firstName}, We are pleased to inform you that your email ${newMail} has been successfully created. You can now proceed to log in to your account pass:${mailData.password}. regards ${req.session.user.firstName}`)
                 console.log(`${newMail} created`);
                 res.json({
                     status: 'success',
@@ -403,7 +415,8 @@ module.exports = {
             const {
                 firstName,
                 lastName,
-                department
+                department,
+                phone
             } = req.body;
             const fullName = `${firstName} ${lastName}`;
             const mailToCreate = `${firstName}.${lastName}@taitataveta.go.ke`;
@@ -431,6 +444,21 @@ module.exports = {
                 text: `Greetings, Sir/Madam! there is a request to create an email for ${fullName} from ${department} department`
             };
 
+            // if user provides a phone number send then a successful submission sms 
+            if (phone) {
+                // const userPhoneUpdated = Mail.update({
+                //     phone
+                // }, {
+                //     where: {
+                //         email: email
+                //     },
+                // });
+                const recipient = parseInt(phone);
+                // seperate first and last name from full name
+                const [firstName, lastName] = fullName.split(' ');
+                // send an sms to user
+                sendSms(0+recipient, `Dear ${firstName}, we have received your request and we'll inform you when your email has been created. Regards ICT support`)
+            }
             // Send WhatsApp Message
             whatsappText(process.env.ADMIN1, mail.text)
                 .then((response) => {
