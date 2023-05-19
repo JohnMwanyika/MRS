@@ -48,9 +48,10 @@ module.exports = {
             }
         })
 
+        const lowercaseMail = email.toLowerCase();
         const mailData = {
             name: fullName,
-            email,
+            email: lowercaseMail,
             password: 'Welcome2020!',
             departmentId: dprt.id,
         };
@@ -71,18 +72,22 @@ module.exports = {
                 })
             })
             .then(async (newMail) => {
-                // get the phone of the user
-                const mailUser = await Mail.findOne({
+                // get the phone of the user from the request he submited
+                const mailUser = await Request.findOne({
                     where: {
                         email: email
                     }
                 })
+
+
                 // Send feedback to the Mail user
                 const recipient = parseInt(mailUser.phone);
                 // seperate first and last name from full name
                 const [firstName, lastName] = fullName.split(' ');
                 // send an sms to user
-                sendSms(recipient, `Dear ${firstName}, We are pleased to inform you that your email ${newMail} has been successfully created. You can now proceed to log in to your account pass:${mailData.password}. regards ${req.session.user.firstName}`)
+                sendSms(recipient, `Dear ${firstName}, We are pleased to inform you that your email ${mailUser.email} has been successfully created. You can now proceed to log in to your account password:${mailData.password} Regards ${req.session.user.firstName}`)
+
+
                 console.log(`${newMail} created`);
                 res.json({
                     status: 'success',
@@ -419,7 +424,8 @@ module.exports = {
                 phone
             } = req.body;
             const fullName = `${firstName} ${lastName}`;
-            const mailToCreate = `${firstName}.${lastName}@taitataveta.go.ke`;
+            const newMail = `${firstName}.${lastName}@taitataveta.go.ke`;
+            const mailToCreate = newMail.toLowerCase();
 
             // get departmentId
             const dprt = await Department.findOne({
@@ -446,18 +452,12 @@ module.exports = {
 
             // if user provides a phone number send then a successful submission sms 
             if (phone) {
-                // const userPhoneUpdated = Mail.update({
-                //     phone
-                // }, {
-                //     where: {
-                //         email: email
-                //     },
-                // });
                 const recipient = parseInt(phone);
+                console.log('######### Phone is', recipient);
                 // seperate first and last name from full name
                 const [firstName, lastName] = fullName.split(' ');
                 // send an sms to user
-                sendSms(0+recipient, `Dear ${firstName}, we have received your request and we'll inform you when your email has been created. Regards ICT support`)
+                sendSms(recipient, `Dear ${firstName}, we have received your request and we'll inform you when your email has been created. Regards ICT support`)
             }
             // Send WhatsApp Message
             whatsappText(process.env.ADMIN1, mail.text)
