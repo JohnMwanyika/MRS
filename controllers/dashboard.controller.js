@@ -9,6 +9,8 @@ const {
     Department
 } = require('../models');
 const bcrypt = require('bcrypt');
+const csv = require('csv-parser');
+const fs = require('fs');
 
 module.exports = {
     getDashboard: async (req, res) => {
@@ -446,6 +448,32 @@ module.exports = {
                     data: 'Oops an error has occured while reseting password try again'
                 });
             })
+    },
+    importMails: async (req, res) => {
+        try {
+            const mails = [];
+
+            fs.createReadStream(req, file, path)
+                .pipe(csv())
+                .on('data', (row) => {
+                    mails.push(row);
+                })
+                .on('end', async () => {
+                    // insert the mails to the database
+                    await Mail.bulkCreate(mails);
+                    // feedback
+                    res.status(200).json({
+                        status: 'success',
+                        data: 'Mails imported successfully',
+                    });
+                })
+        } catch (error) {
+            console.log('Error importing user', error);
+            res.status(500).json({
+                status: 'error',
+                data: 'Failed to import mails',
+            });
+        }
     }
 
 }

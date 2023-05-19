@@ -501,8 +501,8 @@ module.exports = {
 
                         // return updatedRequest;
                         return res.json({
-                            status: 'warning',
-                            data: "We would like to inform you that a similar request has been identified, and the administrators have been promptly notified regarding this matter. Thank you for bringing it to our attention."
+                            status: 'info',
+                            data: "We have notified the administrators about a similar request and appreciate you bringing it to our attention."
                         });
                     }
                 })

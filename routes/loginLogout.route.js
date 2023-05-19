@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
     const errorMessage =
         req.query.error === 'invalid_credentials' ? 'Invalid username or password' :
         req.query.error === 'no_user' ? 'No user found under that username' :
-        req.query.error === 'no_session' ? 'System has been idle for more than 30 minutes you need to log in to create your session' :
+        req.query.error === 'no_session' ? 'System has been idle for more than an hour you need to log in to create your session' :
         req.query.error === 'inactive' ? 'Your account is inactive contact Administrator for activation' :
         "";
     console.log(errorMessage);
