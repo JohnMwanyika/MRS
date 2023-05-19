@@ -496,7 +496,8 @@ module.exports = {
                         requestStatus: 2,
                         email: mailToCreate,
                         fullName: fullName,
-                        department: dprt.name
+                        department: dprt.name,
+                        phone: phone
                     }
 
                     if (!isExisting) {
