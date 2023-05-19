@@ -336,7 +336,7 @@ module.exports = {
                             }
                         })
                         return res.json({
-                            status: 'warning',
+                            status: 'info',
                             data: "You submitted your request earlier, the admins have been reminded"
                         })
                         // return updatedRequest
@@ -592,27 +592,41 @@ module.exports = {
         });
 
         const updatedRequest = await Request.update({
-                requestStatus: 1,
-                userId: req.session.user.id
-            }, {
-                where: {
-                    requestType: 1,
-                    fullName: fullName,
+                    requestStatus: 1,
+                    userId: req.session.user.id
+                }, {
+                    where: {
+                        requestType: 1,
+                        fullName: fullName,
+                    }
                 }
-            }
 
-        ).then((response) => {
-            console.log(response);
-            res.json({
-                status: 'success',
-                data: 'Password reset completed successfully'
-            })
-        }).catch((error) => {
-            res.json({
-                status: 'error',
-                data: error.message
-            })
-        });
+            )
+            .then(async (response) => {
+                // get the phone of the user
+                const mailUser = await Mail.findOne({
+                    where: {
+                        email: email
+                    }
+                })
+                // Send feedback to the Mail user
+                const recipient = parseInt(mailUser.phone);
+                // seperate first and last name from full name
+                const [firstName, lastName] = fullName.split(' ');
+                // send an sms to user
+                sendSms(recipient, `Dear ${firstName}, We are pleased to inform you that your email has been successfully reset. You can now proceed to log in to your account without any issues. regards ${req.session.user.firstName}`)
+
+                console.log(response);
+                res.json({
+                    status: 'success',
+                    data: 'Password reset completed successfully'
+                })
+            }).catch((error) => {
+                res.json({
+                    status: 'error',
+                    data: error.message
+                })
+            });
 
     },
     // newlyCreatedMails: async (req, res) => {

@@ -73,6 +73,7 @@ module.exports = {
                 })
             })
     },
+    // list all mails that have been created,,concidering the role of the user in the dashboard
     newlyCreatedMails: async (req, res) => {
         if (req.session.user.Role.name == 'Super Admin') {
             return await Request.findAll({
@@ -166,6 +167,7 @@ module.exports = {
         }
 
     },
+    // get all the users of the system
     getUsers: async (req, res) => {
         // defining request queries
         const errorMessage = req.query.error === 'user_exists' ? 'This user already exists in the database' : "";
@@ -200,6 +202,7 @@ module.exports = {
                 })
             });
     },
+    // this is used to updated any change made to the admin information(Super Admin only)
     updateUser: async (req, res) => {
         const {
             userId
@@ -246,6 +249,7 @@ module.exports = {
                 })
             });
     },
+    // this controller is used by the super admin to switch between user status
     toggleStatus: async (req, res) => {
         const {
             userId
@@ -282,6 +286,7 @@ module.exports = {
                 })
             })
     },
+    // lists all the password reset requests
     getAllResetRequests: async (req, res) => {
         console.log('Getting all reset requests')
         if (req.session.user.Role.name == 'Super Admin') {
@@ -374,6 +379,7 @@ module.exports = {
                 });
         }
     },
+    // Super Admin interface to change admin password
     passwordReset: async (req, res) => {
         const {
             userId
@@ -411,6 +417,7 @@ module.exports = {
                 });
             })
     },
+    // this submits the password changed by logged in user via the modal
     ownPasswordReset: async (req, res) => {
         const {
             userId
@@ -449,6 +456,7 @@ module.exports = {
                 });
             })
     },
+    // Imports mails via csv files
     importMails: async (req, res) => {
         try {
             const mails = [];
