@@ -286,7 +286,7 @@ module.exports = {
             let mail = {
                 to: '5476benja@gmail.com',
                 subject: 'Request for password reset',
-                text: `Greetings, Sir/Madam! My name is ${fullName} from ${department} department, I would like to request a password reset for my email address, ${email}`
+                text: `Greetings! My name is ${fullName} from ${department} department, I would like to request a password reset for my email address, ${email}`
             };
 
             // uodate mails by adding phone number to the user when they provide it
@@ -447,7 +447,7 @@ module.exports = {
                 // from: 'mwanyikajohn@outlook.com',
                 to: '5476benja@gmail.com',
                 subject: 'Request for email creation',
-                text: `Greetings, Sir/Madam! there is a request to create an email for ${fullName} from ${department} department`
+                text: `Greetings! there is a request to create an email for ${fullName} from ${department} department`
             };
 
             // if user provides a phone number send then a successful submission sms 
