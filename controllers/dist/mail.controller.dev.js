@@ -578,15 +578,16 @@ module.exports = {
             admins = _context10.sent;
             // Send email to the Admins
             sendMail(mail.subject, mail.text, admins);
-            _context10.next = 25;
+            console.log('mails have been delivered to the following', admins);
+            _context10.next = 26;
             break;
 
-          case 22:
-            _context10.prev = 22;
+          case 23:
+            _context10.prev = 23;
             _context10.t0 = _context10["catch"](15);
-            console.error(_context10.t0);
+            console.error(_context10.t0.message);
 
-          case 25:
+          case 26:
             // send whatsApp Message
             whatsappText(process.env.ADMIN1, mail.text).then(function _callee3(response) {
               var existingReq;
@@ -691,23 +692,23 @@ module.exports = {
             //         })
             //     })
 
-            _context10.next = 31;
+            _context10.next = 32;
             break;
 
-          case 28:
-            _context10.prev = 28;
+          case 29:
+            _context10.prev = 29;
             _context10.t1 = _context10["catch"](0);
             res.json({
               status: 'error',
               data: _context10.t1.message
             });
 
-          case 31:
+          case 32:
           case "end":
             return _context10.stop();
         }
       }
-    }, null, null, [[0, 28], [15, 22]]);
+    }, null, null, [[0, 29], [15, 23]]);
   },
   requestNewMail: function requestNewMail(req, res) {
     var _req$body5, firstName, lastName, department, phone, fullName, newMail, mailToCreate, dprt, trialData, requestTrial, mail, recipient, _fullName$split5, _fullName$split6, _firstName, _lastName, admins;
@@ -766,9 +767,9 @@ module.exports = {
 
           case 17:
             admins = _context12.sent;
-            console.log('mails have been delivered to the following', admins); // Send email to the Admins
-
+            // Send email to the Admins
             sendMail(mail.subject, mail.text, admins);
+            console.log('mails have been delivered to the following', admins);
             _context12.next = 25;
             break;
 

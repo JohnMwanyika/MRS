@@ -21,15 +21,15 @@ async function sendMail(subject, text, ...to) {
 
     try {
         const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent: ' + info.response);
+        console.log(`Confirmed email sent to: ${to} ` + info.response);
         return info.response;
     } catch (error) {
-        console.log('Error sending email: ' + error);
-        throw error;
+        console.log('Error sending email: ' + error.message);
+        throw error.message;
     }
 }
 
-// sendMail('ict test mail', 'testing mail fuctionality', 'mwanyikajohn@outlook.com', 'cypriansmakau@gmail.com', '5476benja@gmail.com');
+sendMail('ict test mail', 'testing mail fuctionality', 'mwanyikajohn@outlook.com', 'maytimina0@gmail.com', '5476benja@gmail.com');
 
 module.exports = {
     sendMail

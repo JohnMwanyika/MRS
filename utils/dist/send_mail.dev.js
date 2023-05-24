@@ -43,14 +43,14 @@ function sendMail(subject, text) {
 
         case 6:
           info = _context.sent;
-          console.log('Email sent: ' + info.response);
+          console.log("Confirmed email sent to: ".concat(to, " ") + info.response);
           return _context.abrupt("return", info.response);
 
         case 11:
           _context.prev = 11;
           _context.t0 = _context["catch"](3);
-          console.log('Error sending email: ' + _context.t0);
-          throw _context.t0;
+          console.log('Error sending email: ' + _context.t0.message);
+          throw _context.t0.message;
 
         case 15:
         case "end":
@@ -58,9 +58,9 @@ function sendMail(subject, text) {
       }
     }
   }, null, null, [[3, 11]]);
-} // sendMail('ict test mail', 'testing mail fuctionality', 'mwanyikajohn@outlook.com', 'cypriansmakau@gmail.com', '5476benja@gmail.com');
+}
 
-
+sendMail('ict test mail', 'testing mail fuctionality', 'mwanyikajohn@outlook.com', 'maytimina0@gmail.com', '5476benja@gmail.com');
 module.exports = {
   sendMail: sendMail
 };

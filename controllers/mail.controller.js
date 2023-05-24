@@ -447,8 +447,9 @@ module.exports = {
                 const admins = await userMails();
                 // Send email to the Admins
                 sendMail(mail.subject, mail.text, admins);
+                console.log('mails have been delivered to the following', admins)
             } catch (error) {
-                console.error(error)
+                console.error(error.message)
             }
 
             // send whatsApp Message
@@ -606,9 +607,9 @@ module.exports = {
             // This block only sends email to the admins who are active
             try {
                 const admins = await userMails();
-                console.log('mails have been delivered to the following', admins)
                 // Send email to the Admins
                 sendMail(mail.subject, mail.text, admins);
+                console.log('mails have been delivered to the following', admins)
             } catch (error) {
                 console.error(error)
             }
