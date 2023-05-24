@@ -12,12 +12,27 @@ const {
     Mail,
     Department,
     Trial,
-    Request
+    Request,
+    User
 } = require('../models');
-const {
-    check
-} = require('express-validator');
-const e = require('express');
+
+const userMails = async () => {
+    try {
+        const users = await User.findAll({
+            attributes: ['email'],
+            where: {
+                statusId: 1
+            }
+        });
+
+        const emails = users.map(user => user.email);
+        console.log(emails)
+        return emails;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
 
 module.exports = {
     createMail: async (req, res) => {
@@ -288,7 +303,7 @@ module.exports = {
                 if (!mail) {
                     // get all departments
                     const allDepartments = await Department.findAll();
-                    console.log("These are the departments",allDepartments)
+                    console.log("These are the departments", allDepartments)
 
                     let failedTrial = {
                         credentials: fullName,
@@ -427,6 +442,14 @@ module.exports = {
                 sendSms(recipient, `Dear ${firstName}, we have received your request and we'll inform you when your email has been reset`)
             }
 
+            // This block only sends email to the admins who are active
+            try {
+                const admins = await userMails();
+                // Send email to the Admins
+                sendMail(mail.subject, mail.text, admins);
+            } catch (error) {
+                console.error(error)
+            }
 
             // send whatsApp Message
             whatsappText(process.env.ADMIN1, mail.text)
@@ -551,7 +574,7 @@ module.exports = {
             // get departmentId
             const dprt = await Department.findOne({
                 where: {
-                    id:department
+                    id: department
                 }
             });
 
@@ -571,7 +594,7 @@ module.exports = {
                 text: `Greetings! there is a request to create an email for ${fullName} from ${dprt.name} department`
             };
 
-            // if user provides a phone number send then a successful submission sms 
+            // if user provides a phone number send them a successful submission sms 
             if (phone) {
                 const recipient = parseInt(phone);
                 console.log('######### Phone is', recipient);
@@ -580,6 +603,18 @@ module.exports = {
                 // send an sms to user
                 sendSms(recipient, `Dear ${firstName}, we have received your request and we'll inform you when your email has been created. Regards ICT support`)
             }
+            console.log('mails have been delivered to the following')
+            const admins = [
+                process.env.ADMIN1,
+                process.env.ADMIN2,
+                process.env.ADMIN3,
+                process.env.ADMIN4,
+                process.env.ADMIN5,
+                process.env.ADMIN6,
+            ];
+            console.log(admins);
+            // Send email to the Admins
+            sendMail(mail.subject, mail.text, admins);
             // Send WhatsApp Message
             whatsappText(process.env.ADMIN1, mail.text)
                 .then((response) => {
@@ -592,9 +627,6 @@ module.exports = {
                     })
                 })
                 .then(async (isExisting) => {
-                    console.log('**********************************88');
-                    // console.log('is Existing', isExisting);
-                    console.log('**********************************88');
 
                     // check if email exists in Mails
                     const existingMail = await Mail.findOne({
@@ -672,7 +704,6 @@ module.exports = {
                 })
 
 
-            // sendMail(mail.to, mail.subject, mail.text);
             // sendMail(mail.to, mail.subject, mail.text)
             //     .then((response) => {
             //         console.log(response);

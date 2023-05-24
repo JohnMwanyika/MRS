@@ -1,9 +1,9 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-async function sendMail(to, subject, text) {
+async function sendMail(subject, text, ...to) {
     let transporter = nodemailer.createTransport({
-        host: 'smtp-mail.outlook.com',
+        host: 'mail.govmail.ke',
         port: 587,
         secure: false,
         auth: {
@@ -36,6 +36,8 @@ async function sendMail(to, subject, text) {
         throw error;
     }
 }
+
+// sendMail('ict test mail', 'testing mail fuctionality', 'mwanyikajohn@outlook.com', 'cypriansmakau@gmail.com', '5476benja@gmail.com');
 
 module.exports = {
     sendMail
