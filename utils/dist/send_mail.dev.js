@@ -58,13 +58,15 @@ function sendMail(subject, text) {
       }
     }
   }, null, null, [[3, 11]]);
-}
+} // sendMail('ict test mail', 'testing mail functionality', 'mwanyikajohn@outlook.com', 'maytimina0@gmail.com', '5476benja@gmail.com')
+//     .then(response => {
+//         console.log('Email sent successfully:', response);
+//     })
+//     .catch(error => {
+//         console.error('Error sending email:', error);
+//     });
 
-sendMail('ict test mail', 'testing mail functionality', 'mwanyikajohn@outlook.com', 'maytimina0@gmail.com', '5476benja@gmail.com').then(function (response) {
-  console.log('Email sent successfully:', response);
-})["catch"](function (error) {
-  console.error('Error sending email:', error);
-});
+
 module.exports = {
   sendMail: sendMail
 };

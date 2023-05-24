@@ -29,13 +29,13 @@ async function sendMail(subject, text, ...to) {
     }
 }
 
-sendMail('ict test mail', 'testing mail functionality', 'mwanyikajohn@outlook.com', 'maytimina0@gmail.com', '5476benja@gmail.com')
-    .then(response => {
-        console.log('Email sent successfully:', response);
-    })
-    .catch(error => {
-        console.error('Error sending email:', error);
-    });
+// sendMail('ict test mail', 'testing mail functionality', 'mwanyikajohn@outlook.com', 'maytimina0@gmail.com', '5476benja@gmail.com')
+//     .then(response => {
+//         console.log('Email sent successfully:', response);
+//     })
+//     .catch(error => {
+//         console.error('Error sending email:', error);
+//     });
 module.exports = {
     sendMail
 }
