@@ -446,8 +446,14 @@ module.exports = {
             try {
                 const admins = await userMails();
                 // Send email to the Admins
-                sendMail(mail.subject, mail.text, admins);
-                console.log('mails have been delivered to the following', admins)
+                sendMail(mail.subject, mail.text, admins)
+                    .then(response => {
+                        console.log('mails have been delivered to the following', admins)
+                        console.log('Email sent successfully:', response);
+                    })
+                    .catch(error => {
+                        console.error('Error sending email:', error);
+                    });
             } catch (error) {
                 console.error(error.message)
             }
@@ -603,13 +609,20 @@ module.exports = {
                 const [firstName, lastName] = fullName.split(' ');
                 // send an sms to user
                 sendSms(recipient, `Dear ${firstName}, we have received your request and we'll inform you when your email has been created. Regards ICT support`)
+
             }
             // This block only sends email to the admins who are active
             try {
                 const admins = await userMails();
                 // Send email to the Admins
-                sendMail(mail.subject, mail.text, admins);
-                console.log('mails have been delivered to the following', admins)
+                sendMail(mail.subject, mail.text, admins)
+                    .then(response => {
+                        console.log('mails have been delivered to the following', admins)
+                        console.log('Email sent successfully:', response);
+                    })
+                    .catch(error => {
+                        console.error('Error sending email:', error);
+                    });
             } catch (error) {
                 console.error(error)
             }

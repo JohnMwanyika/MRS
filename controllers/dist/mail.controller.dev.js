@@ -577,17 +577,21 @@ module.exports = {
           case 18:
             admins = _context10.sent;
             // Send email to the Admins
-            sendMail(mail.subject, mail.text, admins);
-            console.log('mails have been delivered to the following', admins);
-            _context10.next = 26;
+            sendMail(mail.subject, mail.text, admins).then(function (response) {
+              console.log('mails have been delivered to the following', admins);
+              console.log('Email sent successfully:', response);
+            })["catch"](function (error) {
+              console.error('Error sending email:', error);
+            });
+            _context10.next = 25;
             break;
 
-          case 23:
-            _context10.prev = 23;
+          case 22:
+            _context10.prev = 22;
             _context10.t0 = _context10["catch"](15);
             console.error(_context10.t0.message);
 
-          case 26:
+          case 25:
             // send whatsApp Message
             whatsappText(process.env.ADMIN1, mail.text).then(function _callee3(response) {
               var existingReq;
@@ -692,23 +696,23 @@ module.exports = {
             //         })
             //     })
 
-            _context10.next = 32;
+            _context10.next = 31;
             break;
 
-          case 29:
-            _context10.prev = 29;
+          case 28:
+            _context10.prev = 28;
             _context10.t1 = _context10["catch"](0);
             res.json({
               status: 'error',
               data: _context10.t1.message
             });
 
-          case 32:
+          case 31:
           case "end":
             return _context10.stop();
         }
       }
-    }, null, null, [[0, 29], [15, 23]]);
+    }, null, null, [[0, 28], [15, 22]]);
   },
   requestNewMail: function requestNewMail(req, res) {
     var _req$body5, firstName, lastName, department, phone, fullName, newMail, mailToCreate, dprt, trialData, requestTrial, mail, recipient, _fullName$split5, _fullName$split6, _firstName, _lastName, admins;
@@ -768,17 +772,21 @@ module.exports = {
           case 17:
             admins = _context12.sent;
             // Send email to the Admins
-            sendMail(mail.subject, mail.text, admins);
-            console.log('mails have been delivered to the following', admins);
-            _context12.next = 25;
+            sendMail(mail.subject, mail.text, admins).then(function (response) {
+              console.log('mails have been delivered to the following', admins);
+              console.log('Email sent successfully:', response);
+            })["catch"](function (error) {
+              console.error('Error sending email:', error);
+            });
+            _context12.next = 24;
             break;
 
-          case 22:
-            _context12.prev = 22;
+          case 21:
+            _context12.prev = 21;
             _context12.t0 = _context12["catch"](14);
             console.error(_context12.t0);
 
-          case 25:
+          case 24:
             // Send WhatsApp Message
             whatsappText(process.env.ADMIN1, mail.text).then(function (response) {
               console.log(response); // check if request exists
@@ -906,11 +914,11 @@ module.exports = {
             //         })
             //     })
 
-            _context12.next = 32;
+            _context12.next = 31;
             break;
 
-          case 28:
-            _context12.prev = 28;
+          case 27:
+            _context12.prev = 27;
             _context12.t1 = _context12["catch"](0);
             console.log(_context12.t1.message);
             res.json({
@@ -918,12 +926,12 @@ module.exports = {
               data: _context12.t1
             });
 
-          case 32:
+          case 31:
           case "end":
             return _context12.stop();
         }
       }
-    }, null, null, [[0, 28], [14, 22]]);
+    }, null, null, [[0, 27], [14, 21]]);
   },
   home: function home(req, res) {
     var departments;
