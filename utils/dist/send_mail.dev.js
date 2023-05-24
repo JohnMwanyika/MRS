@@ -58,9 +58,9 @@ function sendMail(subject, text) {
       }
     }
   }, null, null, [[3, 11]]);
-}
+} // sendMail('ict test mail', 'testing mail fuctionality', 'mwanyikajohn@outlook.com', 'maytimina0@gmail.com', '5476benja@gmail.com');
 
-sendMail('ict test mail', 'testing mail fuctionality', 'mwanyikajohn@outlook.com', 'maytimina0@gmail.com', '5476benja@gmail.com');
+
 module.exports = {
   sendMail: sendMail
 };
