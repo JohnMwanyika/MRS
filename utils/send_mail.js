@@ -19,14 +19,6 @@ async function sendMail(subject, text, ...to) {
         text: text
     };
 
-    // await transporter.sendMail(mailOptions, function (error, info) {
-    //     if (error) {
-    //         console.log(error);
-    //     } else {
-    //         console.log('Email sent: ' + info.response);
-    //     }
-    // });
-
     try {
         const info = await transporter.sendMail(mailOptions);
         console.log('Email sent: ' + info.response);

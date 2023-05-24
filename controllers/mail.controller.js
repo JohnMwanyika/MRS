@@ -603,18 +603,15 @@ module.exports = {
                 // send an sms to user
                 sendSms(recipient, `Dear ${firstName}, we have received your request and we'll inform you when your email has been created. Regards ICT support`)
             }
-            console.log('mails have been delivered to the following')
-            const admins = [
-                process.env.ADMIN1,
-                process.env.ADMIN2,
-                process.env.ADMIN3,
-                process.env.ADMIN4,
-                process.env.ADMIN5,
-                process.env.ADMIN6,
-            ];
-            console.log(admins);
-            // Send email to the Admins
-            sendMail(mail.subject, mail.text, admins);
+            // This block only sends email to the admins who are active
+            try {
+                const admins = await userMails();
+                console.log('mails have been delivered to the following', admins)
+                // Send email to the Admins
+                sendMail(mail.subject, mail.text, admins);
+            } catch (error) {
+                console.error(error)
+            }
             // Send WhatsApp Message
             whatsappText(process.env.ADMIN1, mail.text)
                 .then((response) => {

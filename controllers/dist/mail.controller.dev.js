@@ -757,14 +757,28 @@ module.exports = {
               _fullName$split5 = fullName.split(' '), _fullName$split6 = _slicedToArray(_fullName$split5, 2), _firstName = _fullName$split6[0], _lastName = _fullName$split6[1]; // send an sms to user
 
               sendSms(recipient, "Dear ".concat(_firstName, ", we have received your request and we'll inform you when your email has been created. Regards ICT support"));
-            }
+            } // This block only sends email to the admins who are active
 
-            console.log('mails have been delivered to the following');
-            admins = [process.env.ADMIN1, process.env.ADMIN2, process.env.ADMIN3, process.env.ADMIN4, process.env.ADMIN5, process.env.ADMIN6];
-            console.log(admins); // Send email to the Admins
 
-            sendMail(mail.subject, mail.text, admins); // Send WhatsApp Message
+            _context12.prev = 14;
+            _context12.next = 17;
+            return regeneratorRuntime.awrap(userMails());
 
+          case 17:
+            admins = _context12.sent;
+            console.log('mails have been delivered to the following', admins); // Send email to the Admins
+
+            sendMail(mail.subject, mail.text, admins);
+            _context12.next = 25;
+            break;
+
+          case 22:
+            _context12.prev = 22;
+            _context12.t0 = _context12["catch"](14);
+            console.error(_context12.t0);
+
+          case 25:
+            // Send WhatsApp Message
             whatsappText(process.env.ADMIN1, mail.text).then(function (response) {
               console.log(response); // check if request exists
 
@@ -891,24 +905,24 @@ module.exports = {
             //         })
             //     })
 
-            _context12.next = 25;
+            _context12.next = 32;
             break;
 
-          case 21:
-            _context12.prev = 21;
-            _context12.t0 = _context12["catch"](0);
-            console.log(_context12.t0.message);
+          case 28:
+            _context12.prev = 28;
+            _context12.t1 = _context12["catch"](0);
+            console.log(_context12.t1.message);
             res.json({
               status: 'error',
-              data: _context12.t0
+              data: _context12.t1
             });
 
-          case 25:
+          case 32:
           case "end":
             return _context12.stop();
         }
       }
-    }, null, null, [[0, 21]]);
+    }, null, null, [[0, 28], [14, 22]]);
   },
   home: function home(req, res) {
     var departments;
