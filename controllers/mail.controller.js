@@ -26,7 +26,8 @@ module.exports = {
             fullName,
             email,
             password,
-            department
+            department,
+            phone
         } = req.body;
 
         // check existing
@@ -54,6 +55,7 @@ module.exports = {
             email: lowercaseMail,
             password: 'Welcome2020!',
             departmentId: dprt.id,
+            phone
         };
 
         console.log('Received request');
@@ -85,7 +87,7 @@ module.exports = {
                 // seperate first and last name from full name
                 const [firstName, lastName] = fullName.split(' ');
                 // send an sms to user
-                sendSms(recipient, `Dear ${firstName}, We are pleased to inform you that your email ${mailUser.email} has been successfully created. You can now proceed to log in to your account password:${mailData.password} Regards ${req.session.user.firstName}`)
+                sendSms(recipient, `Dear ${firstName}, We are pleased to inform you that your email ${mailUser.email} has been created. You can now proceed to log in to your account. Password:'${mailData.password}'.\n Regards ${req.session.user.firstName}`)
 
 
                 console.log(`${newMail} created`);
@@ -137,7 +139,7 @@ module.exports = {
                 });
             })
     },
-    getMailByName: async (req, res) => { //This checks for existing mails
+    checkMail: async (req, res) => { //This checks for existing mails
         const {
             firstName,
             lastName,
@@ -181,6 +183,125 @@ module.exports = {
                     return res.render('serp', {
                         status: 'warning',
                         data: "There is no email under that name. Please Check your spelling before sending an email creation request.",
+                        current: {
+                            firstName,
+                            lastName,
+                            dpt
+                        }
+                    });
+                }
+                if (mail) { // mail has been found
+
+                    // This update the departmentId to the email that has been found 
+                    return Mail.update({
+                        departmentId: department
+                    }, {
+                        where: {
+                            id: mail.id
+                        },
+                    })
+                }
+            })
+            .then((updatedMail) => {
+                if (updatedMail) {
+                    console.log(JSON.stringify(updatedMail));
+                    return Mail.findOne({
+                        include: Department,
+                        where: {
+                            name: fullName
+                        }
+                    });
+                }
+
+            })
+            .then((updatedMail) => {
+                if (updatedMail) {
+                    // This will add a mail check success attempt
+                    console.log(JSON.stringify(updatedMail));
+                    let trialData = {
+                        credentials: updatedMail.name,
+                        typeId: 1,
+                        statusId: 2,
+                        departmentId: updatedMail.departmentId,
+                    }
+                    const newTrial = Trial.create(trialData)
+                    // return the two objects as an array
+                    return [newTrial, updatedMail]
+                }
+
+            })
+            .then((result) => {
+                if (result) {
+                    console.log(JSON.stringify(result[0]))
+
+                    res.render('serp', {
+                        status: 'success',
+                        data: result[1],
+                    });
+                }
+
+            })
+            .catch((err) => {
+                res.render('serp', {
+                    status: 'error',
+                    data: err.message,
+                    current: {
+                        firstName,
+                        lastName
+                    }
+                });
+            })
+    },
+    getMailByName: async (req, res) => { //This checks for existing mails
+        const {
+            firstName,
+            lastName,
+            department, //using it to populate trials and insert it to mails for future identification
+        } = req.body;
+
+        // find department by name provided by user note it comes as id from the selected department name
+        const dpt = await Department.findOne({
+            where: {
+                id: department
+            }
+        });
+        console.log('This is the department', JSON.stringify(dpt))
+
+        // combine the first and last name
+        function JoinName(fname, lname) {
+            let fullName = `${fname} ${lname}`;
+            return fullName
+        };
+        let fullName = JoinName(firstName, lastName);
+
+        const mail = await Mail.findOne({
+                include: Department,
+                where: {
+                    name: fullName,
+                },
+            })
+            .then(async (mail) => {
+                console.log(JSON.stringify(mail));
+                console.log('This user is ' + fullName)
+                console.log('DepartmentId is ' + department)
+
+                if (!mail) {
+                    // get all departments
+                    const allDepartments = await Department.findAll();
+                    console.log("These are the departments",allDepartments)
+
+                    let failedTrial = {
+                        credentials: fullName,
+                        typeId: 1,
+                        statusId: 1,
+                        departmentId: department,
+                    }
+                    // creating the failed trial for those who dint find their mails
+                    const newTrial = await Trial.create(failedTrial)
+                    return res.render('serp', {
+                        status: 'warning',
+                        data: "There is no email under that name. Please Check your spelling before sending an email creation request.",
+                        allDepartments,
                         current: {
                             firstName,
                             lastName,
@@ -430,7 +551,7 @@ module.exports = {
             // get departmentId
             const dprt = await Department.findOne({
                 where: {
-                    name: department
+                    id:department
                 }
             });
 
@@ -447,7 +568,7 @@ module.exports = {
                 // from: 'mwanyikajohn@outlook.com',
                 to: '5476benja@gmail.com',
                 subject: 'Request for email creation',
-                text: `Greetings! there is a request to create an email for ${fullName} from ${department} department`
+                text: `Greetings! there is a request to create an email for ${fullName} from ${dprt.name} department`
             };
 
             // if user provides a phone number send then a successful submission sms 
@@ -485,7 +606,7 @@ module.exports = {
                         // return existingMail
                         return res.json({
                             status: 'info',
-                            data: "We kindly inform you that the email you have provided has already been registered by the administrator. Please consider using a different email address or contacting the administrator for further assistance."
+                            data: "We kindly inform you that an email with the name you provided has already been registered by the administrator. Please consider using a different email address or contacting the administrator for further assistance."
                         });
 
                     }

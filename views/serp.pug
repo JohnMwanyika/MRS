@@ -27,6 +27,7 @@ block content
                     input(type="tel" class="form-control" id="phone" name="phone" value=`0${data.phone}` placeholder="Phone", required)
                 else
                     input(type="tel" class="form-control" id="phone" name="phone" placeholder="Phone", required)
+                    //- setting focus to get the attention for user to input theire phone number
                     script.
                         window.addEventListener('DOMContentLoaded', (event) => {
                             const inputElement = document.getElementById('phone');
@@ -41,15 +42,21 @@ block content
                 span.spinner-border.spinner-border-sm(role="status" aria-hidden="true")#spina
     else
 
-        form(action="/mails/request" method="post")#myform2
+        form( method="post" action='/mails/user')#myform2
             .alert.alert-dismissible.fade.show(role='alert',class=`alert-${status}`)
                 i.bi.bi-exclamation-triangle-fill 
                 | #{data} 
                 button.btn-close(type='button' data-dismiss='alert' aria-label='Close')
             //- try again <button type='submit' class="btn btn-danger btn-sm" role="button">Request</button>
+            //- .form-floating.mb-3
+            //-     input(type="text" class="form-control" id="depertment" value=`${current.dpt.name}` name="department" placeholder="Last Name", required)
+            //-     label(for="depertment") Department
             .form-floating.mb-3
-                input(type="text" class="form-control" id="depertment" value=`${current.dpt.name}` name="department" placeholder="Last Name", required)
-                label(for="depertment") Department
+                select.form-select#floatingSelect(aria-label="Floating label select example" name='department')
+                    //- option(selected value=`${current.dpt.name}`) #{current.dpt.name}
+                    each dep in allDepartments
+                        option(selected=(dep.name===current.dpt.name) value=`${dep.id}`) #{dep.name}
+                label(for="floatingSelect") Select Department
             .form-floating.mb-3.mt-3
                 input(type="text" class="form-control" id="firstName" value=`${current.firstName}` name="firstName" placeholder="First Name", required)
                 label(for="firstName") First Name
@@ -67,9 +74,10 @@ block content
                     });
             .row 
                 .col-6
-                    a( class="btn btn-primary w-100 mt-3" href='/')
+                    button( class="btn btn-primary w-100 mt-3")#tryBtn
                         i.fa.fa-paper-plane.me-2
                         | Try again 
+                        //- span.spinner-border.spinner-border-sm(role="status" aria-hidden="true")#spina3
                 .col-6
                     button( class="btn btn-danger w-100 mt-3")#submitbtn2
                         i.fa.fa-paper-plane.me-2
@@ -79,6 +87,7 @@ block content
 
     script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js")
     script.
+        //- ###############################3  Password reset requet  ###############################
         toastr.options = {
             "closeButton": true,
             "debug": false,
@@ -165,3 +174,40 @@ block content
                 console.log(JSON.stringify(request.statusText))
             })
         });
+
+        //- ########################## Try Again ########################
+        //- var loading3 = $('#spina3').hide();
+        //- $("#tryBtn").click(function(event){
+        //-     event.preventDefault();
+        //-     var form2 = $("#myform2");
+        //-     //- var msg = $("#msg");
+
+        //-     $.ajax({
+        //-         url:'/mails/api/user',
+        //-         type:'post',
+        //-         data: form2.serialize(),
+        //-         beforeSend: function(){
+        //-             loading3.show(function(){
+        //-                 $("#tryBtn").prop("disabled", true);
+        //-             });
+        //-         },
+        //-         complete: function(){
+        //-             loading3.hide(function(){
+        //-                 $("#tryBtn").removeAttr('disabled');
+        //-             });
+        //-             //- listenToCallback();
+        //-         },
+        //-         timeout: 30000,
+        //-     }).then(function(data){
+        //-         location.href = '/mails/user';
+        //-         //- location.reload();
+        //-         //- toastr[data.status](data.data, data.status);
+
+        //-     }).catch(function(error){
+        //-         location.href = '/mails/user';
+        //-         //- location.reload();
+        //-         console.log('Cannot connect to mail')
+        //-         toastr["error"]("Cannot connect to WhatsApp", "Failed")
+        //-         console.log(JSON.stringify(request.statusText))
+        //-     })
+        //- });
