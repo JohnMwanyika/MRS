@@ -1,11 +1,14 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+let host = process.env.MAIL_HOST || 'mail.govmail.ke';
+let port = process.env.MAIL_PORT || 587;
+
 async function sendMail(subject, text, ...to) {
     let transporter = nodemailer.createTransport({
-        host: 'mail.govmail.ke',
-        port: 465,
-        secure: true,
+        host,
+        port,
+        secure: false,
         auth: {
             user: process.env.MAIL_USER,
             pass: process.env.MAIL_PASS
@@ -13,7 +16,7 @@ async function sendMail(subject, text, ...to) {
     });
 
     let mailOptions = {
-        from: process.env.MAIL_FROM,
+        from: process.env.MAIL_USER,
         to: to,
         subject: subject,
         text: text
@@ -21,11 +24,11 @@ async function sendMail(subject, text, ...to) {
 
     try {
         const info = await transporter.sendMail(mailOptions);
-        console.log(`Confirmed email sent to: ${to} ` + info.response);
+        console.log(`Confirmed email sent to: ${to} from ${mailOptions.from}` + info.response);
         return info.response;
     } catch (error) {
         console.log('Error sending email: ' + error.message);
-        throw error.message;
+        throw error;
     }
 }
 

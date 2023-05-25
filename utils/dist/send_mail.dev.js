@@ -4,6 +4,9 @@ var nodemailer = require('nodemailer');
 
 require('dotenv').config();
 
+var host = process.env.MAIL_HOST || 'mail.govmail.ke';
+var port = process.env.MAIL_PORT || 587;
+
 function sendMail(subject, text) {
   var transporter,
       _len,
@@ -18,9 +21,9 @@ function sendMail(subject, text) {
       switch (_context.prev = _context.next) {
         case 0:
           transporter = nodemailer.createTransport({
-            host: 'mail.govmail.ke',
-            port: 465,
-            secure: true,
+            host: host,
+            port: port,
+            secure: false,
             auth: {
               user: process.env.MAIL_USER,
               pass: process.env.MAIL_PASS
@@ -32,7 +35,7 @@ function sendMail(subject, text) {
           }
 
           mailOptions = {
-            from: process.env.MAIL_FROM,
+            from: process.env.MAIL_USER,
             to: to,
             subject: subject,
             text: text
@@ -43,14 +46,14 @@ function sendMail(subject, text) {
 
         case 6:
           info = _context.sent;
-          console.log("Confirmed email sent to: ".concat(to, " ") + info.response);
+          console.log("Confirmed email sent to: ".concat(to, " from ").concat(mailOptions.from) + info.response);
           return _context.abrupt("return", info.response);
 
         case 11:
           _context.prev = 11;
           _context.t0 = _context["catch"](3);
           console.log('Error sending email: ' + _context.t0.message);
-          throw _context.t0.message;
+          throw _context.t0;
 
         case 15:
         case "end":
