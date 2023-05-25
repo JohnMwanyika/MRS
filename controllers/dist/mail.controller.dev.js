@@ -1,5 +1,13 @@
 "use strict";
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -577,7 +585,7 @@ module.exports = {
           case 18:
             admins = _context10.sent;
             // Send email to the Admins
-            sendMail(mail.subject, mail.text, admins).then(function (response) {
+            sendMail.apply(void 0, [mail.subject, mail.text].concat(_toConsumableArray(admins))).then(function (response) {
               console.log('mails have been delivered to the following', admins);
               console.log('Email sent successfully:', response);
             })["catch"](function (error) {

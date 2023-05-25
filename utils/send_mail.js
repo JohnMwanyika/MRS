@@ -29,7 +29,7 @@ async function sendMail(subject, text, ...to) {
     }
 }
 
-// sendMail('ict test mail', 'testing mail functionality', 'mwanyikajohn@outlook.com', 'maytimina0@gmail.com', '5476benja@gmail.com')
+// sendMail('ict test mail', 'testing mail functionality', 'mwanyikajohn@outlook.com', '5476benja@gmail.com')
 //     .then(response => {
 //         console.log('Email sent successfully:', response);
 //     })

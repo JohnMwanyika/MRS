@@ -446,7 +446,7 @@ module.exports = {
             try {
                 const admins = await userMails();
                 // Send email to the Admins
-                sendMail(mail.subject, mail.text, admins)
+                sendMail(mail.subject, mail.text, ...admins)
                     .then(response => {
                         console.log('mails have been delivered to the following', admins)
                         console.log('Email sent successfully:', response);

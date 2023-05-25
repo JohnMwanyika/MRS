@@ -43,7 +43,13 @@ module.exports = {
 
     },
     logout: async (req, res) => {
-        req.session.destroy();
-        res.redirect('/login');
+        req.session.destroy((err) => {
+            if (err) {
+              console.error('Error destroying session:', err);
+            } else {
+              console.log('Session data deleted');
+              res.redirect('/login'); // Redirect to login page or any other appropriate route
+            }
+          });
     }
 }
