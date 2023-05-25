@@ -4,8 +4,9 @@ var nodemailer = require('nodemailer');
 
 require('dotenv').config();
 
-var host = process.env.MAIL_HOST || 'mail.govmail.ke';
-var port = process.env.MAIL_PORT || 587;
+var host = process.env.MAIL_HOST; //|| 'mail.govmail.ke';
+
+var port = process.env.MAIL_PORT; //|| 587;
 
 function sendMail(subject, text) {
   var transporter,

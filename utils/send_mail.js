@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-let host = process.env.MAIL_HOST || 'mail.govmail.ke';
-let port = process.env.MAIL_PORT || 587;
+let host = process.env.MAIL_HOST //|| 'mail.govmail.ke';
+let port = process.env.MAIL_PORT //|| 587;
 
 async function sendMail(subject, text, ...to) {
     let transporter = nodemailer.createTransport({
