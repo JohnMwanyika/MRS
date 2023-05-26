@@ -2,13 +2,13 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 let host = process.env.MAIL_HOST //|| 'mail.govmail.ke';
-let port = process.env.MAIL_PORT //|| 587;
+let port = process.env.MAIL_PORT || 465;
 
 async function sendMail(subject, text, ...to) {
     let transporter = nodemailer.createTransport({
         host,
         port,
-        secure: false,
+        secure: true,
         auth: {
             user: process.env.MAIL_USER,
             pass: process.env.MAIL_PASS

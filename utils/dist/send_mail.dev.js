@@ -6,7 +6,7 @@ require('dotenv').config();
 
 var host = process.env.MAIL_HOST; //|| 'mail.govmail.ke';
 
-var port = process.env.MAIL_PORT; //|| 587;
+var port = process.env.MAIL_PORT || 465;
 
 function sendMail(subject, text) {
   var transporter,
@@ -24,7 +24,7 @@ function sendMail(subject, text) {
           transporter = nodemailer.createTransport({
             host: host,
             port: port,
-            secure: false,
+            secure: true,
             auth: {
               user: process.env.MAIL_USER,
               pass: process.env.MAIL_PASS
