@@ -752,7 +752,7 @@ module.exports = {
               // from: 'mwanyikajohn@outlook.com',
               to: '5476benja@gmail.com',
               subject: 'Request for email creation',
-              text: "Greetings! there is a request to create an email for ".concat(fullName, " from ").concat(dprt.name, " department")
+              text: "Greetings! There is a request to create an email for ".concat(fullName, " from ").concat(dprt.name, " department")
             }; // if user provides a phone number send them a successful submission sms 
 
             if (phone) {
