@@ -9,10 +9,10 @@ block content
                 li.breadcrumb-item.active #{title}
             .card.mb-4
                 .card-body
-                    form.d-flex.align-items-center.justify-content-center(action="/dashboard/import-mails", method="POST", enctype="multipart/form-data")
+                    form.d-flex.align-items-center.justify-content-center(action="/dashboard/import-mails" method="POST" enctype="multipart/form-data")
                         .form-group
                             label(for="file") Choose CSV File 
-                            input.form-control-file#file(type="file", name="file", accept=".csv", required)
+                            input.form-control-file#file(type="file" name="file" accept=".csv", required)
                         button.btn.btn-primary(type="submit") Upload
 
             .card.mb-4
@@ -24,25 +24,28 @@ block content
                     table#datatablesSimple
                         thead
                             tr
+                                th Email
                                 th Name
-                                th Position
-                                th Office
-                                th Age
-                                th Start date
-                                th Salary
+                                th Department
+                                th Date
+                                //- th Created by
                         tfoot
                             tr
+                                th Email
                                 th Name
-                                th Position
-                                th Office
-                                th Age
-                                th Start date
-                                th Salary
-                        tbody
-                            tr
-                                td Tiger Nixon
-                                td System Architect
-                                td Edinburgh
-                                td 61
-                                td 2011/04/25
-                                td $320,800
+                                th Department
+                                th Date
+                                //- th Created by
+                        if (user.Role.name == 'Super Admin')
+                            tbody
+                                each mail in data
+                                    tr
+                                        td=mail.email
+                                        td=mail.name
+                                        if (mail.Department)
+                                            td=mail.Department.name
+                                        else 
+                                            td N/A
+                                        td=moment(mail.createdAt).format('MMMM Do YYYY, h:mm:ss a')
+                                        //- td #{mail.User.firstName} #{mail.User.lastName}
+                        

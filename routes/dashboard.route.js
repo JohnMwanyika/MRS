@@ -10,7 +10,8 @@ const {
     getAllResetRequests,
     passwordReset,
     ownPasswordReset,
-    importMails
+    importMails,
+    getImportForm
 } = require('../controllers/dashboard.controller');
 
 const multer = require('multer');
@@ -61,12 +62,7 @@ router.post('/users/reset_password/:userId', passwordReset);
 // route for changing the currently logged in user
 router.post('/reset_password/:userId', ownPasswordReset);
 // route to get the import form
-router.get('/imports', (req, res) => {
-    res.render('importForm', {
-        user: req.session.user,
-        title: 'Import Mails'
-    });
-});
+router.get('/imports', getImportForm);
 // router to post the imported data
 router.post('/import-mails', upload.single('file'), importMails);
 

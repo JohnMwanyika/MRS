@@ -483,6 +483,37 @@ module.exports = {
                 data: 'Failed to import mails',
             });
         }
+    },
+    getImportForm: async (req, res) => {
+        const mails = await Mail.findAll({
+                include: [{
+                    model: Department,
+                    required: false
+                }, ],
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            })
+            .then((mails) => {
+                // console.log(mails);
+                // res.json({
+                //     status: 'success',
+                //     data: mails
+                // });
+                res.render('importForm', {
+                    title: 'Import Mails',
+                    status: 'success',
+                    user: req.session.user,
+                    data: mails,
+                    moment: require('moment'),
+                    axios: require('axios'),
+                })
+            })
+            .catch((err) => {
+                res.render('error', {
+                    error: err,
+                })
+            })
     }
 
 }

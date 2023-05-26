@@ -139,7 +139,11 @@ module.exports = {
             })
     },
     getAllMail: async (req, res) => {
-        const mails = await Mail.findAll()
+        const mails = await Mail.findAll({
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            })
             .then((mails) => {
                 console.log(mails);
                 res.json({

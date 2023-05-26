@@ -212,7 +212,9 @@ module.exports = {
         switch (_context5.prev = _context5.next) {
           case 0:
             _context5.next = 2;
-            return regeneratorRuntime.awrap(Mail.findAll().then(function (mails) {
+            return regeneratorRuntime.awrap(Mail.findAll({
+              order: [['createdAt', 'DESC']]
+            }).then(function (mails) {
               console.log(mails);
               res.json({
                 status: 'success',
