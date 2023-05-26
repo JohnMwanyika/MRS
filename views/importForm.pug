@@ -5,7 +5,7 @@ block content
             h1.mt-4 #{title}
             ol.breadcrumb.mb-4
                 li.breadcrumb-item
-                    a(href="index.html") Dashboard
+                    a(href="/dashboard") Dashboard
                 li.breadcrumb-item.active #{title}
             .card.mb-4
                 .card-body
@@ -27,15 +27,15 @@ block content
                                 th Email
                                 th Name
                                 th Department
-                                th Date
-                                //- th Created by
+                                th Date created
+                                th Date updated
                         tfoot
                             tr
                                 th Email
                                 th Name
                                 th Department
-                                th Date
-                                //- th Created by
+                                th Date created
+                                th Date updated
                         if (user.Role.name == 'Super Admin')
                             tbody
                                 each mail in data
@@ -47,5 +47,6 @@ block content
                                         else 
                                             td N/A
                                         td=moment(mail.createdAt).format('MMMM Do YYYY, h:mm:ss a')
+                                        td=moment(mail.updatedAt).format('MMMM Do YYYY, h:mm:ss a')
                                         //- td #{mail.User.firstName} #{mail.User.lastName}
                         
